@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ThinkAI - Một kỷ nguyên học tập mới</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#3caff6",
+                "background-light": "#F9F8F3",
+                "background-dark": "#101b22",
+              },
+              fontFamily: {
+                "display": ["Newsreader", "serif"]
+              },
+              borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+            },
+          },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Newsreader', serif;
+        }
+        .zen-glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .dark .zen-glass {
+            background: rgba(16, 27, 34, 0.7);
+        }
+        .browser-mockup {
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111518] dark:text-gray-100 transition-colors duration-300">
+<!-- Floating TopNavBar -->
+<div class="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
+<header class="zen-glass flex items-center justify-between w-full max-w-[960px] h-16 px-6 rounded-full border border-white/20 dark:border-white/10 shadow-sm">
+<div class="flex items-center gap-3">
+<div class="size-8 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M36.7273 44C33.9891 44 31.6043 39.8386 30.3636 33.69C29.123 39.8386 26.7382 44 24 44C21.2618 44 18.877 39.8386 17.6364 33.69C16.3957 39.8386 14.0109 44 11.2727 44C7.25611 44 4 35.0457 4 24C4 12.9543 7.25611 4 11.2727 4C14.0109 4 16.3957 8.16144 17.6364 14.31C18.877 8.16144 21.2618 4 24 4C26.7382 4 29.123 8.16144 30.3636 14.31C31.6043 8.16144 33.9891 4 36.7273 4C40.7439 4 44 12.9543 44 24C44 35.0457 40.7439 44 36.7273 44Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-lg font-bold tracking-tight">ThinkAI</h2>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Tính năng</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Giải pháp</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Bảng giá</a>
+</nav>
+<div class="flex gap-3">
+<button class="flex h-10 px-5 items-center justify-center rounded-full bg-[#111518] dark:bg-white text-white dark:text-[#111518] text-sm font-bold transition-transform hover:scale-105">
+                    Đăng nhập
+                </button>
+</div>
+</header>
+</div>
+<main class="relative pt-32">
+<!-- HeroSection -->
+<section class="flex flex-col items-center px-4 text-center max-w-[1200px] mx-auto">
+<div class="max-w-[800px] mb-12">
+<h1 class="text-[#111518] dark:text-white text-5xl md:text-7xl font-normal leading-tight tracking-tight mb-6">
+                    chào mừng đến với một kỷ nguyên học tập mới
+                </h1>
+<p class="text-[#607a8a] dark:text-gray-400 text-lg md:text-xl font-light mb-8 max-w-[600px] mx-auto">
+                    Nền tảng giáo dục thông minh với gia sư AI 24/7. Trải nghiệm học tập cá nhân hóa vượt trội.
+                </p>
+<div class="flex flex-wrap justify-center gap-4">
+<button class="h-14 px-8 rounded-full bg-primary text-white font-bold text-lg shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
+                        Bắt đầu ngay
+                    </button>
+<button class="h-14 px-8 rounded-full border border-[#111518]/10 dark:border-white/10 text-[#111518] dark:text-white font-bold text-lg hover:bg-white/50 transition-all">
+                        Tìm hiểu thêm
+                    </button>
+</div>
+</div>
+<!-- Browser Mockup Dashboard -->
+<div class="relative w-full max-w-[1000px] mt-10 mb-24 px-4">
+<div class="absolute inset-0 -z-10 bg-gradient-to-tr from-primary/10 via-transparent to-primary/5 blur-3xl rounded-full"></div>
+<div class="browser-mockup bg-white dark:bg-background-dark rounded-xl overflow-hidden border border-[#111518]/5 dark:border-white/5">
+<!-- Browser Header -->
+<div class="h-10 bg-background-light dark:bg-gray-800/50 flex items-center px-4 gap-2 border-b border-[#111518]/5 dark:border-white/5">
+<div class="flex gap-1.5">
+<div class="size-3 rounded-full bg-red-400/20"></div>
+<div class="size-3 rounded-full bg-yellow-400/20"></div>
+<div class="size-3 rounded-full bg-green-400/20"></div>
+</div>
+<div class="mx-auto bg-white/50 dark:bg-black/20 px-4 py-0.5 rounded-md text-[10px] text-[#607a8a] flex items-center gap-2">
+<span class="material-symbols-outlined text-xs">lock</span>
+                            thinkai.edu/dashboard
+                        </div>
+</div>
+<!-- Dashboard Preview Image -->
+<div class="w-full aspect-[16/9] bg-center bg-cover" data-alt="Modern dashboard interface with AI tutor chat and learning progress charts" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAvInIwKRcah3wkEihMhRLaEJCE4M2yf8xh3qAG6-lb0vpRGXl2EfKa4qM0dya2DEOSpfe5H5qepkFQZRIYeQS_Y25gCmlSkrr2t54-sHK9Gk7huLwyiPyi5VcBcA470Qbo2XaB7UmpUhl8jK-t2eGqzVL5NS6sd-wuVt19fw065K2TrwUHMtJDui31yZvZmMPt36wnYLlzAC1tR1G-5C4l3FMIYaqjh3MSmQkqrkohcCgwSeHiKN7-LZ5tng2ll8fJ-1bQI1AcdFKL");'>
+<div class="w-full h-full bg-white/20 dark:bg-black/20 backdrop-blur-[2px]"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- FeatureSection Header -->
+<section class="max-w-[960px] mx-auto px-6 mb-12">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div class="max-w-[600px]">
+<h2 class="text-3xl font-bold tracking-tight mb-4">Hệ sinh thái học tập Zen</h2>
+<p class="text-[#607a8a] text-lg">Tối giản hóa quy trình học tập, tập trung tối đa vào kiến thức với sự hỗ trợ của trí tuệ nhân tạo.</p>
+</div>
+</div>
+</section>
+<!-- Feature Cards -->
+<section class="max-w-[960px] mx-auto px-6 pb-24">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- AI Tutor -->
+<div class="group flex flex-col gap-5 p-6 rounded-xl border border-[#dbe2e6] dark:border-white/10 hover:border-primary/50 transition-all hover:shadow-xl hover:shadow-primary/5 bg-white/50 dark:bg-white/5">
+<div class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined">psychology</span>
+</div>
+<div>
+<h3 class="text-xl font-bold mb-2">Gia sư AI</h3>
+<p class="text-[#607a8a] text-sm leading-relaxed">Tương tác thông minh mọi lúc, giải đáp mọi thắc mắc 24/7 với phản hồi cá nhân hóa.</p>
+</div>
+</div>
+<!-- Smart Exam -->
+<div class="group flex flex-col gap-5 p-6 rounded-xl border border-[#dbe2e6] dark:border-white/10 hover:border-primary/50 transition-all hover:shadow-xl hover:shadow-primary/5 bg-white/50 dark:bg-white/5">
+<div class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined">quiz</span>
+</div>
+<div>
+<h3 class="text-xl font-bold mb-2">Đề thi Thông minh</h3>
+<p class="text-[#607a8a] text-sm leading-relaxed">Tự động thiết kế đề thi dựa trên lỗ hổng kiến thức hiện tại của người học.</p>
+</div>
+</div>
+<!-- Analytics -->
+<div class="group flex flex-col gap-5 p-6 rounded-xl border border-[#dbe2e6] dark:border-white/10 hover:border-primary/50 transition-all hover:shadow-xl hover:shadow-primary/5 bg-white/50 dark:bg-white/5">
+<div class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined">insights</span>
+</div>
+<div>
+<h3 class="text-xl font-bold mb-2">Phân tích Học tập</h3>
+<p class="text-[#607a8a] text-sm leading-relaxed">Báo cáo trực quan về sự tiến bộ, giúp bạn biết chính xác mình đang đứng ở đâu.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Stats Section -->
+<section class="max-w-[960px] mx-auto px-6 pb-32">
+<div class="flex flex-wrap gap-6">
+<div class="flex-1 min-w-[200px] flex flex-col gap-2 rounded-xl p-8 border border-[#dbe2e6] dark:border-white/10 text-center">
+<p class="text-[#607a8a] text-sm font-medium uppercase tracking-wider">Người học</p>
+<p class="text-4xl font-bold tracking-tight text-primary">50,000+</p>
+</div>
+<div class="flex-1 min-w-[200px] flex flex-col gap-2 rounded-xl p-8 border border-[#dbe2e6] dark:border-white/10 text-center">
+<p class="text-[#607a8a] text-sm font-medium uppercase tracking-wider">Tỉ lệ hài lòng</p>
+<p class="text-4xl font-bold tracking-tight text-primary">98%</p>
+</div>
+<div class="flex-1 min-w-[200px] flex flex-col gap-2 rounded-xl p-8 border border-[#dbe2e6] dark:border-white/10 text-center">
+<p class="text-[#607a8a] text-sm font-medium uppercase tracking-wider">Bài học AI</p>
+<p class="text-4xl font-bold tracking-tight text-primary">1M+</p>
+</div>
+</div>
+</section>
+<!-- Landscape Background Element -->
+<div class="absolute top-[20%] left-0 w-full h-[600px] pointer-events-none -z-20 overflow-hidden opacity-30">
+<div class="w-full h-full bg-cover bg-center" data-alt="Minimalist abstract landscape with soft hills and pastel colors" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCWkFvNkrLyJ3Mf75oSDOVoXS5Ou2ro_3iyj3nmMGAWFzrV95zb1w10D_E1s11rzQFkZj-2B4Fm24GGbILv-fkw3rbDzIj3lHFaClda3EbqOst0Za6bgpRshgJSFUTfaUnSltla8QPxLHQKEAqqE1Gjwm6r3guy5i7YSNHkWQBih2gPHntFxaGnA1TcqqFKiQhW6M5lJUS9vrBCf9t9giW-KmtFLxYELcmqwIPsl5DThW7jnSbN2petrVB42butFB58p8vUmtHmG6Dj");'>
+</div>
+<div class="absolute inset-0 bg-gradient-to-b from-background-light via-transparent to-background-light dark:from-background-dark dark:to-background-dark"></div>
+</div>
+</main>
+<footer class="max-w-[960px] mx-auto px-6 py-12 border-t border-[#dbe2e6] dark:border-white/10">
+<div class="flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-3">
+<div class="size-6 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M36.7273 44C33.9891 44 31.6043 39.8386 30.3636 33.69C29.123 39.8386 26.7382 44 24 44C21.2618 44 18.877 39.8386 17.6364 33.69C16.3957 39.8386 14.0109 44 11.2727 44C7.25611 44 4 35.0457 4 24C4 12.9543 7.25611 4 11.2727 4C14.0109 4 16.3957 8.16144 17.6364 14.31C18.877 8.16144 21.2618 4 24 4C26.7382 4 29.123 8.16144 30.3636 14.31C31.6043 8.16144 33.9891 4 36.7273 4C40.7439 4 44 12.9543 44 24C44 35.0457 40.7439 44 36.7273 44Z" fill="currentColor"></path>
+</svg>
+</div>
+<span class="font-bold">ThinkAI</span>
+</div>
+<div class="flex gap-8 text-sm text-[#607a8a]">
+<a class="hover:text-primary transition-colors" href="#">Chính sách bảo mật</a>
+<a class="hover:text-primary transition-colors" href="#">Điều khoản dịch vụ</a>
+<a class="hover:text-primary transition-colors" href="#">Liên hệ</a>
+</div>
+<p class="text-sm text-[#607a8a]">© 2024 ThinkAI. Bản quyền được bảo lưu.</p>
+</div>
+</footer>
+</body></html>

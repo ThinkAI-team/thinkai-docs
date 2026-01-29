@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ThinkAI - Kết quả bài thi</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#3c83f6",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101722",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem", 
+                        "lg": "0.5rem", 
+                        "xl": "0.75rem", 
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        'zen': '0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.01)',
+                        'zen-hover': '0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom styles for things Tailwind handles awkwardly without plugins */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .dark .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111418] dark:text-white transition-colors duration-300">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Navigation -->
+<header class="sticky top-0 z-50 w-full glass-panel border-b border-[#f0f2f5] dark:border-gray-800">
+<div class="flex items-center justify-between px-6 py-4 max-w-[1200px] mx-auto">
+<div class="flex items-center gap-4">
+<div class="size-8 text-primary">
+<svg class="w-full h-full" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M36.7273 44C33.9891 44 31.6043 39.8386 30.3636 33.69C29.123 39.8386 26.7382 44 24 44C21.2618 44 18.877 39.8386 17.6364 33.69C16.3957 39.8386 14.0109 44 11.2727 44C7.25611 44 4 35.0457 4 24C4 12.9543 7.25611 4 11.2727 4C14.0109 4 16.3957 8.16144 17.6364 14.31C18.877 8.16144 21.2618 4 24 4C26.7382 4 29.123 8.16144 30.3636 14.31C31.6043 8.16144 33.9891 4 36.7273 4C40.7439 4 44 12.9543 44 24C44 35.0457 40.7439 44 36.7273 44Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-lg font-bold tracking-tight">ThinkAI</h2>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Khoá học</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Thư viện</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Cộng đồng</a>
+</nav>
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-9 ring-2 ring-white dark:ring-gray-700 shadow-sm" data-alt="User avatar profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD7E1tA9pS3M75EDmv0eys6IcePkn0MODU_YNWNaiErI4TQrkscGw9RLZWTeEcrGXQp8vkczpuC4VgEWNUDjPDNxdtIpKtIF9Jg8M4igDGhg3F0XH-voOQZbpb4yLrfZZyb6cDMMdBNVk3BpwQpDoHNCkmzpQg9TiW-7iwqQYXBtxxDFPv8ZjTE8kJquWDiKHBzR-SChBvoHI8-ht0Q8JUa_cvs3wUjvLFcX1JCQlooj9fEJSKrpqHC2cUOhr78l8VvcAB3wS-FLKxM");'></div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow w-full px-4 py-8 md:py-12">
+<div class="max-w-[900px] mx-auto flex flex-col gap-8">
+<!-- Hero Section: Score & Summary -->
+<section class="bg-white dark:bg-[#1e2732] rounded-2xl p-8 md:p-10 shadow-zen border border-gray-100 dark:border-gray-800 flex flex-col md:flex-row items-center justify-between gap-10 relative overflow-hidden">
+<!-- Decorative Background Blur -->
+<div class="absolute -top-20 -right-20 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+<div class="flex-1 text-center md:text-left z-10">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-xs font-semibold mb-4 border border-emerald-100 dark:border-emerald-800">
+<span class="material-symbols-outlined text-[16px]">celebration</span>
+                            Hoàn thành xuất sắc
+                        </div>
+<h1 class="text-3xl md:text-4xl font-black tracking-tight mb-2 text-[#111418] dark:text-white">Chúc mừng bạn!</h1>
+<p class="text-[#60708a] dark:text-gray-400 text-lg mb-8 leading-relaxed">Bạn đã hoàn thành bài kiểm tra <strong class="text-[#111418] dark:text-gray-200">Kiến thức cơ bản về AI</strong>. Kết quả của bạn rất ấn tượng.</p>
+<div class="flex flex-wrap gap-3 justify-center md:justify-start">
+<button class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary hover:bg-primary/90 text-white font-medium rounded-xl transition-all active:scale-95 shadow-md shadow-primary/20">
+<span class="material-symbols-outlined text-[20px]">refresh</span>
+                                Làm lại bài thi
+                            </button>
+<button class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-[#111418] dark:text-gray-200 font-medium rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-all">
+                                Quay về Dashboard
+                            </button>
+</div>
+</div>
+<!-- Circular Progress -->
+<div class="relative flex items-center justify-center flex-shrink-0 size-48 md:size-56">
+<!-- Background Circle -->
+<svg class="size-full -rotate-90 transform" viewbox="0 0 100 100">
+<circle class="text-gray-100 dark:text-gray-700" cx="50" cy="50" fill="none" r="45" stroke="currentColor" stroke-width="6"></circle>
+<!-- Progress Circle (8/10 = 80%) -->
+<!-- Circumference = 2 * PI * 45 ≈ 282.7 -->
+<!-- Offset = 282.7 * (1 - 0.8) ≈ 56.5 -->
+<circle class="text-primary transition-all duration-1000 ease-out" cx="50" cy="50" fill="none" r="45" stroke="currentColor" stroke-dasharray="282.7" stroke-dashoffset="56.5" stroke-linecap="round" stroke-width="6"></circle>
+</svg>
+<div class="absolute flex flex-col items-center">
+<span class="text-4xl md:text-5xl font-bold text-[#111418] dark:text-white tracking-tighter">8<span class="text-2xl text-gray-400 font-normal">/10</span></span>
+<span class="text-sm font-medium text-gray-500 dark:text-gray-400 mt-1">80% Đạt</span>
+</div>
+</div>
+</section>
+<!-- Stats Grid -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<!-- Correct -->
+<div class="bg-white dark:bg-[#1e2732] p-5 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm flex items-center gap-4 group hover:shadow-zen-hover transition-all">
+<div class="size-12 rounded-full bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+<span class="material-symbols-outlined">check_circle</span>
+</div>
+<div>
+<p class="text-sm text-gray-500 dark:text-gray-400 font-medium">Câu trả lời đúng</p>
+<p class="text-2xl font-bold text-[#111418] dark:text-white">8</p>
+</div>
+</div>
+<!-- Incorrect -->
+<div class="bg-white dark:bg-[#1e2732] p-5 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm flex items-center gap-4 group hover:shadow-zen-hover transition-all">
+<div class="size-12 rounded-full bg-rose-50 dark:bg-rose-900/30 flex items-center justify-center text-rose-600 dark:text-rose-400">
+<span class="material-symbols-outlined">cancel</span>
+</div>
+<div>
+<p class="text-sm text-gray-500 dark:text-gray-400 font-medium">Câu trả lời sai</p>
+<p class="text-2xl font-bold text-[#111418] dark:text-white">2</p>
+</div>
+</div>
+<!-- Time -->
+<div class="bg-white dark:bg-[#1e2732] p-5 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm flex items-center gap-4 group hover:shadow-zen-hover transition-all">
+<div class="size-12 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
+<span class="material-symbols-outlined">timer</span>
+</div>
+<div>
+<p class="text-sm text-gray-500 dark:text-gray-400 font-medium">Thời gian làm bài</p>
+<p class="text-2xl font-bold text-[#111418] dark:text-white">12m 30s</p>
+</div>
+</div>
+</section>
+<!-- Detailed Review -->
+<section class="flex flex-col gap-6">
+<div class="flex items-center justify-between px-2">
+<h2 class="text-xl font-bold text-[#111418] dark:text-white">Chi tiết câu trả lời</h2>
+<div class="flex items-center gap-2 text-sm text-gray-500">
+<span class="size-2 rounded-full bg-emerald-500"></span> Đúng
+                            <span class="size-2 rounded-full bg-rose-500 ml-2"></span> Sai
+                        </div>
+</div>
+<div class="flex flex-col gap-4">
+<!-- Question 1: Correct -->
+<div class="bg-white dark:bg-[#1e2732] rounded-xl border border-gray-100 dark:border-gray-800 p-6 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-emerald-500"></div>
+<div class="flex gap-4">
+<div class="flex-shrink-0 mt-1">
+<div class="size-6 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+</div>
+<div class="flex-1">
+<p class="text-sm font-semibold text-gray-400 mb-1">Câu hỏi 1</p>
+<h3 class="text-lg font-medium text-[#111418] dark:text-white mb-3">AI là viết tắt của cụm từ nào?</h3>
+<div class="p-3 bg-emerald-50/50 dark:bg-emerald-900/10 rounded-lg border border-emerald-100 dark:border-emerald-800/30">
+<p class="text-emerald-800 dark:text-emerald-300 font-medium text-sm">Đáp án của bạn: Artificial Intelligence</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Question 2: Incorrect -->
+<div class="bg-white dark:bg-[#1e2732] rounded-xl border border-gray-100 dark:border-gray-800 p-6 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-rose-500"></div>
+<div class="flex gap-4">
+<div class="flex-shrink-0 mt-1">
+<div class="size-6 rounded-full bg-rose-100 dark:bg-rose-900/50 text-rose-600 dark:text-rose-400 flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</div>
+</div>
+<div class="flex-1">
+<p class="text-sm font-semibold text-gray-400 mb-1">Câu hỏi 2</p>
+<h3 class="text-lg font-medium text-[#111418] dark:text-white mb-3">Mạng nơ-ron nhân tạo lấy cảm hứng từ đâu?</h3>
+<div class="grid gap-3">
+<div class="p-3 bg-rose-50/50 dark:bg-rose-900/10 rounded-lg border border-rose-100 dark:border-rose-800/30 flex items-center justify-between">
+<p class="text-rose-800 dark:text-rose-300 font-medium text-sm">Bạn chọn: Hệ thống máy tính lượng tử</p>
+<span class="material-symbols-outlined text-rose-500 text-sm">close</span>
+</div>
+<div class="p-3 bg-emerald-50/50 dark:bg-emerald-900/10 rounded-lg border border-emerald-100 dark:border-emerald-800/30 flex items-center justify-between">
+<p class="text-emerald-800 dark:text-emerald-300 font-medium text-sm">Đáp án đúng: Bộ não sinh học của con người</p>
+<span class="material-symbols-outlined text-emerald-500 text-sm">check</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Question 3: Correct -->
+<div class="bg-white dark:bg-[#1e2732] rounded-xl border border-gray-100 dark:border-gray-800 p-6 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-emerald-500"></div>
+<div class="flex gap-4">
+<div class="flex-shrink-0 mt-1">
+<div class="size-6 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+</div>
+<div class="flex-1">
+<p class="text-sm font-semibold text-gray-400 mb-1">Câu hỏi 3</p>
+<h3 class="text-lg font-medium text-[#111418] dark:text-white mb-3">Ngôn ngữ lập trình nào phổ biến nhất cho AI hiện nay?</h3>
+<div class="p-3 bg-emerald-50/50 dark:bg-emerald-900/10 rounded-lg border border-emerald-100 dark:border-emerald-800/30">
+<p class="text-emerald-800 dark:text-emerald-300 font-medium text-sm">Đáp án của bạn: Python</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Question 4: Incorrect -->
+<div class="bg-white dark:bg-[#1e2732] rounded-xl border border-gray-100 dark:border-gray-800 p-6 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-rose-500"></div>
+<div class="flex gap-4">
+<div class="flex-shrink-0 mt-1">
+<div class="size-6 rounded-full bg-rose-100 dark:bg-rose-900/50 text-rose-600 dark:text-rose-400 flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</div>
+</div>
+<div class="flex-1">
+<p class="text-sm font-semibold text-gray-400 mb-1">Câu hỏi 4</p>
+<h3 class="text-lg font-medium text-[#111418] dark:text-white mb-3">Thuật ngữ "Machine Learning" được đặt ra vào năm nào?</h3>
+<div class="grid gap-3">
+<div class="p-3 bg-rose-50/50 dark:bg-rose-900/10 rounded-lg border border-rose-100 dark:border-rose-800/30 flex items-center justify-between">
+<p class="text-rose-800 dark:text-rose-300 font-medium text-sm">Bạn chọn: 1980</p>
+<span class="material-symbols-outlined text-rose-500 text-sm">close</span>
+</div>
+<div class="p-3 bg-emerald-50/50 dark:bg-emerald-900/10 rounded-lg border border-emerald-100 dark:border-emerald-800/30 flex items-center justify-between">
+<p class="text-emerald-800 dark:text-emerald-300 font-medium text-sm">Đáp án đúng: 1959</p>
+<span class="material-symbols-outlined text-emerald-500 text-sm">check</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Bottom Action for Mobile/Tablet convenience -->
+<div class="md:hidden flex flex-col gap-3 mt-4">
+<button class="w-full flex items-center justify-center gap-2 px-6 py-3 bg-primary text-white font-medium rounded-xl shadow-lg shadow-primary/30">
+<span class="material-symbols-outlined text-[20px]">refresh</span>
+                        Làm lại bài thi
+                    </button>
+<button class="w-full flex items-center justify-center gap-2 px-6 py-3 bg-white border border-gray-200 text-[#111418] font-medium rounded-xl">
+                        Quay về Dashboard
+                    </button>
+</div>
+</div>
+</main>
+<!-- Subtle footer note -->
+<footer class="py-8 text-center text-gray-400 text-sm">
+<p>© 2024 ThinkAI Platform. All rights reserved.</p>
+</footer>
+</div>
+</body></html>

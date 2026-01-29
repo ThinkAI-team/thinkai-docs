@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ThinkAI - Cài đặt tài khoản</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#2b2b2b", // Deep charcoal/black from Zen buttons
+                        "primary-hover": "#404040",
+                        accent: "#ff6b4a", // The coral/orange accent
+                        "background-light": "#FBF9F1", // Warm creamy off-white
+                        "background-dark": "#18181b", // Deep zinc dark
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#27272a", // Lighter zinc for cards
+                        "border-light": "#e5e3db",
+                        "border-dark": "#3f3f46",
+                        "text-light": "#1f1f1f",
+                        "text-dark": "#e4e4e7",
+                        "muted-light": "#6b7280",
+                        "muted-dark": "#a1a1aa",
+                    },
+                    fontFamily: {
+                        display: ["Instrument Serif", "serif"],
+                        sans: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "1rem",
+                        'pill': '9999px',
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                        'soft-dark': '0 4px 20px -2px rgba(0, 0, 0, 0.3)',
+                    }
+                },
+            },
+        };
+    </script>
+<style>body {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .sidebar-link.active {
+            background-color: var(--tw-colors-surface-light);
+            font-weight: 500;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+        }
+        .dark .sidebar-link.active {
+            background-color: var(--tw-colors-surface-dark);
+            color: white;
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark font-sans min-h-screen flex flex-col antialiased selection:bg-accent selection:text-white">
+<nav class="w-full px-6 py-6 flex justify-between items-center max-w-7xl mx-auto">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white">
+<span class="material-icons-round text-sm">auto_awesome</span>
+</div>
+<span class="font-display text-2xl tracking-wide font-medium italic">ThinkAI</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-white/10 transition-colors">
+<span class="material-icons-round text-muted-light dark:text-muted-dark">notifications</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden border-2 border-white dark:border-gray-600 cursor-pointer">
+<img alt="User avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxIhLZqV8j997zu1kd-I364I_zgW8RCfFHOKtvGt_z_6J-v1UnoDQa0Djc6IhNB_IR3upiy1z97OU1H11DuNXS14OnBGOOB1mU79vsZWMllcLAtpgWf5InhJhZrw7VMt6OQVpT2D2WAQSjN9t4g1qWAoxRAdaEoW17wJmlx4geIZUZrJFO2O-FTIOio4cKu7ZH-6xaYq9F7wKrs8czOj8saMfA9IM1AaArFA3M05MPfY6J7dfG4HU8_aoOePbm8KsNgIXRg3-bgVDj"/>
+</div>
+</div>
+</nav>
+<main class="flex-grow w-full max-w-6xl mx-auto px-6 py-8">
+<header class="mb-12 text-center md:text-left">
+<h1 class="font-display text-4xl md:text-5xl text-primary dark:text-white mb-2">Cài đặt</h1>
+<p class="text-muted-light dark:text-muted-dark text-lg font-light">Quản lý thông tin cá nhân và tùy chọn trải nghiệm.</p>
+</header>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
+<aside class="md:col-span-3 lg:col-span-3 space-y-2">
+<nav class="flex flex-col gap-1">
+<a class="sidebar-link active flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-primary dark:text-white hover:bg-white/50 dark:hover:bg-white/5" href="#">
+<span class="material-icons-round text-[20px]">person</span>
+<span>Hồ sơ</span>
+</a>
+<a class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-muted-light dark:text-muted-dark hover:text-primary dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/5" href="#">
+<span class="material-icons-round text-[20px]">notifications_none</span>
+<span>Thông báo</span>
+</a>
+<a class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-muted-light dark:text-muted-dark hover:text-primary dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/5" href="#">
+<span class="material-icons-round text-[20px]">lock</span>
+<span>Bảo mật</span>
+</a>
+<a class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-muted-light dark:text-muted-dark hover:text-primary dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/5" href="#">
+<span class="material-icons-round text-[20px]">credit_card</span>
+<span>Gói đăng ký</span>
+</a>
+</nav>
+</aside>
+<section class="md:col-span-9 lg:col-span-8 space-y-8">
+<div class="bg-surface-light dark:bg-surface-dark rounded-3xl p-8 shadow-soft dark:shadow-soft-dark border border-border-light dark:border-border-dark">
+<div class="flex flex-col md:flex-row items-center md:items-start gap-8">
+<div class="flex flex-col items-center gap-4">
+<div class="relative group">
+<div class="w-28 h-28 rounded-full overflow-hidden border-4 border-background-light dark:border-background-dark shadow-md">
+<img alt="Current profile picture" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQPeWxsaJtMco5E842az-ar3zAnEQFJTks2aHeKrXVf_BEA-kwtMEwtzskFS5BoPIkcM34tfrSOLMoGVI_k0Xevsqk9uyvv3WsFI11bJ_g3eApfcsdbV-eG-FSS_yW5Gyzvjjy8Q8EHqSNVpZxvnz9fwLMF6rTLkSrfjcV0wa-HsJ_mouybQZJeL6FsXuuLB-TQhgfg45iX_XnPb-AFbXpLcb_aQAK5l7ttJ5ZXdYD2DukHDzGYd4NuZqRdmg_UenTdL43Q9cPF06l"/>
+</div>
+<button class="absolute bottom-1 right-1 bg-white dark:bg-gray-800 text-primary dark:text-white p-2 rounded-full shadow-md border border-gray-100 dark:border-gray-600 hover:scale-105 transition-transform">
+<span class="material-icons-round text-sm">edit</span>
+</button>
+</div>
+<span class="text-sm text-muted-light dark:text-muted-dark font-medium">Ảnh đại diện</span>
+</div>
+<div class="flex-grow w-full space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="text-sm font-medium text-muted-light dark:text-muted-dark ml-1" for="fullName">Họ và tên</label>
+<input class="w-full px-5 py-3 rounded-2xl bg-background-light dark:bg-background-dark border-transparent focus:border-accent focus:ring-0 focus:bg-white dark:focus:bg-black/20 transition-all text-primary dark:text-white placeholder-gray-400" id="fullName" placeholder="Nhập tên của bạn" type="text" value="Nguyễn Văn An"/>
+</div>
+<div class="space-y-2">
+<label class="text-sm font-medium text-muted-light dark:text-muted-dark ml-1" for="username">Tên hiển thị</label>
+<input class="w-full px-5 py-3 rounded-2xl bg-background-light dark:bg-background-dark border-transparent focus:border-accent focus:ring-0 focus:bg-white dark:focus:bg-black/20 transition-all text-primary dark:text-white placeholder-gray-400" id="username" type="text" value="@annguyen"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-sm font-medium text-muted-light dark:text-muted-dark ml-1" for="email">Địa chỉ Email</label>
+<input class="w-full px-5 py-3 rounded-2xl bg-background-light dark:bg-background-dark border-transparent focus:border-accent focus:ring-0 focus:bg-white dark:focus:bg-black/20 transition-all text-primary dark:text-white placeholder-gray-400" id="email" type="email" value="an.nguyen@example.com"/>
+</div>
+<div class="space-y-2">
+<label class="text-sm font-medium text-muted-light dark:text-muted-dark ml-1">Giới thiệu ngắn</label>
+<textarea class="w-full px-5 py-3 rounded-2xl bg-background-light dark:bg-background-dark border-transparent focus:border-accent focus:ring-0 focus:bg-white dark:focus:bg-black/20 transition-all text-primary dark:text-white placeholder-gray-400 resize-none" rows="3">Người đam mê học hỏi và khám phá công nghệ mới.</textarea>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-3xl p-8 shadow-soft dark:shadow-soft-dark border border-border-light dark:border-border-dark">
+<h3 class="font-display text-2xl text-primary dark:text-white mb-6">Giao diện</h3>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="p-3 rounded-2xl bg-background-light dark:bg-background-dark text-primary dark:text-white">
+<span class="material-icons-round">dark_mode</span>
+</div>
+<div>
+<h4 class="font-medium text-primary dark:text-white">Chế độ tối</h4>
+<p class="text-sm text-muted-light dark:text-muted-dark">Giảm mỏi mắt và tăng sự tập trung</p>
+</div>
+</div>
+<button class="relative w-14 h-8 bg-gray-200 dark:bg-gray-600 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent" id="theme-toggle" onclick="toggleTheme()">
+<span class="absolute left-1 top-1 w-6 h-6 bg-white rounded-full shadow-sm transform transition-transform duration-300 dark:translate-x-6" id="toggle-circle"></span>
+</button>
+</div>
+</div>
+<div class="flex justify-end gap-4 pt-4">
+<button class="px-6 py-3 rounded-full text-muted-light dark:text-muted-dark hover:bg-gray-100 dark:hover:bg-white/5 transition-colors font-medium">
+                        Hủy bỏ
+                    </button>
+<button class="px-8 py-3 rounded-full bg-primary hover:bg-primary-hover text-white transition-all shadow-lg hover:shadow-xl font-medium flex items-center gap-2">
+<span>Lưu thay đổi</span>
+<span class="material-icons-round text-sm">arrow_forward</span>
+</button>
+</div>
+</section>
+</div>
+</main>
+<footer class="mt-auto py-12 text-center text-sm text-muted-light dark:text-muted-dark">
+<p>© 2024 ThinkAI. Inspired by Zen Browser.</p>
+</footer>
+<script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const toggleCircle = document.getElementById('toggle-circle');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+        // Check for saved theme preference
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+
+</body></html>

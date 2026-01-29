@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ThinkAI - Quản trị viên Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;family=Playfair+Display:ital,wght@1,400;1,600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#FF6B55", // A warm coral accent from the Zen screenshot
+                        "background-light": "#F2F0E9", // The distinctive beige/cream background
+                        "background-dark": "#1C1C1C", // Deep charcoal for dark mode
+                        "surface-light": "#E6E4DC",
+                        "surface-dark": "#2A2A2A",
+                        "text-main": "#2D2D2D",
+                        "text-muted": "#666666",
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.75rem",
+                        'xl': "1rem",
+                        '2xl': "1.5rem",
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                        'inner-soft': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.02)',
+                    }
+                },
+            },
+        };
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .zen-title {
+            font-family: 'Playfair Display', serif;
+        }::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d1cfc7;
+            border-radius: 4px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #444;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .dark .glass-panel {
+            background: rgba(42, 42, 42, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-main dark:text-gray-200 transition-colors duration-300 min-h-screen flex overflow-hidden">
+<aside class="w-64 flex-shrink-0 border-r border-gray-200 dark:border-gray-800 flex flex-col justify-between h-screen bg-[#F2F0E9] dark:bg-[#1C1C1C] transition-colors duration-300">
+<div>
+<div class="p-8 flex items-center space-x-3">
+<div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold">T</div>
+<span class="text-xl font-bold tracking-tight">ThinkAI</span>
+</div>
+<nav class="px-4 space-y-1">
+<a class="flex items-center space-x-3 px-4 py-3 bg-surface-light dark:bg-surface-dark rounded-xl text-sm font-medium transition-all shadow-sm" href="#">
+<span class="material-icons-outlined text-[20px]">dashboard</span>
+<span>Tổng quan</span>
+</a>
+<a class="flex items-center space-x-3 px-4 py-3 text-text-muted dark:text-gray-400 hover:bg-white/50 dark:hover:bg-white/5 rounded-xl text-sm font-medium transition-all group" href="#">
+<span class="material-icons-outlined text-[20px] group-hover:text-primary transition-colors">people</span>
+<span>Người dùng</span>
+</a>
+<a class="flex items-center space-x-3 px-4 py-3 text-text-muted dark:text-gray-400 hover:bg-white/50 dark:hover:bg-white/5 rounded-xl text-sm font-medium transition-all group" href="#">
+<span class="material-icons-outlined text-[20px] group-hover:text-primary transition-colors">school</span>
+<span>Khóa học</span>
+</a>
+<a class="flex items-center space-x-3 px-4 py-3 text-text-muted dark:text-gray-400 hover:bg-white/50 dark:hover:bg-white/5 rounded-xl text-sm font-medium transition-all group" href="#">
+<span class="material-icons-outlined text-[20px] group-hover:text-primary transition-colors">analytics</span>
+<span>Báo cáo</span>
+</a>
+<a class="flex items-center space-x-3 px-4 py-3 text-text-muted dark:text-gray-400 hover:bg-white/50 dark:hover:bg-white/5 rounded-xl text-sm font-medium transition-all group" href="#">
+<span class="material-icons-outlined text-[20px] group-hover:text-primary transition-colors">settings</span>
+<span>Cài đặt</span>
+</a>
+</nav>
+</div>
+<div class="p-4 border-t border-gray-200 dark:border-gray-800">
+<button class="flex items-center justify-center w-full mb-4 py-2 text-xs font-medium text-text-muted dark:text-gray-400 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-white dark:hover:bg-gray-800 transition-colors" onclick="document.documentElement.classList.toggle('dark')">
+<span class="material-icons-outlined text-sm mr-2">dark_mode</span>
+                Chế độ giao diện
+            </button>
+<div class="flex items-center space-x-3 px-2">
+<img alt="Admin" class="w-9 h-9 rounded-full border border-gray-300 dark:border-gray-600" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCy2ex9fETyU6UN1pkc7frI1nRxVD7IJnuzY9Bcks0pRmBQvKSjTQdESwqTbTFS_HubDKkIWUNYxnio5CkyTcZsoBV08_pCJDdDbxcotQKwcwJqrNCbebpjibbWqpCBO-ucVG3IXc47gQa7Zjwa1wADYh7tHO4oW5J_62bSjUTFHDHL58K0exxPTp3BAMN7JDJ17DpJNCGUKvsInabR2Tc0aE80ocjifXvQvdWU5uVWCSbjZncT0K-64yIRQHNUFCOfiefswF33QWzS"/>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-medium truncate">Quản trị viên</p>
+<p class="text-xs text-text-muted dark:text-gray-500 truncate">admin@thinkai.vn</p>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex-1 overflow-y-auto p-8 lg:p-12 relative">
+<div class="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-orange-100/40 via-blue-100/20 to-transparent dark:from-primary/10 dark:via-blue-900/10 dark:to-transparent rounded-full blur-3xl pointer-events-none -z-10 translate-x-1/3 -translate-y-1/4"></div>
+<header class="flex justify-between items-end mb-10">
+<div>
+<h1 class="zen-title text-4xl lg:text-5xl text-text-main dark:text-white mb-2">
+                    Chào mừng trở lại, <span class="italic text-primary">Admin</span>
+</h1>
+<p class="text-text-muted dark:text-gray-400">Dưới đây là tổng quan hệ thống ThinkAI hôm nay.</p>
+</div>
+<div class="hidden md:flex items-center space-x-3">
+<div class="relative">
+<span class="material-icons-outlined absolute left-3 top-2.5 text-gray-400">search</span>
+<input class="pl-10 pr-4 py-2 bg-white dark:bg-surface-dark border-none rounded-full shadow-sm text-sm focus:ring-2 focus:ring-primary/20 w-64" placeholder="Tìm kiếm..." type="text"/>
+</div>
+<button class="bg-black dark:bg-white text-white dark:text-black px-5 py-2 rounded-full text-sm font-medium hover:opacity-80 transition-opacity flex items-center">
+                    Tải báo cáo <span class="material-icons-outlined text-sm ml-1">download</span>
+</button>
+</div>
+</header>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+<div class="glass-panel p-6 rounded-2xl shadow-soft">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-orange-100 dark:bg-orange-900/30 rounded-lg text-orange-600 dark:text-orange-400">
+<span class="material-icons-outlined">people_alt</span>
+</div>
+<span class="text-xs font-medium text-green-600 bg-green-100 dark:bg-green-900/30 dark:text-green-400 px-2 py-1 rounded-full">+12%</span>
+</div>
+<h3 class="text-3xl font-serif mb-1">2,543</h3>
+<p class="text-sm text-text-muted dark:text-gray-400">Tổng người dùng</p>
+</div>
+<div class="glass-panel p-6 rounded-2xl shadow-soft">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg text-blue-600 dark:text-blue-400">
+<span class="material-icons-outlined">school</span>
+</div>
+<span class="text-xs font-medium text-green-600 bg-green-100 dark:bg-green-900/30 dark:text-green-400 px-2 py-1 rounded-full">+5%</span>
+</div>
+<h3 class="text-3xl font-serif mb-1">142</h3>
+<p class="text-sm text-text-muted dark:text-gray-400">Khóa học hoạt động</p>
+</div>
+<div class="glass-panel p-6 rounded-2xl shadow-soft">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg text-purple-600 dark:text-purple-400">
+<span class="material-icons-outlined">timer</span>
+</div>
+<span class="text-xs font-medium text-gray-500 bg-gray-100 dark:bg-gray-800 dark:text-gray-400 px-2 py-1 rounded-full">0%</span>
+</div>
+<h3 class="text-3xl font-serif mb-1">45p</h3>
+<p class="text-sm text-text-muted dark:text-gray-400">Thời gian học TB</p>
+</div>
+<div class="glass-panel p-6 rounded-2xl shadow-soft">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg text-green-600 dark:text-green-400">
+<span class="material-icons-outlined">payments</span>
+</div>
+<span class="text-xs font-medium text-green-600 bg-green-100 dark:bg-green-900/30 dark:text-green-400 px-2 py-1 rounded-full">+8%</span>
+</div>
+<h3 class="text-3xl font-serif mb-1">890tr</h3>
+<p class="text-sm text-text-muted dark:text-gray-400">Doanh thu tháng</p>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
+<div class="lg:col-span-2 glass-panel p-6 rounded-2xl shadow-soft">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-lg font-semibold">Tăng trưởng người dùng</h3>
+<select class="bg-transparent border-none text-sm text-text-muted dark:text-gray-400 focus:ring-0 cursor-pointer">
+<option>7 ngày qua</option>
+<option>Tháng này</option>
+<option>Năm nay</option>
+</select>
+</div>
+<div class="h-64 w-full">
+<canvas id="growthChart"></canvas>
+</div>
+</div>
+<div class="glass-panel p-6 rounded-2xl shadow-soft flex flex-col justify-center items-center text-center relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-full bg-[url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&amp;w=2564&amp;auto=format&amp;fit=crop')] bg-cover bg-center opacity-10 dark:opacity-20 z-0"></div>
+<div class="z-10 relative">
+<div class="w-16 h-16 bg-white dark:bg-surface-dark rounded-full flex items-center justify-center shadow-lg mx-auto mb-4">
+<span class="material-icons-outlined text-primary text-2xl">auto_awesome</span>
+</div>
+<h3 class="text-xl font-bold mb-2">ThinkAI Premium</h3>
+<p class="text-sm text-text-muted dark:text-gray-400 mb-6 px-4">Đã có 450 người dùng nâng cấp lên gói Premium trong tháng này.</p>
+<button class="text-sm font-semibold text-primary hover:text-orange-600 transition-colors flex items-center justify-center">
+                        Xem chi tiết <span class="material-icons-outlined text-sm ml-1">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<div class="glass-panel rounded-2xl shadow-soft overflow-hidden">
+<div class="p-6 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center">
+<h3 class="text-lg font-semibold">Người dùng mới nhất</h3>
+<button class="text-sm text-text-muted dark:text-gray-400 hover:text-primary transition-colors">Xem tất cả</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="text-xs font-semibold tracking-wide text-text-muted dark:text-gray-500 uppercase border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-white/5">
+<th class="px-6 py-4">Tên người dùng</th>
+<th class="px-6 py-4">Email</th>
+<th class="px-6 py-4">Vai trò</th>
+<th class="px-6 py-4">Ngày tham gia</th>
+<th class="px-6 py-4">Trạng thái</th>
+<th class="px-6 py-4">Hành động</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+<tr class="hover:bg-white/50 dark:hover:bg-white/5 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center">
+<div class="relative w-8 h-8 mr-3 rounded-full md:block">
+<img alt="User" class="object-cover w-full h-full rounded-full" loading="lazy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCubxgjZy7ZRefzUkoN7J7bl-HCs_CsrBHMwyHZ4HCvzi9NG5gKrtmPaqU2wQj_eSRoW20BO0pDAGK-UYvgs_u8dVnuujkeZ-K7RVL1XtmcUYx1c60VLg5nyVuP-jBmbHJEFUHVrFURd3k-3C8r4_LfP0zO4lgp1_Mh7WC-c9nnjbUsSPjVA6moXBDF4NoOXuWw5QmaXDck0CO3xyqWgTquDpbuPi7FZQDz1xrzEAyjvYo2xI1eJSNowEV9TPpyQGObSIOalYr-M8IG"/>
+</div>
+<div>
+<p class="font-medium text-sm">Nguyễn Văn A</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-text-muted dark:text-gray-400">
+                                nguyen.a@example.com
+                            </td>
+<td class="px-6 py-4 text-sm">
+                                Học viên
+                            </td>
+<td class="px-6 py-4 text-sm text-text-muted dark:text-gray-400">
+                                12/10/2023
+                            </td>
+<td class="px-6 py-4 text-sm">
+<span class="px-3 py-1 font-medium leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100 text-xs">
+                                    Hoạt động
+                                </span>
+</td>
+<td class="px-6 py-4 text-sm">
+<button class="text-gray-400 hover:text-primary transition-colors">
+<span class="material-icons-outlined text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-white/50 dark:hover:bg-white/5 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center">
+<div class="relative w-8 h-8 mr-3 rounded-full md:block">
+<img alt="User" class="object-cover w-full h-full rounded-full" loading="lazy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_moeAOGKfcFZEERIBNzmZdxaP4YiFb9uAj5ZJAck57AIZUSzqzoEQJHzKLo-P7pLDyWGyjuRZGdDF4CzCJzsYpQuV4sk0n03bmywS-B079ERVZFvXnR1yQppHBc55tjiOtkN7YOZNdp28Ak471YnrfgxWalFZIJBIkA7FdXq_rd-P3S8Kuazn1xl2aUp7poHnb46x1OyWR5eysjLhmFgz3Rha37r65DwBOE8nMxcNib63LwG0lOJFySyUYRnTNXxp2o3WOGw8B9fN"/>
+</div>
+<div>
+<p class="font-medium text-sm">Trần Thị B</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-text-muted dark:text-gray-400">
+                                tranthib@gmail.com
+                            </td>
+<td class="px-6 py-4 text-sm">
+                                Giảng viên
+                            </td>
+<td class="px-6 py-4 text-sm text-text-muted dark:text-gray-400">
+                                11/10/2023
+                            </td>
+<td class="px-6 py-4 text-sm">
+<span class="px-3 py-1 font-medium leading-tight text-blue-700 bg-blue-100 rounded-full dark:bg-blue-700 dark:text-blue-100 text-xs">
+                                    Chờ duyệt
+                                </span>
+</td>
+<td class="px-6 py-4 text-sm">
+<button class="text-gray-400 hover:text-primary transition-colors">
+<span class="material-icons-outlined text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-white/50 dark:hover:bg-white/5 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center">
+<div class="relative w-8 h-8 mr-3 rounded-full md:block">
+<img alt="User" class="object-cover w-full h-full rounded-full" loading="lazy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAs4TXYnvpYPDRZqQ5cadkajEjtg6dilwfyKhnME_X0NgRjaGwRrsz5pzPCl39V_nfA0lOCGiE1EnB8l7FM1HiaEhZ6M38TxQ81yi_sPpjXJ2rOAY3ihWEHIPU-BHDICPqF1cdUIM4SQqmOsKUN6BqqS-aDxWzpHj_1Pny0HrtlLVEZO-f_wFbV71ghokqDk2jZp0_SOCfacttWs9LHYMZiuBpKezV2YpRI608pqeHFX-ehBdRExo8wp8ocsCuew5_kxM7Xb-hwLuob"/>
+</div>
+<div>
+<p class="font-medium text-sm">Lê Văn C</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-text-muted dark:text-gray-400">
+                                levanc@outlook.com
+                            </td>
+<td class="px-6 py-4 text-sm">
+                                Học viên
+                            </td>
+<td class="px-6 py-4 text-sm text-text-muted dark:text-gray-400">
+                                10/10/2023
+                            </td>
+<td class="px-6 py-4 text-sm">
+<span class="px-3 py-1 font-medium leading-tight text-gray-700 bg-gray-200 rounded-full dark:bg-gray-700 dark:text-gray-100 text-xs">
+                                    Ngoại tuyến
+                                </span>
+</td>
+<td class="px-6 py-4 text-sm">
+<button class="text-gray-400 hover:text-primary transition-colors">
+<span class="material-icons-outlined text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-white/50 dark:hover:bg-white/5 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center">
+<div class="relative w-8 h-8 mr-3 rounded-full md:block">
+<img alt="User" class="object-cover w-full h-full rounded-full" loading="lazy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzA4yU1oCHrWfWDC6n45_JtznRR8cvSnaemFcecFvRpzAzrUXJ-B5i7DuTUNCJTwgm0TEh0GJTbbc0kGhtQT-NUw6ksI1BK_WBMlwlAItDcWdQozBKXQTkL6jgI-GEWFA7qgMFTz-5X_HrKPPcF0p1hDojCVWkIkLWuullewJp9Le-9SrhQdhFtMKEIlKRtfJgdVhhpw_J8K05pw_uXYDmyf3oNlYuxsO7XKeoHiVxo6GgW0YmG1nNo8XWw1JpoyUjD9ZKWrH-U9al"/>
+</div>
+<div>
+<p class="font-medium text-sm">Phạm D</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-text-muted dark:text-gray-400">
+                                pham.d@company.vn
+                            </td>
+<td class="px-6 py-4 text-sm">
+                                Premium
+                            </td>
+<td class="px-6 py-4 text-sm text-text-muted dark:text-gray-400">
+                                09/10/2023
+                            </td>
+<td class="px-6 py-4 text-sm">
+<span class="px-3 py-1 font-medium leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100 text-xs">
+                                    Hoạt động
+                                </span>
+</td>
+<td class="px-6 py-4 text-sm">
+<button class="text-gray-400 hover:text-primary transition-colors">
+<span class="material-icons-outlined text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 border-t border-gray-100 dark:border-gray-800 bg-gray-50/30 dark:bg-white/5 flex justify-between items-center text-xs text-text-muted dark:text-gray-400">
+<span>Hiển thị 4 trong số 2,543 người dùng</span>
+<div class="flex space-x-1">
+<button class="px-3 py-1 rounded-md hover:bg-white dark:hover:bg-gray-700 transition-colors disabled:opacity-50" disabled="">Trước</button>
+<button class="px-3 py-1 rounded-md bg-white dark:bg-gray-700 shadow-sm text-black dark:text-white font-medium">1</button>
+<button class="px-3 py-1 rounded-md hover:bg-white dark:hover:bg-gray-700 transition-colors">2</button>
+<button class="px-3 py-1 rounded-md hover:bg-white dark:hover:bg-gray-700 transition-colors">3</button>
+<span class="px-2 py-1">...</span>
+<button class="px-3 py-1 rounded-md hover:bg-white dark:hover:bg-gray-700 transition-colors">Sau</button>
+</div>
+</div>
+</div>
+<footer class="mt-12 text-center text-sm text-text-muted dark:text-gray-500 pb-4">
+<p>© 2023 ThinkAI. Thiết kế lấy cảm hứng từ sự tối giản.</p>
+</footer>
+</main>
+<script>
+        // Chart Configuration
+        const ctx = document.getElementById('growthChart').getContext('2d');
+        const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, 'rgba(255, 107, 85, 0.4)'); // Primary color faded
+        gradient.addColorStop(1, 'rgba(255, 107, 85, 0)');
+        const growthChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'],
+                datasets: [{
+                    label: 'Người dùng mới',
+                    data: [12, 19, 15, 25, 22, 30, 45],
+                    backgroundColor: gradient,
+                    borderColor: '#FF6B55', // Primary Color
+                    borderWidth: 2,
+                    pointBackgroundColor: '#ffffff',
+                    pointBorderColor: '#FF6B55',
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(28, 28, 28, 0.9)',
+                        titleColor: '#fff',
+                        bodyColor: '#fff',
+                        padding: 10,
+                        cornerRadius: 8,
+                        displayColors: false,
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)',
+                            drawBorder: false,
+                        },
+                        ticks: {
+                            font: {
+                                family: "'Plus Jakarta Sans', sans-serif"
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            font: {
+                                family: "'Plus Jakarta Sans', sans-serif"
+                            }
+                        }
+                    }
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                },
+            }
+        });
+        // Dark Mode Chart Update Listener (Simple hack to update grid lines)
+        const updateChartTheme = () => {
+           const isDark = document.documentElement.classList.contains('dark');
+           if (isDark) {
+               growthChart.options.scales.y.grid.color = 'rgba(255, 255, 255, 0.05)';
+           } else {
+               growthChart.options.scales.y.grid.color = 'rgba(0, 0, 0, 0.05)';
+           }
+           growthChart.update();
+        };
+        const observer = new MutationObserver(updateChartTheme);
+        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    </script>
+
+</body></html>

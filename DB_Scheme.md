@@ -1,8 +1,9 @@
 # 🗄️ ThinkAI - Database Schema Design
 
-**Version:** 1.0.0  
-**Last Updated:** 2026-01-25  
-**Database:** MySQL 8.0
+**Version:** 1.1.0  
+**Last Updated:** 2026-01-30  
+**Database:** MySQL 8.0  
+**SQL File:** [thinkai_schema.sql](database/thinkai_schema.sql)
 
 ---
 
@@ -14,13 +15,17 @@ erDiagram
     USERS ||--o{ EXAM_ATTEMPTS : "takes"
     USERS ||--o{ AI_CHAT_LOGS : "chats"
     USERS ||--o{ COURSES : "teaches"
+    USERS ||--o{ COURSE_REVIEWS : "reviews"
+    USERS ||--o{ REFRESH_TOKENS : "has"
 
     COURSES ||--o{ ENROLLMENTS : "has"
     COURSES ||--o{ LESSONS : "contains"
     COURSES ||--o{ EXAMS : "has"
+    COURSES ||--o{ COURSE_REVIEWS : "reviewed by"
 
     LESSONS ||--o{ LESSON_PROGRESS : "tracked by"
     LESSONS ||--o{ AI_CHAT_LOGS : "context for"
+    LESSONS ||--o{ AI_SUMMARIES : "summarized in"
 
     EXAMS ||--o{ QUESTIONS : "contains"
     EXAMS ||--o{ EXAM_ATTEMPTS : "attempted by"
@@ -35,10 +40,19 @@ erDiagram
         varchar full_name
         varchar avatar_url
         varchar phone_number
+        varchar google_id UK
         enum role "STUDENT, TEACHER, ADMIN"
         boolean is_active
         datetime created_at
         datetime updated_at
+    }
+
+    REFRESH_TOKENS {
+        bigint id PK
+        bigint user_id FK
+        varchar token UK
+        datetime expires_at
+        datetime created_at
     }
 
     COURSES {
@@ -49,6 +63,7 @@ erDiagram
         decimal price
         bigint instructor_id FK
         boolean is_published
+        enum status "DRAFT, PENDING, APPROVED, REJECTED"
         datetime created_at
         datetime updated_at
     }
@@ -93,6 +108,7 @@ erDiagram
         int time_limit_minutes
         int passing_score
         boolean is_ai_generated
+        bigint created_by FK
         datetime created_at
     }
 
@@ -114,6 +130,7 @@ erDiagram
         decimal score
         int correct_count
         int total_questions
+        boolean is_passed
         text ai_feedback
         datetime started_at
         datetime submitted_at
@@ -135,6 +152,49 @@ erDiagram
         text user_message
         text ai_response
         json citations
+        int response_time_ms
+        datetime created_at
+    }
+
+    AI_SUMMARIES {
+        bigint id PK
+        bigint lesson_id FK
+        text summary_text
+        json key_points
+        bigint generated_by FK
+        datetime created_at
+    }
+
+    COURSE_REVIEWS {
+        bigint id PK
+        bigint course_id FK
+        bigint user_id FK
+        tinyint rating "1-5"
+        text review_text
+        boolean is_approved
+        datetime created_at
+        datetime updated_at
+    }
+
+    AI_SETTINGS {
+        bigint id PK
+        varchar setting_key UK
+        text setting_value
+        varchar description
+        bigint updated_by FK
+        datetime created_at
+        datetime updated_at
+    }
+
+    SYSTEM_LOGS {
+        bigint id PK
+        bigint user_id FK
+        varchar action
+        varchar entity_type
+        bigint entity_id
+        json details
+        varchar ip_address
+        varchar user_agent
         datetime created_at
     }
 ```

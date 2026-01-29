@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ThinkAI - Chi tiết khóa học</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#3c83f6",
+                        "background-light": "#f5f7f8", // Using the config provided, slightly cool grey
+                        "background-dark": "#101722",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 20px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background-color: #334155;
+        }
+        /* Zen-like utility for soft shadows */
+        .shadow-zen {
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111418] dark:text-gray-100 antialiased selection:bg-primary/30">
+<!-- Navbar -->
+<nav class="sticky top-0 z-50 w-full bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-[#f0f2f5] dark:border-gray-800">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-16">
+<!-- Logo -->
+<div class="flex items-center gap-2 cursor-pointer">
+<div class="w-8 h-8 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M36.7273 44C33.9891 44 31.6043 39.8386 30.3636 33.69C29.123 39.8386 26.7382 44 24 44C21.2618 44 18.877 39.8386 17.6364 33.69C16.3957 39.8386 14.0109 44 11.2727 44C7.25611 44 4 35.0457 4 24C4 12.9543 7.25611 4 11.2727 4C14.0109 4 16.3957 8.16144 17.6364 14.31C18.877 8.16144 21.2618 4 24 4C26.7382 4 29.123 8.16144 30.3636 14.31C31.6043 8.16144 33.9891 4 36.7273 4C40.7439 4 44 12.9543 44 24C44 35.0457 40.7439 44 36.7273 44Z" fill="currentColor"></path>
+</svg>
+</div>
+<span class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">ThinkAI</span>
+</div>
+<!-- Search (Hidden on mobile) -->
+<div class="hidden md:flex flex-1 max-w-md mx-8">
+<div class="relative w-full">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2 border border-transparent rounded-full leading-5 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:bg-white dark:focus:bg-gray-900 transition-colors sm:text-sm" placeholder="Tìm kiếm khóa học..." type="text"/>
+</div>
+</div>
+<!-- Right Menu -->
+<div class="flex items-center gap-6">
+<div class="hidden md:flex gap-6 text-sm font-medium text-gray-600 dark:text-gray-300">
+<a class="hover:text-primary transition-colors" href="#">Khóa học</a>
+<a class="hover:text-primary transition-colors" href="#">Blog</a>
+<a class="hover:text-primary transition-colors" href="#">Cộng đồng</a>
+</div>
+<div class="flex items-center gap-3">
+<button class="hidden sm:flex items-center justify-center h-9 px-4 rounded-full text-sm font-bold text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800 transition-colors">
+                            Đăng nhập
+                        </button>
+<button class="flex items-center justify-center h-9 px-4 rounded-full bg-primary text-white text-sm font-bold hover:bg-blue-600 transition-colors shadow-lg shadow-blue-500/20">
+                            Đăng ký
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<!-- Breadcrumb -->
+<nav aria-label="Breadcrumb" class="flex mb-6 text-sm font-medium text-gray-500 dark:text-gray-400">
+<ol class="inline-flex items-center space-x-1 md:space-x-2">
+<li class="inline-flex items-center">
+<a class="hover:text-primary" href="#">Trang chủ</a>
+</li>
+<li>
+<div class="flex items-center">
+<span class="material-symbols-outlined text-base mx-1">chevron_right</span>
+<a class="hover:text-primary" href="#">Lập trình</a>
+</div>
+</li>
+<li>
+<div class="flex items-center">
+<span class="material-symbols-outlined text-base mx-1">chevron_right</span>
+<span class="text-gray-900 dark:text-white">Backend</span>
+</div>
+</li>
+</ol>
+</nav>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 relative">
+<!-- Left Column: Course Details -->
+<div class="lg:col-span-8 flex flex-col gap-8">
+<!-- Header Info -->
+<section>
+<h1 class="text-3xl md:text-4xl lg:text-5xl font-black text-[#111418] dark:text-white leading-tight mb-4 tracking-tight">
+                        Lập trình Java Spring Boot chuyên sâu
+                    </h1>
+<p class="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                        Xây dựng ứng dụng web mạnh mẽ, bảo mật và hiệu năng cao với framework phổ biến nhất thế giới Java. Từ cơ bản đến Microservices.
+                    </p>
+<div class="flex flex-wrap items-center gap-4 text-sm font-medium">
+<div class="flex items-center gap-1 text-yellow-500">
+<span class="font-bold text-base mr-1 text-[#111418] dark:text-white">4.8</span>
+<span class="material-symbols-outlined text-[18px] fill-current">star</span>
+<span class="material-symbols-outlined text-[18px] fill-current">star</span>
+<span class="material-symbols-outlined text-[18px] fill-current">star</span>
+<span class="material-symbols-outlined text-[18px] fill-current">star</span>
+<span class="material-symbols-outlined text-[18px] fill-current">star_half</span>
+</div>
+<span class="text-primary hover:underline cursor-pointer">(1,234 đánh giá)</span>
+<span class="hidden sm:inline text-gray-300">|</span>
+<span class="text-gray-600 dark:text-gray-400">4,500 học viên</span>
+<span class="hidden sm:inline text-gray-300">|</span>
+<span class="text-gray-600 dark:text-gray-400">Cập nhật: 10/2023</span>
+</div>
+</section>
+<!-- What you'll learn -->
+<section class="border border-[#e5e7eb] dark:border-gray-700 bg-white dark:bg-[#1e293b] rounded-2xl p-6 sm:p-8 shadow-sm">
+<h2 class="text-xl font-bold mb-6 text-[#111418] dark:text-white">Bạn sẽ học được gì</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="flex gap-3 items-start">
+<span class="material-symbols-outlined text-primary mt-0.5">check</span>
+<span class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">Hiểu sâu về kiến trúc Spring Boot và Spring Framework</span>
+</div>
+<div class="flex gap-3 items-start">
+<span class="material-symbols-outlined text-primary mt-0.5">check</span>
+<span class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">Xây dựng RESTful API chuẩn mực và bảo mật với Spring Security</span>
+</div>
+<div class="flex gap-3 items-start">
+<span class="material-symbols-outlined text-primary mt-0.5">check</span>
+<span class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">Làm việc với Database sử dụng Spring Data JPA &amp; Hibernate</span>
+</div>
+<div class="flex gap-3 items-start">
+<span class="material-symbols-outlined text-primary mt-0.5">check</span>
+<span class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">Deploy ứng dụng lên Cloud (AWS/Azure) và sử dụng Docker</span>
+</div>
+<div class="flex gap-3 items-start">
+<span class="material-symbols-outlined text-primary mt-0.5">check</span>
+<span class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">Tối ưu hiệu năng và xử lý cache với Redis</span>
+</div>
+<div class="flex gap-3 items-start">
+<span class="material-symbols-outlined text-primary mt-0.5">check</span>
+<span class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">Kiến trúc Microservices cơ bản với Spring Cloud</span>
+</div>
+</div>
+</section>
+<!-- Content Syllabus -->
+<section>
+<h2 class="text-2xl font-bold mb-6 text-[#111418] dark:text-white">Nội dung khóa học</h2>
+<div class="flex justify-between items-center mb-4 text-sm text-gray-600 dark:text-gray-400">
+<span>8 chương • 64 bài học • 12 giờ 30 phút</span>
+<button class="text-primary font-medium hover:underline">Mở rộng tất cả</button>
+</div>
+<div class="flex flex-col gap-3">
+<!-- Chapter 1 -->
+<div class="border border-[#e5e7eb] dark:border-gray-700 rounded-xl overflow-hidden bg-white dark:bg-[#1e293b]">
+<button class="w-full flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-left">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-gray-400 transition-transform">expand_more</span>
+<span class="font-bold text-[#111418] dark:text-white">1. Giới thiệu &amp; Cài đặt môi trường</span>
+</div>
+<span class="text-sm text-gray-500">3 bài • 15p</span>
+</button>
+<!-- Expanded content would go here, static for design -->
+<div class="p-4 bg-white dark:bg-[#1e293b] border-t border-gray-100 dark:border-gray-700 flex flex-col gap-3">
+<div class="flex justify-between items-center text-sm text-gray-600 dark:text-gray-300">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[18px] text-gray-400">play_circle</span>
+<span class="hover:underline cursor-pointer">Giới thiệu khóa học</span>
+</div>
+<span class="text-gray-400">02:30</span>
+</div>
+<div class="flex justify-between items-center text-sm text-gray-600 dark:text-gray-300">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[18px] text-gray-400">play_circle</span>
+<span class="hover:underline cursor-pointer">Cài đặt JDK và IntelliJ IDEA</span>
+</div>
+<span class="text-gray-400">08:15</span>
+</div>
+</div>
+</div>
+<!-- Chapter 2 -->
+<div class="border border-[#e5e7eb] dark:border-gray-700 rounded-xl overflow-hidden bg-white dark:bg-[#1e293b]">
+<button class="w-full flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-left">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-gray-400 transition-transform -rotate-90">expand_more</span>
+<span class="font-bold text-[#111418] dark:text-white">2. Dependency Injection &amp; IoC Container</span>
+</div>
+<span class="text-sm text-gray-500">8 bài • 1h 20p</span>
+</button>
+</div>
+<!-- Chapter 3 -->
+<div class="border border-[#e5e7eb] dark:border-gray-700 rounded-xl overflow-hidden bg-white dark:bg-[#1e293b]">
+<button class="w-full flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-left">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-gray-400 transition-transform -rotate-90">expand_more</span>
+<span class="font-bold text-[#111418] dark:text-white">3. Spring Data JPA &amp; Hibernate</span>
+</div>
+<span class="text-sm text-gray-500">12 bài • 2h 45p</span>
+</button>
+</div>
+<!-- Chapter 4 -->
+<div class="border border-[#e5e7eb] dark:border-gray-700 rounded-xl overflow-hidden bg-white dark:bg-[#1e293b]">
+<button class="w-full flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-left">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-gray-400 transition-transform -rotate-90">expand_more</span>
+<span class="font-bold text-[#111418] dark:text-white">4. RESTful API với Spring Boot</span>
+</div>
+<span class="text-sm text-gray-500">10 bài • 2h 00p</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Description -->
+<section class="prose prose-blue dark:prose-invert max-w-none">
+<h2 class="text-2xl font-bold mb-4 text-[#111418] dark:text-white">Mô tả chi tiết</h2>
+<div class="text-gray-700 dark:text-gray-300 space-y-4 leading-relaxed">
+<p>
+                            Khóa học này được thiết kế dành cho các lập trình viên Java muốn nâng cao kỹ năng backend của mình lên một tầm cao mới. Spring Boot hiện là framework Java phổ biến nhất cho việc phát triển web hiện đại.
+                        </p>
+<p>
+                            Trong khóa học này, chúng ta sẽ không chỉ học cú pháp, mà còn học tư duy thiết kế hệ thống. Bạn sẽ được thực hành xây dựng một dự án E-commerce thực tế từ đầu đến cuối, bao gồm tích hợp thanh toán, gửi email, và bảo mật với JWT.
+                        </p>
+<p class="font-medium">
+                            Yêu cầu đầu vào:
+                        </p>
+<ul class="list-disc pl-5 space-y-1">
+<li>Kiến thức Java Core vững chắc (OOP, Collection, Stream API).</li>
+<li>Hiểu biết cơ bản về Database và SQL.</li>
+<li>Tinh thần ham học hỏi và kiên trì.</li>
+</ul>
+</div>
+</section>
+<!-- Instructor -->
+<section>
+<h2 class="text-2xl font-bold mb-6 text-[#111418] dark:text-white">Giảng viên</h2>
+<div class="bg-white dark:bg-[#1e293b] p-6 rounded-2xl border border-[#e5e7eb] dark:border-gray-700">
+<div class="flex flex-col sm:flex-row gap-6">
+<div class="flex-shrink-0">
+<img alt="Professional instructor portrait smiling in a modern office environment" class="w-24 h-24 rounded-full object-cover border-4 border-gray-50 dark:border-gray-800" data-alt="Giảng viên Nguyễn Văn A" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4f37CsCTv3dKTY4L-1pPaMNwStgLgSdgkr288UhAEbkNJ9K7L2KS2OEVeJwArRdBJ-H60jaxv8ihnZJD2OZj8NY_XEDY89O2pFTVEGRFAbjYpXU2WZrxr5i7aQtcpSopbSNhu92rKlWjBEaoav0FFNY6VW__e7tsQySRgErWksva8Idox7UI_h-B4LI4zw9RdfykGCXc-tNEmnV6X7B-DzmS3LobRX1kjEGE-MvY2LFG5XiSa0YOfoKoxTfAqv-iC6ywMhveLtVYB"/>
+</div>
+<div class="flex-1">
+<h3 class="text-xl font-bold text-[#111418] dark:text-white">Nguyễn Văn A</h3>
+<p class="text-primary text-sm font-medium mb-3">Senior Software Architect</p>
+<div class="flex gap-4 text-sm text-gray-500 mb-3">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">star</span>
+<span>4.9 Xếp hạng</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">play_lesson</span>
+<span>10 Khóa học</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">group</span>
+<span>20,000 Học viên</span>
+</div>
+</div>
+<p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                                    Tôi là một kỹ sư phần mềm với hơn 10 năm kinh nghiệm làm việc với hệ sinh thái Java. Tôi từng làm việc tại các công ty công nghệ lớn tại Việt Nam và Singapore. Sứ mệnh của tôi là giúp các bạn trẻ tiếp cận kiến thức lập trình chuẩn quốc tế.
+                                </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Rating Summary (Reusing provided style) -->
+<section>
+<h2 class="text-2xl font-bold mb-6 text-[#111418] dark:text-white">Đánh giá từ học viên</h2>
+<div class="flex flex-wrap gap-x-8 gap-y-6 p-6 bg-white dark:bg-[#1e293b] rounded-2xl border border-[#e5e7eb] dark:border-gray-700">
+<div class="flex flex-col gap-2 justify-center items-center sm:items-start min-w-[120px]">
+<p class="text-[#111418] dark:text-white text-5xl font-black leading-tight">4.8</p>
+<div class="flex gap-0.5 text-yellow-500">
+<span class="material-symbols-outlined fill-current" style="font-variation-settings: 'FILL' 1">star</span>
+<span class="material-symbols-outlined fill-current" style="font-variation-settings: 'FILL' 1">star</span>
+<span class="material-symbols-outlined fill-current" style="font-variation-settings: 'FILL' 1">star</span>
+<span class="material-symbols-outlined fill-current" style="font-variation-settings: 'FILL' 1">star</span>
+<span class="material-symbols-outlined fill-current" style="font-variation-settings: 'FILL' 1">star_half</span>
+</div>
+<p class="text-gray-500 text-sm font-medium">1,234 đánh giá</p>
+</div>
+<div class="flex-1 grid grid-cols-[30px_1fr_40px] items-center gap-y-2 w-full min-w-[240px]">
+<!-- 5 stars -->
+<p class="text-gray-700 dark:text-gray-300 text-sm font-medium">5</p>
+<div class="h-2 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700 mx-2">
+<div class="h-full rounded-full bg-yellow-500" style="width: 72%;"></div>
+</div>
+<p class="text-gray-500 text-xs text-right">72%</p>
+<!-- 4 stars -->
+<p class="text-gray-700 dark:text-gray-300 text-sm font-medium">4</p>
+<div class="h-2 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700 mx-2">
+<div class="h-full rounded-full bg-yellow-500" style="width: 20%;"></div>
+</div>
+<p class="text-gray-500 text-xs text-right">20%</p>
+<!-- 3 stars -->
+<p class="text-gray-700 dark:text-gray-300 text-sm font-medium">3</p>
+<div class="h-2 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700 mx-2">
+<div class="h-full rounded-full bg-yellow-500" style="width: 5%;"></div>
+</div>
+<p class="text-gray-500 text-xs text-right">5%</p>
+<!-- 2 stars -->
+<p class="text-gray-700 dark:text-gray-300 text-sm font-medium">2</p>
+<div class="h-2 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700 mx-2">
+<div class="h-full rounded-full bg-yellow-500" style="width: 2%;"></div>
+</div>
+<p class="text-gray-500 text-xs text-right">2%</p>
+<!-- 1 stars -->
+<p class="text-gray-700 dark:text-gray-300 text-sm font-medium">1</p>
+<div class="h-2 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700 mx-2">
+<div class="h-full rounded-full bg-yellow-500" style="width: 1%;"></div>
+</div>
+<p class="text-gray-500 text-xs text-right">1%</p>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Sticky Sidebar -->
+<div class="lg:col-span-4 relative">
+<div class="sticky top-24 flex flex-col gap-6">
+<div class="bg-white dark:bg-[#1e293b] rounded-2xl border border-[#e5e7eb] dark:border-gray-700 shadow-zen overflow-hidden group">
+<!-- Video Preview -->
+<div class="relative w-full aspect-video bg-gray-100 cursor-pointer overflow-hidden">
+<img alt="Laptop screen displaying java code on a wooden desk with coffee" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Video preview thumbnail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCN9p37wYuTzA4kAAW2OYc6PcMnvkWl3w_dF6_c94L_RAymG7TMCDTv4V354UdKzvTWI3Qcf4Rf53bGOaKz766vLZmr7aPJ0DoiFQmdmUmjfgqRfRLamJafnQ4OVKUJT3YVlvnTNA1QQQhKmuGKKEkxKOvtP05xrEvkUxlmaEkHjroqbYhjZSsK0a5Aa1JpsV2fKeDzXu-0PUxapkGzsvlKrojv4kKYFR9YZK_c7BCWHI7juuTknTXZ1IqMk6_JAJwofp-DyPqqtEzg"/>
+<div class="absolute inset-0 bg-black/20 flex items-center justify-center group-hover:bg-black/30 transition-colors">
+<div class="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-4xl text-primary ml-1 fill-current" style="font-variation-settings: 'FILL' 1">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-4 left-0 right-0 text-center">
+<span class="bg-black/70 text-white text-xs px-3 py-1 rounded-full font-medium">Xem trước khóa học</span>
+</div>
+</div>
+<!-- Pricing & CTA -->
+<div class="p-6">
+<div class="flex items-center gap-3 mb-4">
+<span class="text-3xl font-black text-[#111418] dark:text-white">999.000đ</span>
+<span class="text-lg text-gray-400 line-through font-medium">2.000.000đ</span>
+<span class="text-xs font-bold text-red-500 bg-red-100 px-2 py-1 rounded">-50%</span>
+</div>
+<button class="w-full h-12 bg-primary hover:bg-blue-600 text-white font-bold rounded-lg shadow-lg shadow-blue-500/30 transition-all active:scale-[0.98] mb-3 text-base tracking-wide">
+                                Đăng ký ngay
+                            </button>
+<p class="text-center text-xs text-gray-500 mb-6">Hoàn tiền trong 30 ngày nếu không hài lòng</p>
+<!-- Features List -->
+<div class="flex flex-col gap-3">
+<p class="text-sm font-bold text-[#111418] dark:text-white mb-1">Khóa học bao gồm:</p>
+<div class="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-300">
+<span class="material-symbols-outlined text-[20px] text-gray-400">schedule</span>
+<span>12.5 giờ video theo yêu cầu</span>
+</div>
+<div class="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-300">
+<span class="material-symbols-outlined text-[20px] text-gray-400">article</span>
+<span>15 bài viết chuyên sâu</span>
+</div>
+<div class="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-300">
+<span class="material-symbols-outlined text-[20px] text-gray-400">code</span>
+<span>20 bài tập coding</span>
+</div>
+<div class="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-300">
+<span class="material-symbols-outlined text-[20px] text-gray-400">all_inclusive</span>
+<span>Truy cập trọn đời</span>
+</div>
+<div class="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-300">
+<span class="material-symbols-outlined text-[20px] text-gray-400">devices</span>
+<span>Học trên Mobile và TV</span>
+</div>
+<div class="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-300">
+<span class="material-symbols-outlined text-[20px] text-gray-400">workspace_premium</span>
+<span>Chứng chỉ hoàn thành</span>
+</div>
+</div>
+</div>
+<!-- Footer of Card -->
+<div class="bg-gray-50 dark:bg-gray-800/50 p-4 border-t border-[#e5e7eb] dark:border-gray-700 flex justify-between items-center text-sm font-medium">
+<span class="text-gray-600 dark:text-gray-300 hover:text-primary cursor-pointer transition-colors">Chia sẻ</span>
+<span class="text-gray-600 dark:text-gray-300 hover:text-primary cursor-pointer transition-colors">Tặng quà</span>
+</div>
+</div>
+<!-- Business promo (Optional filler for visual balance) -->
+<div class="bg-transparent p-4 rounded-xl border border-dashed border-gray-300 dark:border-gray-700 text-center hidden xl:block">
+<p class="text-sm font-bold text-gray-800 dark:text-white mb-1">Đào tạo doanh nghiệp?</p>
+<p class="text-xs text-gray-500 mb-2">Nhận quyền truy cập vào 5,000+ khóa học cho đội ngũ của bạn.</p>
+<a class="text-sm font-bold text-primary hover:underline" href="#">ThinkAI Business</a>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer Simplified -->
+<footer class="mt-12 border-t border-[#f0f2f5] dark:border-gray-800 bg-white dark:bg-background-dark py-12">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="flex items-center gap-2">
+<span class="text-lg font-bold text-[#111418] dark:text-white">ThinkAI</span>
+<span class="text-sm text-gray-500">© 2023 ThinkAI, Inc.</span>
+</div>
+<div class="flex gap-6 text-sm text-gray-500">
+<a class="hover:text-primary" href="#">Điều khoản</a>
+<a class="hover:text-primary" href="#">Chính sách bảo mật</a>
+<a class="hover:text-primary" href="#">Trợ giúp</a>
+</div>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ThinkAI Đăng nhập</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#2C2C2C", // Dark charcoal from Zen Browser button
+                        accent: "#FF6B6B", // Soft red accent seen in Zen Browser
+                        "background-light": "#F5F2E8", // Warm creamy beige
+                        "background-dark": "#1A1A1A", // Dark mode background
+                        "surface-light": "#EBE7DB", // Slightly darker surface for inputs
+                        "surface-dark": "#262626", // Dark mode surface
+                        "text-main": "#2C2C2C",
+                        "text-dark": "#E5E5E5"
+                    },
+                    fontFamily: {
+                        display: ["EB Garamond", "serif"],
+                        sans: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                        'xl': "1rem",
+                        '2xl': "1.5rem",
+                    },
+                },
+            },
+        };
+    </script>
+<style>::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-main dark:text-text-dark transition-colors duration-300 min-h-screen flex items-center justify-center p-4 lg:p-0 font-sans">
+<div class="w-full max-w-[1440px] bg-background-light dark:bg-background-dark min-h-screen lg:h-screen flex flex-col lg:flex-row overflow-hidden relative">
+<div class="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden z-0">
+<div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-orange-100 dark:bg-orange-900/10 rounded-full blur-[120px] opacity-40"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-100 dark:bg-blue-900/10 rounded-full blur-[120px] opacity-40"></div>
+</div>
+<div class="w-full lg:w-1/2 flex flex-col justify-center items-center px-6 sm:px-12 lg:px-24 py-12 relative z-10">
+<div class="w-full max-w-md">
+<div class="mb-12 flex items-center gap-2">
+<span class="material-symbols-outlined text-3xl text-accent">psychology</span>
+<span class="font-display text-2xl font-medium tracking-wide">ThinkAI</span>
+</div>
+<div class="mb-10">
+<h1 class="font-display text-5xl italic text-primary dark:text-white mb-4">
+                        welcome <span class="not-italic text-accent">back</span>
+</h1>
+<p class="text-gray-600 dark:text-gray-400 font-light text-lg">
+                        Chào mừng quay trở lại! Hãy đăng nhập để tiếp tục hành trình học tập.
+                    </p>
+</div>
+<form action="#" class="space-y-5" method="POST">
+<div>
+<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 ml-1" for="email">Email</label>
+<input class="w-full px-4 py-3 rounded-xl bg-white dark:bg-surface-dark border-transparent focus:border-accent focus:ring-0 focus:outline-none shadow-sm text-gray-900 dark:text-white placeholder-gray-400 transition-all duration-200 hover:bg-surface-light dark:hover:bg-gray-800" id="email" name="email" placeholder="ban@email.com" type="email"/>
+</div>
+<div>
+<div class="flex justify-between items-center mb-1 ml-1">
+<label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="password">Mật khẩu</label>
+<a class="text-sm text-gray-500 hover:text-accent dark:text-gray-400 dark:hover:text-accent transition-colors" href="#">Quên mật khẩu?</a>
+</div>
+<input class="w-full px-4 py-3 rounded-xl bg-white dark:bg-surface-dark border-transparent focus:border-accent focus:ring-0 focus:outline-none shadow-sm text-gray-900 dark:text-white placeholder-gray-400 transition-all duration-200 hover:bg-surface-light dark:hover:bg-gray-800" id="password" name="password" placeholder="••••••••" type="password"/>
+</div>
+<button class="w-full bg-primary hover:bg-gray-800 text-white font-medium py-3 px-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 flex items-center justify-center gap-2 group" type="submit">
+                        Đăng nhập
+                        <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</form>
+<div class="relative my-8">
+<div class="absolute inset-0 flex items-center">
+<div class="w-full border-t border-gray-300 dark:border-gray-700"></div>
+</div>
+<div class="relative flex justify-center text-sm">
+<span class="px-2 bg-background-light dark:bg-background-dark text-gray-500">hoặc</span>
+</div>
+</div>
+<button class="w-full bg-white dark:bg-surface-dark text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-700 font-medium py-3 px-4 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center justify-center gap-3 shadow-sm" type="button">
+<img alt="Google Logo" class="w-5 h-5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBuZd1JiWv5hbSvNIjKHOFOMmp8SKGJGKk_302y-fPfAbARIdTq4y5zQsP7JoPYl0DknTtxUx6pOv3ThhMKJh8FxQvli1SppywcRm9VAL89v5asEI-57gjJ4DyQ_OHy7LuJluPjcaTjwT_RBA1XEBfvrBWoOPZj15AhWLYldbHkotwaasPWpxoDYNu3dFk857FgdVTKCcbgbAUoA5j9EJCDIQjxTSEfghX89TzjdqQxD_kTakLrXSkpZR2ezeESxEVw0LL6K-SMreC5"/>
+                    Đăng nhập bằng Google
+                </button>
+<p class="mt-8 text-center text-sm text-gray-600 dark:text-gray-400">
+                    Chưa có tài khoản? 
+                    <a class="font-medium text-primary dark:text-white hover:underline decoration-accent underline-offset-4" href="#">Đăng ký ngay</a>
+</p>
+<div class="mt-12 flex items-center justify-center gap-6 text-xs text-gray-400 dark:text-gray-500">
+<a class="hover:text-primary dark:hover:text-gray-300 transition-colors" href="#">Điều khoản</a>
+<span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+<a class="hover:text-primary dark:hover:text-gray-300 transition-colors" href="#">Bảo mật</a>
+<span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+<a class="hover:text-primary dark:hover:text-gray-300 transition-colors" href="#">Trợ giúp</a>
+</div>
+</div>
+</div>
+<div class="hidden lg:flex w-1/2 p-4 h-screen sticky top-0">
+<div class="relative w-full h-full rounded-2xl overflow-hidden group">
+<img alt="Classical painting representing wisdom and learning" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-105 filter saturate-[0.85] contrast-[1.1]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVRY-B100cf8QKjqnjkssQnmYaY4YNXSYlHPvvGjCDhdnuridVSy26r494SR8YpYu-zXi4ZdmRQ_hZ1YKMUOBGiVCSCqLjIZAzYM_jBaBl2dtPvhfaG200y3Y_jpFFkcfQj1uU3DQ_-Sf6W-LieQZekGprKACZIcWtJyNQDHLV6wdgRfGBATz6Kl9rha9b7F-MvuVDVRrXu_mQCmXEEkCACXTDNzImWtcGzlF6f02tudZWUKJzCH--FivrTSvkXRID1xMrqlu_Xiso"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+<div class="absolute bottom-12 left-12 right-12 text-white z-20">
+<div class="w-12 h-1 bg-accent mb-6 rounded-full"></div>
+<blockquote class="font-display text-4xl italic leading-tight mb-4 drop-shadow-lg">
+                        "Học thông minh hơn<br/>với AI."
+                    </blockquote>
+<p class="text-white/80 font-light text-sm tracking-wide uppercase">
+                        Nền tảng giáo dục thế hệ mới
+                    </p>
+</div>
+<div class="absolute top-12 right-12 bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-xl shadow-2xl max-w-xs transform rotate-2 hover:rotate-0 transition-transform duration-500 opacity-90">
+<div class="flex items-center gap-3 mb-3">
+<div class="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-sm">auto_awesome</span>
+</div>
+<div class="text-white text-xs font-medium">ThinkAI Assistant</div>
+</div>
+<div class="space-y-2">
+<div class="h-2 bg-white/20 rounded w-3/4"></div>
+<div class="h-2 bg-white/20 rounded w-full"></div>
+<div class="h-2 bg-white/10 rounded w-5/6"></div>
+</div>
+</div>
+</div>
+</div>
+<button class="absolute top-6 right-6 lg:left-6 lg:right-auto z-50 p-2 rounded-full text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" onclick="document.documentElement.classList.toggle('dark')">
+<span class="material-symbols-outlined dark:hidden">dark_mode</span>
+<span class="material-symbols-outlined hidden dark:block">light_mode</span>
+</button>
+</div>
+
+</body></html>

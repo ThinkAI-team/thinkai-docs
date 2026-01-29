@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ThinkAI - Kỷ nguyên học tập mới</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#E67E5F", // Warm orange from 'học tập'
+              "background-light": "#F9F8F3",
+              "background-dark": "#121212",
+              accent: "#3B82F6",
+            },
+            fontFamily: {
+              display: ["Instrument Serif", "serif"],
+              sans: ["Inter", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.75rem",
+              'xl': '1.5rem',
+            },
+          },
+        },
+      };
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .serif-heading {
+            font-family: 'Instrument Serif', serif;
+        }
+        .glass-nav {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .browser-mockup {
+            box-shadow: 0 30px 60px -12px rgba(0,0,0,0.25), 0 18px 36px -18px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 transition-colors duration-300">
+<nav class="fixed top-0 left-0 right-0 z-50 flex justify-center p-6">
+<div class="glass-nav bg-white/70 dark:bg-black/50 border border-slate-200 dark:border-slate-800 rounded-full px-8 py-3 flex items-center gap-12 max-w-4xl w-full justify-between">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 bg-slate-900 dark:bg-white rounded-full flex items-center justify-center">
+<span class="text-white dark:text-black font-bold text-xs">T</span>
+</div>
+<span class="font-semibold text-lg tracking-tight">ThinkAI</span>
+</div>
+<div class="hidden md:flex items-center gap-8 text-sm font-medium opacity-70">
+<a class="hover:opacity-100" href="#">Khóa học</a>
+<a class="hover:opacity-100" href="#">Gia sư AI</a>
+<a class="hover:opacity-100" href="#">Về chúng tôi</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors" onclick="document.documentElement.classList.toggle('dark')">
+<span class="material-icons-round text-lg leading-none">dark_mode</span>
+</button>
+<button class="bg-slate-900 dark:bg-white text-white dark:text-black px-5 py-2 rounded-full text-sm font-medium hover:scale-105 transition-transform">
+                    Đăng nhập →
+                </button>
+</div>
+</div>
+</nav>
+<header class="pt-40 pb-20 px-6 text-center max-w-5xl mx-auto">
+<h1 class="serif-heading text-6xl md:text-8xl leading-tight mb-8">
+            chào mừng đến với<br/>một kỷ nguyên <span class="italic text-primary">học tập</span> mới
+        </h1>
+<p class="max-w-2xl mx-auto text-lg opacity-60 leading-relaxed mb-10">
+            Nền tảng giáo dục thông minh với gia sư AI 24/7. Được thiết kế tinh tế, tập trung vào sự riêng tư và cá nhân hóa trải nghiệm học tập của bạn.
+        </p>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+<button class="bg-slate-900 dark:bg-white text-white dark:text-black px-8 py-4 rounded-full font-medium flex items-center gap-2 group transition-all">
+                Bắt đầu ngay
+                <span class="material-icons-round group-hover:translate-x-1 transition-transform">east</span>
+</button>
+<button class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-8 py-4 rounded-full font-medium flex items-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all">
+                Tìm hiểu thêm
+                <span class="material-icons-round text-primary text-sm">favorite</span>
+</button>
+</div>
+<div class="relative max-w-6xl mx-auto">
+<div class="absolute -top-12 left-1/2 -translate-x-1/2 flex gap-4 opacity-40">
+<span class="material-icons-round">edit</span>
+<span class="material-icons-round">folder</span>
+<span class="material-icons-round">cloud</span>
+<span class="material-icons-round">settings</span>
+</div>
+<div class="browser-mockup bg-slate-800 dark:bg-zinc-900 rounded-2xl p-2 border-4 border-slate-200/20 overflow-hidden">
+<div class="bg-zinc-800 rounded-xl aspect-[16/9] overflow-hidden flex flex-col">
+<div class="h-10 px-4 flex items-center gap-2 bg-zinc-900/50">
+<div class="flex gap-1.5">
+<div class="w-3 h-3 rounded-full bg-red-500/50"></div>
+<div class="w-3 h-3 rounded-full bg-yellow-500/50"></div>
+<div class="w-3 h-3 rounded-full bg-green-500/50"></div>
+</div>
+</div>
+<div class="flex-1 flex text-left">
+<div class="w-56 bg-zinc-900/40 p-6 hidden md:block">
+<div class="h-4 w-24 bg-zinc-700 rounded mb-8"></div>
+<div class="space-y-4">
+<div class="h-8 w-full bg-white/10 rounded-lg"></div>
+<div class="h-8 w-3/4 bg-white/5 rounded-lg"></div>
+<div class="h-8 w-4/5 bg-white/5 rounded-lg"></div>
+</div>
+</div>
+<div class="flex-1 p-8">
+<p class="text-[10px] uppercase tracking-widest text-zinc-500 mb-2 font-bold">XIN CHÀO, ALEX</p>
+<h2 class="text-3xl font-display mb-8">Tiếp tục hành trình học tập</h2>
+<div class="grid grid-cols-3 gap-6">
+<div class="col-span-2 bg-zinc-800/80 border border-white/5 rounded-2xl p-6">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h3 class="text-lg font-medium">Toán cao cấp II</h3>
+<p class="text-xs text-zinc-400">Tiến độ: 75%</p>
+</div>
+<span class="material-icons-round text-3xl opacity-20">functions</span>
+</div>
+<div class="w-full h-1.5 bg-zinc-700 rounded-full mb-6 overflow-hidden">
+<div class="h-full bg-primary w-3/4"></div>
+</div>
+<button class="bg-white text-black px-4 py-1.5 rounded text-sm font-bold">Tiếp tục</button>
+</div>
+<div class="bg-zinc-800/80 border border-white/5 rounded-2xl p-6 flex flex-col items-center justify-center text-center">
+<div class="w-10 h-10 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center mb-4">
+<span class="material-icons-round">check_circle</span>
+</div>
+<div class="text-3xl font-bold">12</div>
+<p class="text-xs text-zinc-400">Bài tập hoàn thành</p>
+</div>
+</div>
+<div class="mt-8">
+<button class="w-full py-3 rounded-xl bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-white font-medium text-sm">Hỏi AI Tutor</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<section class="py-24 px-6 max-w-7xl mx-auto">
+<div class="grid md:grid-cols-2 gap-20 items-center">
+<div class="space-y-12">
+<div>
+<h2 class="text-5xl font-display mb-6">Hiệu suất tối đa.</h2>
+<p class="opacity-60 text-lg leading-relaxed">
+                        ThinkAI được tích hợp các tính năng giúp bạn tập trung vào học tập hiệu quả. Không xao nhãng, chỉ có kiến thức.
+                    </p>
+</div>
+<div class="space-y-8">
+<div class="p-6 rounded-2xl bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700">
+<h3 class="font-semibold mb-2">Không gian làm việc</h3>
+<p class="text-sm opacity-60">Tổ chức các môn học vào các Workspace riêng biệt để giữ cho dự án học tập của bạn ngăn nắp.</p>
+</div>
+<div class="p-6">
+<h3 class="font-semibold mb-2">Chế độ tập trung</h3>
+<p class="text-sm opacity-60">Ẩn các thanh công cụ không cần thiết khi bạn đang làm bài kiểm tra hoặc ôn tập.</p>
+</div>
+<div class="p-6">
+<h3 class="font-semibold mb-2">Split View</h3>
+<p class="text-sm opacity-60">Xem bài giảng video và ghi chú cùng lúc trên một màn hình chưa bao giờ dễ dàng hơn.</p>
+</div>
+</div>
+</div>
+<div class="bg-slate-400 dark:bg-zinc-800 aspect-[4/3] rounded-3xl p-8 relative flex items-center justify-center overflow-hidden">
+<div class="bg-white dark:bg-zinc-900 w-full h-full rounded-2xl shadow-2xl p-6 flex flex-col gap-4">
+<div class="flex gap-4 items-center">
+<div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg"></div>
+<div class="space-y-2 flex-1">
+<div class="h-2 w-1/4 bg-slate-100 dark:bg-zinc-800 rounded"></div>
+<div class="h-2 w-full bg-slate-50 dark:bg-zinc-800/50 rounded"></div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 flex-1">
+<div class="bg-slate-50 dark:bg-zinc-800/40 rounded-xl p-4"></div>
+<div class="bg-orange-50 dark:bg-primary/5 rounded-xl p-4 flex flex-col justify-end">
+<div class="h-4 w-full bg-primary/20 rounded-full"></div>
+</div>
+</div>
+</div>
+<div class="absolute -bottom-10 left-1/2 -translate-x-1/2 w-4/5 h-20 bg-slate-300/30 dark:bg-black/20 blur-2xl rounded-full"></div>
+</div>
+</div>
+</section>
+<section class="py-20 border-t border-slate-200 dark:border-slate-800">
+<p class="text-center uppercase tracking-[0.2em] text-[10px] font-bold opacity-40 mb-12">ĐƯỢC TIN DÙNG BỞI CÁC TỔ CHỨC GIÁO DỤC</p>
+<div class="flex flex-wrap justify-center gap-12 md:gap-24 opacity-50 grayscale hover:grayscale-0 transition-all">
+<div class="flex items-center gap-2 font-bold text-xl"><span class="material-icons-round">school</span> UNIVERSITY</div>
+<div class="flex items-center gap-2 font-bold text-xl"><span class="material-icons-round">book</span> EDUTECH</div>
+<div class="flex items-center gap-2 font-bold text-xl"><span class="material-icons-round">language</span> GLOBAL</div>
+<div class="flex items-center gap-2 font-bold text-xl"><span class="material-icons-round">science</span> FUTURE LAB</div>
+</div>
+</section>
+<section class="py-24 bg-slate-50 dark:bg-zinc-900/30 text-center px-6">
+<h2 class="text-4xl font-display mb-6">Giá trị cốt lõi</h2>
+<p class="max-w-2xl mx-auto opacity-60 mb-12">Chúng tôi tạo ra ThinkAI không chỉ là một ưu tiên, mà là một sự cần thiết để đảm bảo việc học luôn đạt được sự cân bằng giữa hiệu quả, sáng tạo và quyền riêng tư.</p>
+<div class="flex flex-wrap justify-center gap-4">
+<div class="flex items-center gap-2 bg-white dark:bg-zinc-800 px-6 py-3 rounded-full border border-slate-100 dark:border-slate-700 text-sm">
+<span class="material-icons-round text-blue-500 text-base">verified_user</span> Riêng tư và an toàn
+            </div>
+<div class="flex items-center gap-2 bg-white dark:bg-zinc-800 px-6 py-3 rounded-full border border-slate-100 dark:border-slate-700 text-sm">
+<span class="material-icons-round text-primary text-base">bolt</span> Đơn giản nhưng mạnh mẽ
+            </div>
+<div class="flex items-center gap-2 bg-white dark:bg-zinc-800 px-6 py-3 rounded-full border border-slate-100 dark:border-slate-700 text-sm">
+<span class="material-icons-round text-green-500 text-base">code</span> Mã nguồn mở (một phần)
+            </div>
+</div>
+</section>
+<footer class="bg-zinc-900 dark:bg-black text-white pt-20 pb-10 px-10">
+<div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-12 mb-20">
+<div class="col-span-1 md:col-span-1">
+<div class="flex items-center gap-2 mb-6">
+<div class="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+<span class="text-black font-bold text-xs">T</span>
+</div>
+<span class="font-semibold text-lg tracking-tight">ThinkAI</span>
+</div>
+<p class="text-sm opacity-50 leading-relaxed mb-6">
+                    Được thiết kế đẹp mắt, tập trung vào quyền riêng tư và tích hợp nhiều tính năng. Chúng tôi quan tâm đến trải nghiệm học tập của bạn.
+                </p>
+<button class="bg-white text-black px-6 py-2.5 rounded-full text-sm font-medium flex items-center gap-2">
+                    Tải xuống App <span class="material-icons-round text-sm">download</span>
+</button>
+</div>
+<div>
+<h4 class="text-xs uppercase tracking-widest font-bold opacity-30 mb-6">Theo dõi</h4>
+<ul class="space-y-4 text-sm opacity-70">
+<li><a class="hover:opacity-100 transition-opacity" href="#">Facebook</a></li>
+<li><a class="hover:opacity-100 transition-opacity" href="#">Twitter / X</a></li>
+<li><a class="hover:opacity-100 transition-opacity" href="#">Instagram</a></li>
+<li><a class="hover:opacity-100 transition-opacity" href="#">LinkedIn</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-xs uppercase tracking-widest font-bold opacity-30 mb-6">Bắt đầu</h4>
+<ul class="space-y-4 text-sm opacity-70">
+<li><a class="hover:opacity-100 transition-opacity" href="#">Tài liệu hướng dẫn</a></li>
+<li><a class="hover:opacity-100 transition-opacity" href="#">Gói Pro</a></li>
+<li><a class="hover:opacity-100 transition-opacity" href="#">Dành cho trường học</a></li>
+<li><a class="hover:opacity-100 transition-opacity" href="#">Đăng ký Mentor</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-xs uppercase tracking-widest font-bold opacity-30 mb-6">Hỗ trợ</h4>
+<ul class="space-y-4 text-sm opacity-70">
+<li><a class="hover:opacity-100 transition-opacity" href="#">Cộng đồng Discord</a></li>
+<li><a class="hover:opacity-100 transition-opacity" href="#">Trạng thái hệ thống</a></li>
+<li><a class="hover:opacity-100 transition-opacity" href="#">Bảo mật</a></li>
+<li><a class="hover:opacity-100 transition-opacity" href="#">Chính sách bảo mật</a></li>
+</ul>
+</div>
+</div>
+<div class="max-w-7xl mx-auto pt-10 border-t border-white/10 flex justify-between items-center text-xs opacity-40">
+<p>Made with ❤️ by ThinkAI Team</p>
+<div class="flex gap-4">
+<span class="material-icons-round opacity-30 text-3xl">fingerprint</span>
+</div>
+</div>
+</footer>
+
+</body></html>

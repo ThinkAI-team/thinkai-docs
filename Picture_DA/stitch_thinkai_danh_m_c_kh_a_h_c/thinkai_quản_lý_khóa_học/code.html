@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ThinkAI - Quản lý khóa học</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#3c83f6",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101722",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for Zen feel */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .zen-card {
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease-in-out;
+        }
+        .zen-card:hover {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-hidden">
+<div class="flex h-screen w-full">
+<!-- Sidebar -->
+<aside class="hidden lg:flex flex-col w-64 h-full bg-white dark:bg-[#151f2e] border-r border-slate-100 dark:border-slate-800 z-10">
+<div class="p-6 flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[20px]">school</span>
+</div>
+<div>
+<h1 class="text-base font-bold leading-none text-slate-900 dark:text-white">ThinkAI</h1>
+<p class="text-xs text-slate-500 mt-1 dark:text-slate-400">Giảng viên</p>
+</div>
+</div>
+<nav class="flex-1 px-3 py-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 group transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary">dashboard</span>
+<span class="text-sm font-medium">Tổng quan</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:text-primary dark:bg-primary/20" href="#">
+<span class="material-symbols-outlined text-[20px] font-variation-settings-'FILL'1">menu_book</span>
+<span class="text-sm font-medium">Khóa học</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 group transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary">group</span>
+<span class="text-sm font-medium">Học viên</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 group transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary">insert_chart</span>
+<span class="text-sm font-medium">Báo cáo</span>
+</a>
+</nav>
+<div class="p-3 border-t border-slate-100 dark:border-slate-800">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 group transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary">settings</span>
+<span class="text-sm font-medium">Cài đặt</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full relative overflow-hidden">
+<!-- Header Area -->
+<header class="w-full px-6 py-5 bg-white/80 dark:bg-[#101722]/90 backdrop-blur-sm z-10 sticky top-0 border-b border-transparent dark:border-slate-800/50">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h2 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Quản lý khóa học</h2>
+<p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Theo dõi và quản lý tất cả các khóa học của bạn tại đây.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="relative p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-[#101722]"></span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700">
+<img alt="Teacher Profile Avatar" class="w-full h-full object-cover" data-alt="Close up portrait of a man looking forward" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDomZhKETD0P_qON9Lq79pzrZ9gC5QHPm4FXdj1sdnYdbHbz40sdGem68_npUCKP5ZY4GManYQzsZZyTqNAadoIOEtiky8ijUmqdb-wjw3S1-amwLmUhbdRx8LcxM3mT77vdbjV1H7igc4DrNUWt1XqWfuybu-lS6g_4QO7ajOncTLEuLrYcODFFCI4P8f2xkwCyk2UOU_qu6PS6PivqylA2Mf38otG0xlw8gMQxSKl0nUFcbiN-_eghv8KcnfyOPyDvUrrHE5hfetR"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-6 scroll-smooth">
+<div class="max-w-7xl mx-auto flex flex-col gap-6">
+<!-- Action Bar -->
+<div class="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
+<!-- Search & Filters -->
+<div class="flex flex-1 flex-col sm:flex-row w-full lg:w-auto gap-3">
+<div class="relative group w-full sm:w-80">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors text-[20px]">search</span>
+<input class="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-[#151f2e] border border-slate-200 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all placeholder:text-slate-400 text-slate-900 dark:text-slate-100 shadow-sm" placeholder="Tìm kiếm khóa học..." type="text"/>
+</div>
+<div class="flex gap-2 overflow-x-auto pb-1 sm:pb-0 no-scrollbar">
+<button class="flex items-center gap-2 px-3 py-2 bg-white dark:bg-[#151f2e] border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors whitespace-nowrap shadow-sm">
+<span>Trạng thái</span>
+<span class="material-symbols-outlined text-[18px] text-slate-400">keyboard_arrow_down</span>
+</button>
+<button class="flex items-center gap-2 px-3 py-2 bg-white dark:bg-[#151f2e] border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors whitespace-nowrap shadow-sm">
+<span>Thời gian</span>
+<span class="material-symbols-outlined text-[18px] text-slate-400">keyboard_arrow_down</span>
+</button>
+</div>
+</div>
+<!-- Main Action -->
+<button class="flex items-center justify-center gap-2 bg-primary hover:bg-blue-600 text-white px-5 py-2.5 rounded-lg shadow-sm shadow-primary/30 transition-all active:scale-95 w-full sm:w-auto">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span class="text-sm font-semibold">Tạo khóa học mới</span>
+</button>
+</div>
+<!-- Data Table -->
+<div class="bg-white dark:bg-[#151f2e] rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm zen-card">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-slate-50/50 dark:bg-slate-800/30 border-b border-slate-100 dark:border-slate-800">
+<tr>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider w-[40%]">Tên khóa học</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Học viên</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Doanh thu</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Trạng thái</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider text-right"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800/50">
+<!-- Row 1 -->
+<tr class="group hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-4">
+<div class="w-16 h-12 rounded-lg bg-slate-100 dark:bg-slate-800 overflow-hidden shrink-0 border border-slate-200 dark:border-slate-700">
+<img alt="AI Brain Concept" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" data-alt="Abstract digital brain circuit blue light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEdKazJSmJWG6d-r31kkww4blIpJ0vKKMqx1JpYg4vkd96mrHbMrZHn3nIs8PI1roejIF2S8gJzZmC2XIXYnmV_ktm1gdxN5CqXwLr0vICBin-uaId8x295ioD_CNQFzY-Urxc0nNAhRjnF780Op2avaPY_QSYHB3DrdNJ2OOvo73nH7-u5kGutGj2sgG0YA3wugjpCqCON8HG9XG0FTVwiddyRO3KtEpDXtGD3-w323fWeMfPHlxySxJHdzcbTKMFAnBDnWMixcCk"/>
+</div>
+<div class="flex flex-col min-w-0">
+<p class="text-sm font-semibold text-slate-900 dark:text-white truncate">Nhập môn AI &amp; Machine Learning</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Công nghệ • Cập nhật 2 giờ trước</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="flex -space-x-2 overflow-hidden">
+<img alt="Student" class="inline-block h-6 w-6 rounded-full ring-2 ring-white dark:ring-[#151f2e] object-cover" data-alt="Portrait of woman" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyp0hwWOYTawKPCqxUthZA9Ot7AI8yT4wYZMdCPj57AOUI9ju6txuMFqb30kmPc6RGE2z1Bk6Qh_0f-vX1W-mKNZ3e-VLsne4gAZyfk3KM9kuHTE7b1X2Hg0x_hmjN9-rebfgWBXVGsmfIiPNZIVREQklgAVDUTI2DEcDe4WJkwDH3Qzv0odMp1ZY1qJY6YLfQmAQR19GXe-uVqiojTWKWuOBVLRPEoYpVkxnvemUm6W2ke63tEFjTfGA_LFs_sSQmgRCN75QqwA6z"/>
+<img alt="Student" class="inline-block h-6 w-6 rounded-full ring-2 ring-white dark:ring-[#151f2e] object-cover" data-alt="Portrait of man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBn-kf4PMQFBv9OtVNd9Z77cHY8ZYDGjFn8XpJTB9bhZu9cCKj0b6mtsAa2uzzq2L3VzJSkLzXYhqihaRYTc92nLddhFDToJKtiZ8mrBb2BbBSTKOUurK3Zm0cY_1yTK23MOPr9nV7IMjxZApRQcXuYGiF17Vw4JfJdKVSJpv5Gh3WbQNnc1h4FT3_QYnEiGU0LVTwKU3rL96jskSCZJvIR33PIXVY6E8cZy-gJtXOqy2A_gMnJVy9BLIaPdv50tdii7729-OUuEfjI"/>
+<img alt="Student" class="inline-block h-6 w-6 rounded-full ring-2 ring-white dark:ring-[#151f2e] object-cover" data-alt="Portrait of man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxon3RFZcCsR1_WtdXKYYXsYKDEN8edo_abVxrcwqSwFBMfMDT3U9L5vjWn8CewVaw_16_C7R3WXjbM8xdWercB31579-_wszmvPdrmzjqkkuPex-LQKsbbzn7tr3dvK_xmNFHEqjkCZdO7K38Ube9Jswi8tkA_iIYNZgkro5evA445dH2CMHxXAfg2EHR0Taa6XvDvN4ixxpuh6CRnn9TFgB3EE6k6ujPXBpGZ-XqzOjf_iq0-p_YWAKNyUV62dhSsejwdb-3dHx9"/>
+</div>
+<span class="text-xs font-medium text-slate-600 dark:text-slate-300">+1.204</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<p class="text-sm font-medium text-slate-900 dark:text-white">120.000.000₫</p>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                                Hoạt động
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors p-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="group hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-4">
+<div class="w-16 h-12 rounded-lg bg-slate-100 dark:bg-slate-800 overflow-hidden shrink-0 border border-slate-200 dark:border-slate-700">
+<img alt="Code screen" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" data-alt="Computer screen with code lines matrix" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhrSVQDYZkFzgW_rXTokd5ZiQQgM5vkQJac4HH7M-OYmxl3x9BAlSYi_yIwrkpXKBgPOimQMrzA452x2W-uwdjNTwP-kP9QPGZpIIdQZ2pRoodCCB4hh40CdZL8wAAa114EIP_gznZUmOY6vYWe-2FX7Z4l6lZKjsyLvNweE_W2MhgrAgkZ9EQIK924czkCBr_1phMF1ZDkbsEq3nEeMxH-mjtwJtKiTkl3hGFN7GDnN-WKuHkI_gc-bQgrJLUNZg8Ri0GhXEGOAX3"/>
+</div>
+<div class="flex flex-col min-w-0">
+<p class="text-sm font-semibold text-slate-900 dark:text-white truncate">Python cho người mới bắt đầu</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Lập trình • Cập nhật 1 ngày trước</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="flex -space-x-2 overflow-hidden">
+<img alt="Student" class="inline-block h-6 w-6 rounded-full ring-2 ring-white dark:ring-[#151f2e] object-cover" data-alt="Portrait of woman" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7fhZVrsNrVBMBVuj0fVxzUz1oMTPqWQg8IR1Cm4rUZRGzd7xCwteO1B7st_9dy22S4gulluqV7ju9ElkBhvxwiSOces2QXYwR6Yk17-MAx-aHk5siqRapRuHIBSZ4lnjX7yAZ1JZvGg0ccRQdfFvmffCEab_gq1YyCo3rE_jeUafmfyrIlHZXJlxBRQvub47ayMCRN2FbT9iD2PyqNd-c1IA2OzZiU2W1bObF6WmYJAJNFV2vYLrywQMLo8ytR3h7gJs7rgsXwX9_"/>
+<img alt="Student" class="inline-block h-6 w-6 rounded-full ring-2 ring-white dark:ring-[#151f2e] object-cover" data-alt="Portrait of man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuASPMLz6lov4wSnqjMW2OPsiVkjVThFd4a7RYsPaF8hfsquH88lUhpMUc1PFkzwFsQbn53wvDvYmHKOumDE8vRELqHo0axwUMHyP4pPt1IyDJzSxqY-SR6-1VaRVwmNb14YBQ6O0p_K8jyfbHpXDXipSuDo2IQdjjXYcgBhPuVKE_L-T0LZFVPF9SI0q0DGjpooxtdpEfxqxj2kGzyLhfpUgSkLrEharQw3rN542kC9ppAuAXDR4oICW6hhtCg0gzIWxjQGxdLe4ONU"/>
+</div>
+<span class="text-xs font-medium text-slate-600 dark:text-slate-300">+850</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<p class="text-sm font-medium text-slate-900 dark:text-white">45.000.000₫</p>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                                Hoạt động
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors p-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="group hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-4">
+<div class="w-16 h-12 rounded-lg bg-slate-100 dark:bg-slate-800 overflow-hidden shrink-0 border border-slate-200 dark:border-slate-700 flex items-center justify-center">
+<!-- Placeholder for no image -->
+<span class="material-symbols-outlined text-slate-400">image</span>
+</div>
+<div class="flex flex-col min-w-0">
+<p class="text-sm font-semibold text-slate-900 dark:text-white truncate">Advanced Deep Learning</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Khoa học dữ liệu • Vừa tạo</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-xs text-slate-400 italic">Chưa có học viên</span>
+</td>
+<td class="px-6 py-4">
+<p class="text-sm font-medium text-slate-400">0₫</p>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 dark:bg-slate-700/30 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
+<span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                                                Nháp
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors p-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="group hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-4">
+<div class="w-16 h-12 rounded-lg bg-slate-100 dark:bg-slate-800 overflow-hidden shrink-0 border border-slate-200 dark:border-slate-700">
+<img alt="Data Charts" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" data-alt="Colorful data visualization graphs" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-D2cRNSyeMGuaZ-nTSx4eorAGJ8V4Okf70z0hgOTkH1rAnzZ4c7qrk-PwslIlt-8XQqi3U1R7HUDY9upmQP9rjjwb8G4OeEzmhATkhqfz3khOHba0Im3kka7MwxW5-PGPMKB2x4EEujuU-teN64VHlnyEDL3IS839UDBGuC4wmCBv1fup8Dg3dHNERRCSoNlsC-3wVPNeC9CQGsfVYs84aEnwku3OyK5iWHeZvKCo0u2sVDqlz537-7lo6XEqPSOPkrNl0_A-PrhP"/>
+</div>
+<div class="flex flex-col min-w-0">
+<p class="text-sm font-semibold text-slate-900 dark:text-white truncate">Data Visualization Masterclass</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Thiết kế • Cập nhật 3 ngày trước</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="flex -space-x-2 overflow-hidden">
+<img alt="Student" class="inline-block h-6 w-6 rounded-full ring-2 ring-white dark:ring-[#151f2e] object-cover" data-alt="Portrait of woman" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7EGjt2PIEb1p3MHhE-dABf6JnHe9dDwMkEzsi7j9HrS6Iamp7Sf4JY3Wa5h6SwLQy_gjUkGCEpujD5PIzlQ_rzppofgqprWnsRZOwVe6u7XilZzmUBd4qINSMgOBSkvSY7j4D5P-jXOpdq-DThFOy16w5prk-rQw9N-PrswigBNDIZA9jw0XUtPmkAeNzDFNplMMVISsaTnhizHIiVhaApa-Ird18_DGvbFNxu_cOQm_EVuDxB7-89wzV20Od61XCauEejZw1bmNq"/>
+</div>
+<span class="text-xs font-medium text-slate-600 dark:text-slate-300">+42</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<p class="text-sm font-medium text-slate-900 dark:text-white">12.500.000₫</p>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400 border border-amber-100 dark:border-amber-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                                                Tạm dừng
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors p-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-6 py-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+<p class="text-sm text-slate-500 dark:text-slate-400">Hiển thị <span class="font-medium text-slate-900 dark:text-white">1-4</span> trong <span class="font-medium text-slate-900 dark:text-white">12</span> khóa học</p>
+<div class="flex gap-2">
+<button class="px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed" disabled="">Trước</button>
+<button class="px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800">Sau</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

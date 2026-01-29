@@ -1,0 +1,353 @@
+================================================================================
+                    THINKAI DATABASE - HƯỚNG DẪN SỬ DỤNG
+================================================================================
+Cập nhật: 2026-01-30
+Database: MySQL 8.0
+File SQL: database/thinkai_schema.sql
+================================================================================
+
+                              TỔNG QUAN CẤU TRÚC
+================================================================================
+
+Database ThinkAI gồm 15 bảng chính, được chia theo các module:
+
+    ┌─────────────────────────────────────────────────────────────────────────┐
+    │  AUTH MODULE (Bình Minh)                                                │
+    │  ├── users           : Thông tin người dùng (Student/Teacher/Admin)     │
+    │  └── refresh_tokens  : JWT refresh tokens cho authentication            │
+    ├─────────────────────────────────────────────────────────────────────────┤
+    │  COURSE MODULE (Hoàng Minh)                                             │
+    │  ├── courses         : Khóa học                                         │
+    │  └── enrollments     : Đăng ký khóa học của học viên                    │
+    ├─────────────────────────────────────────────────────────────────────────┤
+    │  LEARNING MODULE (Anh Khoa)                                             │
+    │  ├── lessons         : Bài học (Video/PDF)                              │
+    │  └── lesson_progress : Tiến độ học của từng học viên                    │
+    ├─────────────────────────────────────────────────────────────────────────┤
+    │  AI MODULE (Bò Trang)                                                   │
+    │  ├── ai_chat_logs    : Lịch sử chat với AI Tutor                        │
+    │  └── ai_summaries    : Tóm tắt bài học do AI tạo                        │
+    ├─────────────────────────────────────────────────────────────────────────┤
+    │  EXAM MODULE (Mai Pháp)                                                 │
+    │  ├── exams           : Bài thi                                          │
+    │  ├── questions       : Câu hỏi trong bài thi                            │
+    │  ├── exam_attempts   : Lịch sử làm bài (điểm, feedback AI)              │
+    │  └── exam_answers    : Chi tiết câu trả lời                             │
+    ├─────────────────────────────────────────────────────────────────────────┤
+    │  TEACHER MODULE (Trọng Nghĩa)                                           │
+    │  └── (Sử dụng các bảng courses, lessons, exams với quyền Teacher)       │
+    ├─────────────────────────────────────────────────────────────────────────┤
+    │  ADMIN MODULE (Thái Nguyên)                                             │
+    │  ├── course_reviews  : Đánh giá & nhận xét khóa học                     │
+    │  ├── ai_settings     : Cấu hình AI prompts                              │
+    │  └── system_logs     : Log hoạt động hệ thống                           │
+    └─────────────────────────────────────────────────────────────────────────┘
+
+================================================================================
+                           CHI TIẾT TỪNG BẢNG
+================================================================================
+
+1. USERS (Người dùng)
+--------------------------------------------------------------------------------
+   Lưu trữ thông tin tất cả người dùng hệ thống.
+
+   Các cột quan trọng:
+   - id            : ID tự tăng (Primary Key)
+   - email         : Email đăng nhập (Unique)
+   - password_hash : Mật khẩu đã mã hóa BCrypt
+   - role          : STUDENT / TEACHER / ADMIN
+   - google_id     : ID từ Google OAuth (nếu đăng nhập Google)
+   - is_active     : TRUE/FALSE (Admin có thể khóa tài khoản)
+
+   Người phụ trách: Bình Minh
+
+--------------------------------------------------------------------------------
+
+2. REFRESH_TOKENS (Token làm mới)
+--------------------------------------------------------------------------------
+   Lưu refresh token để cấp lại access token khi hết hạn.
+
+   Các cột quan trọng:
+   - user_id       : FK → users.id
+   - token         : Chuỗi refresh token (Unique)
+   - expires_at    : Thời điểm hết hạn (7 ngày)
+
+   Người phụ trách: Bình Minh
+
+--------------------------------------------------------------------------------
+
+3. COURSES (Khóa học)
+--------------------------------------------------------------------------------
+   Lưu thông tin khóa học do Teacher tạo.
+
+   Các cột quan trọng:
+   - title         : Tên khóa học
+   - description   : Mô tả chi tiết
+   - thumbnail_url : URL ảnh thumbnail
+   - price         : Giá (VND), 0 = miễn phí
+   - instructor_id : FK → users.id (Teacher tạo khóa học)
+   - is_published  : Đã publish chưa
+   - status        : DRAFT / PENDING / APPROVED / REJECTED
+
+   Người phụ trách: Hoàng Minh (Student view), Trọng Nghĩa (Teacher CRUD)
+
+--------------------------------------------------------------------------------
+
+4. LESSONS (Bài học)
+--------------------------------------------------------------------------------
+   Lưu các bài học trong khóa học.
+
+   Các cột quan trọng:
+   - course_id     : FK → courses.id
+   - title         : Tên bài học
+   - type          : VIDEO / PDF / QUIZ
+   - content_url   : URL video hoặc PDF
+   - content_text  : Nội dung text (dùng cho AI context)
+   - order_index   : Thứ tự trong khóa học
+
+   Người phụ trách: Anh Khoa (Hiển thị), Trọng Nghĩa (Upload)
+
+--------------------------------------------------------------------------------
+
+5. ENROLLMENTS (Đăng ký học)
+--------------------------------------------------------------------------------
+   Lưu thông tin học viên đăng ký khóa học.
+
+   Các cột quan trọng:
+   - user_id          : FK → users.id (Student)
+   - course_id        : FK → courses.id
+   - progress_percent : Tiến độ 0-100%
+   - completed_at     : NULL nếu chưa hoàn thành
+
+   Ràng buộc: Mỗi user chỉ đăng ký 1 lần/course (UNIQUE)
+
+   Người phụ trách: Hoàng Minh
+
+--------------------------------------------------------------------------------
+
+6. LESSON_PROGRESS (Tiến độ bài học)
+--------------------------------------------------------------------------------
+   Theo dõi tiến độ học từng bài của học viên.
+
+   Các cột quan trọng:
+   - user_id           : FK → users.id
+   - lesson_id         : FK → lessons.id
+   - is_completed      : Đã hoàn thành chưa
+   - watch_time_seconds: Thời gian đã xem (giây)
+   - last_accessed_at  : Lần truy cập cuối
+
+   Người phụ trách: Anh Khoa
+
+--------------------------------------------------------------------------------
+
+7. EXAMS (Bài thi)
+--------------------------------------------------------------------------------
+   Lưu thông tin bài thi của khóa học.
+
+   Các cột quan trọng:
+   - course_id         : FK → courses.id
+   - title             : Tên bài thi
+   - difficulty        : EASY / MEDIUM / HARD
+   - time_limit_minutes: Thời gian làm bài (phút)
+   - passing_score     : Điểm đạt (%)
+   - is_ai_generated   : Có phải AI tạo không
+   - created_by        : FK → users.id (Teacher/Admin)
+
+   Người phụ trách: Mai Pháp (Student làm bài), Trọng Nghĩa (Teacher tạo)
+
+--------------------------------------------------------------------------------
+
+8. QUESTIONS (Câu hỏi)
+--------------------------------------------------------------------------------
+   Lưu các câu hỏi trong bài thi.
+
+   Các cột quan trọng:
+   - exam_id        : FK → exams.id
+   - content        : Nội dung câu hỏi
+   - options        : JSON array ["A", "B", "C", "D"]
+   - correct_option : Đáp án đúng ("A", "B", "C", "D" hoặc "A,B")
+   - type           : SINGLE_CHOICE / MULTIPLE_CHOICE
+   - explanation    : Giải thích đáp án
+
+   Người phụ trách: Mai Pháp, Trọng Nghĩa
+
+--------------------------------------------------------------------------------
+
+9. EXAM_ATTEMPTS (Lịch sử làm bài)
+--------------------------------------------------------------------------------
+   Lưu mỗi lần học viên làm bài thi.
+
+   Các cột quan trọng:
+   - user_id         : FK → users.id
+   - exam_id         : FK → exams.id
+   - score           : Điểm số (0-100)
+   - correct_count   : Số câu đúng
+   - is_passed       : Đạt/Không đạt
+   - ai_feedback     : Nhận xét từ AI
+   - started_at      : Bắt đầu làm bài
+   - submitted_at    : Nộp bài
+
+   Người phụ trách: Mai Pháp
+
+--------------------------------------------------------------------------------
+
+10. EXAM_ANSWERS (Câu trả lời)
+--------------------------------------------------------------------------------
+    Lưu chi tiết câu trả lời của từng lần thi.
+
+    Các cột quan trọng:
+    - attempt_id     : FK → exam_attempts.id
+    - question_id    : FK → questions.id
+    - selected_option: Đáp án đã chọn
+    - is_correct     : Đúng/Sai
+
+    Người phụ trách: Mai Pháp
+
+--------------------------------------------------------------------------------
+
+11. AI_CHAT_LOGS (Log chat AI)
+--------------------------------------------------------------------------------
+    Lưu lịch sử hội thoại với AI Tutor.
+
+    Các cột quan trọng:
+    - user_id        : FK → users.id
+    - course_id      : FK → courses.id (context)
+    - lesson_id      : FK → lessons.id (context)
+    - user_message   : Câu hỏi của user
+    - ai_response    : Câu trả lời AI
+    - citations      : JSON array nguồn trích dẫn
+    - response_time_ms: Thời gian phản hồi (ms)
+
+    Người phụ trách: Bò Trang
+
+--------------------------------------------------------------------------------
+
+12. AI_SUMMARIES (Tóm tắt AI)
+--------------------------------------------------------------------------------
+    Lưu các bản tóm tắt bài học do AI tạo.
+
+    Các cột quan trọng:
+    - lesson_id      : FK → lessons.id
+    - summary_text   : Nội dung tóm tắt (Markdown)
+    - key_points     : JSON array các điểm chính
+    - generated_by   : FK → users.id (User yêu cầu)
+
+    Người phụ trách: Bò Trang
+
+--------------------------------------------------------------------------------
+
+13. COURSE_REVIEWS (Đánh giá khóa học)
+--------------------------------------------------------------------------------
+    Lưu đánh giá và nhận xét của học viên về khóa học.
+
+    Các cột quan trọng:
+    - course_id      : FK → courses.id
+    - user_id        : FK → users.id
+    - rating         : 1-5 sao
+    - review_text    : Nội dung nhận xét
+    - is_approved    : Admin duyệt chưa
+
+    Ràng buộc: Mỗi user chỉ review 1 lần/course
+
+    Người phụ trách: Thái Nguyên
+
+--------------------------------------------------------------------------------
+
+14. AI_SETTINGS (Cấu hình AI)
+--------------------------------------------------------------------------------
+    Lưu các prompt cấu hình cho AI (Admin quản lý).
+
+    Các setting mặc định:
+    - TUTOR_SYSTEM_PROMPT    : System prompt cho AI Tutor
+    - EXAM_GENERATOR_PROMPT  : Prompt tạo đề thi
+    - SUMMARY_PROMPT         : Prompt tóm tắt bài học
+    - FEEDBACK_PROMPT        : Prompt feedback kết quả thi
+
+    Người phụ trách: Thái Nguyên
+
+--------------------------------------------------------------------------------
+
+15. SYSTEM_LOGS (Log hệ thống)
+--------------------------------------------------------------------------------
+    Lưu log các hoạt động quan trọng (audit trail).
+
+    Các cột quan trọng:
+    - user_id        : FK → users.id
+    - action         : Hành động (LOGIN, CREATE, UPDATE, DELETE)
+    - entity_type    : Loại entity (users, courses, exams...)
+    - entity_id      : ID của entity
+    - details        : JSON chi tiết
+    - ip_address     : Địa chỉ IP
+
+    Người phụ trách: Thái Nguyên
+
+================================================================================
+                              CÁC VIEW THỐNG KÊ
+================================================================================
+
+1. v_course_stats
+   → Thống kê số học viên, số bài học, rating trung bình của khóa học
+
+2. v_student_dashboard  
+   → Thống kê tổng khóa học, tiến độ trung bình, số bài thi đã làm
+
+3. v_teacher_dashboard
+   → Thống kê số khóa học, tổng học viên, tổng bài học, bài thi
+
+4. v_admin_dashboard
+   → Thống kê toàn hệ thống (users, courses, enrollments, AI chats today)
+
+================================================================================
+                           CÁCH SỬ DỤNG SQL FILE
+================================================================================
+
+1. Mở MySQL Workbench hoặc terminal MySQL
+
+2. Chạy lệnh:
+   mysql -u root -p < database/thinkai_schema.sql
+
+3. Hoặc trong MySQL Workbench:
+   - File → Open SQL Script → chọn thinkai_schema.sql
+   - Nhấn Execute (⚡)
+
+4. Kiểm tra:
+   USE thinkai_db;
+   SHOW TABLES;
+
+================================================================================
+                           TÀI KHOẢN TEST MẶC ĐỊNH
+================================================================================
+
+    | Email               | Password     | Role    |
+    |---------------------|--------------|---------|
+    | admin@thinkai.com   | Admin@123    | ADMIN   |
+    | teacher@thinkai.com | Teacher@123  | TEACHER |
+    | student@thinkai.com | Student@123  | STUDENT |
+
+    Lưu ý: Password trong database đã được hash BCrypt!
+
+================================================================================
+                              LƯU Ý QUAN TRỌNG
+================================================================================
+
+    ★ Charset: utf8mb4 (hỗ trợ emoji và tiếng Việt đầy đủ)
+    ★ Engine: InnoDB (hỗ trợ transaction và foreign key)
+    ★ Foreign Key: ON DELETE CASCADE hoặc SET NULL tùy logic
+    ★ Index: Đã tạo sẵn index cho các trường thường query
+    ★ FULLTEXT: Bảng courses có fulltext index cho search
+
+================================================================================
+                           LIÊN HỆ HỖ TRỢ
+================================================================================
+
+    - Auth/Users     : Bình Minh
+    - Courses        : Hoàng Minh  
+    - Learning       : Anh Khoa
+    - AI Features    : Bò Trang
+    - Exams          : Mai Pháp
+    - Teacher Portal : Trọng Nghĩa
+    - Admin Panel    : Thái Nguyên
+
+================================================================================
+                              GOOD LUCK! 🚀
+================================================================================

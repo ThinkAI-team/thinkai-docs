@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ThinkAI Danh mục Khóa học</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#FF8E6E", // Warm orange accent from Zen Browser
+                        "background-light": "#F5F3EB", // Cream/Beige background
+                        "background-dark": "#1C1C1C", // Dark charcoal background
+                        "surface-light": "#EAE7DD",
+                        "surface-dark": "#2A2A2A",
+                        "text-main-light": "#2B2B2B",
+                        "text-main-dark": "#E5E5E5",
+                        "text-muted-light": "#666666",
+                        "text-muted-dark": "#A3A3A3",
+                    },
+                    fontFamily: {
+                        serif: ["'Instrument Serif'", "serif"],
+                        sans: ["'Inter'", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.75rem", // 12px
+                        'xl': "1rem",
+                        '2xl': "1.5rem",
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                        'hover': '0 10px 30px -5px rgba(0, 0, 0, 0.1)',
+                    }
+                },
+            },
+        };
+    </script>
+<style>::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: rgba(156, 163, 175, 0.5);
+            border-radius: 20px;
+        }
+        .filter-checkbox:checked {
+            background-color: #FF8E6E;
+            border-color: #FF8E6E;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark font-sans transition-colors duration-300 min-h-screen flex flex-col">
+<nav class="sticky top-0 z-50 backdrop-blur-md bg-background-light/80 dark:bg-background-dark/80 border-b border-gray-200/50 dark:border-gray-800/50 px-6 py-4">
+<div class="max-w-7xl mx-auto flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white">
+<span class="material-icons-outlined text-lg">psychology</span>
+</div>
+<span class="font-serif text-2xl font-bold tracking-tight">ThinkAI</span>
+</div>
+<div class="hidden md:flex items-center space-x-8 text-sm font-medium text-text-muted-light dark:text-text-muted-dark">
+<a class="hover:text-primary transition-colors" href="#">Khóa học</a>
+<a class="hover:text-primary transition-colors" href="#">Lộ trình</a>
+<a class="hover:text-primary transition-colors" href="#">Blog</a>
+<a class="hover:text-primary transition-colors" href="#">Cộng đồng</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-surface-light dark:hover:bg-surface-dark transition-colors" onclick="document.documentElement.classList.toggle('dark')">
+<span class="material-icons-outlined text-xl">dark_mode</span>
+</button>
+<a class="bg-text-main-light dark:bg-white text-white dark:text-black px-5 py-2 rounded-full text-sm font-medium hover:opacity-90 transition-opacity flex items-center gap-2" href="#">
+                    Đăng nhập <span class="material-icons-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+</nav>
+<header class="pt-16 pb-12 px-6">
+<div class="max-w-7xl mx-auto text-center">
+<h1 class="font-serif text-5xl md:text-6xl text-text-main-light dark:text-white mb-6">
+                Khám phá tri thức <br/>
+<span class="italic text-primary">vượt giới hạn</span>
+</h1>
+<p class="text-text-muted-light dark:text-text-muted-dark max-w-2xl mx-auto text-lg mb-10 font-light">
+                Hơn 500 khóa học chất lượng cao từ các chuyên gia hàng đầu. Học mọi lúc, mọi nơi với trải nghiệm mượt mà và tập trung.
+            </p>
+<div class="max-w-xl mx-auto relative group">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="material-icons-outlined text-gray-400 group-focus-within:text-primary transition-colors">search</span>
+</div>
+<input class="block w-full pl-12 pr-4 py-4 bg-white dark:bg-surface-dark border-0 rounded-2xl shadow-soft focus:ring-2 focus:ring-primary/50 text-text-main-light dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-shadow" placeholder="Tìm kiếm khóa học, kỹ năng, giáo viên..." type="text"/>
+</div>
+</div>
+</header>
+<main class="flex-grow px-6 pb-24">
+<div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
+<aside class="lg:col-span-3 space-y-8">
+<div class="bg-white dark:bg-surface-dark p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 sticky top-24">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-serif text-xl font-medium">Bộ lọc</h3>
+<button class="text-xs text-primary hover:underline">Xóa tất cả</button>
+</div>
+<div class="mb-8">
+<h4 class="text-sm font-semibold uppercase tracking-wider text-text-muted-light dark:text-text-muted-dark mb-4">Cấp độ</h4>
+<div class="space-y-3">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="filter-checkbox rounded border-gray-300 dark:border-gray-600 focus:ring-0 text-primary w-5 h-5" type="checkbox"/>
+<span class="text-sm text-text-main-light dark:text-gray-300 group-hover:text-primary transition-colors">Người mới bắt đầu</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="filter-checkbox rounded border-gray-300 dark:border-gray-600 focus:ring-0 text-primary w-5 h-5" type="checkbox"/>
+<span class="text-sm text-text-main-light dark:text-gray-300 group-hover:text-primary transition-colors">Trung cấp</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="filter-checkbox rounded border-gray-300 dark:border-gray-600 focus:ring-0 text-primary w-5 h-5" type="checkbox"/>
+<span class="text-sm text-text-main-light dark:text-gray-300 group-hover:text-primary transition-colors">Nâng cao</span>
+</label>
+</div>
+</div>
+<div class="mb-8">
+<h4 class="text-sm font-semibold uppercase tracking-wider text-text-muted-light dark:text-text-muted-dark mb-4">Giá</h4>
+<div class="space-y-3">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="filter-checkbox rounded border-gray-300 dark:border-gray-600 focus:ring-0 text-primary w-5 h-5" type="checkbox"/>
+<span class="text-sm text-text-main-light dark:text-gray-300 group-hover:text-primary transition-colors">Miễn phí</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="filter-checkbox rounded border-gray-300 dark:border-gray-600 focus:ring-0 text-primary w-5 h-5" type="checkbox"/>
+<span class="text-sm text-text-main-light dark:text-gray-300 group-hover:text-primary transition-colors">Có trả phí</span>
+</label>
+</div>
+</div>
+<div>
+<h4 class="text-sm font-semibold uppercase tracking-wider text-text-muted-light dark:text-text-muted-dark mb-4">Chủ đề</h4>
+<div class="space-y-3">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="filter-checkbox rounded border-gray-300 dark:border-gray-600 focus:ring-0 text-primary w-5 h-5" type="checkbox"/>
+<span class="text-sm text-text-main-light dark:text-gray-300 group-hover:text-primary transition-colors">Công nghệ &amp; AI</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="filter-checkbox rounded border-gray-300 dark:border-gray-600 focus:ring-0 text-primary w-5 h-5" type="checkbox"/>
+<span class="text-sm text-text-main-light dark:text-gray-300 group-hover:text-primary transition-colors">Thiết kế &amp; Sáng tạo</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="filter-checkbox rounded border-gray-300 dark:border-gray-600 focus:ring-0 text-primary w-5 h-5" type="checkbox"/>
+<span class="text-sm text-text-main-light dark:text-gray-300 group-hover:text-primary transition-colors">Kinh doanh</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="filter-checkbox rounded border-gray-300 dark:border-gray-600 focus:ring-0 text-primary w-5 h-5" type="checkbox"/>
+<span class="text-sm text-text-main-light dark:text-gray-300 group-hover:text-primary transition-colors">Ngoại ngữ</span>
+</label>
+</div>
+</div>
+</div>
+</aside>
+<div class="lg:col-span-9">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
+<p class="text-text-muted-light dark:text-text-muted-dark text-sm">Hiển thị <span class="font-bold text-text-main-light dark:text-white">12</span> trên <span class="font-bold text-text-main-light dark:text-white">56</span> khóa học</p>
+<div class="flex items-center gap-2">
+<span class="text-sm text-text-muted-light dark:text-text-muted-dark">Sắp xếp theo:</span>
+<select class="bg-transparent border-0 text-sm font-medium text-text-main-light dark:text-white focus:ring-0 cursor-pointer">
+<option>Phổ biến nhất</option>
+<option>Mới nhất</option>
+<option>Giá thấp đến cao</option>
+</select>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<article class="group bg-white dark:bg-surface-dark rounded-2xl overflow-hidden shadow-sm hover:shadow-hover hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col h-full border border-gray-100 dark:border-gray-800">
+<div class="relative aspect-video overflow-hidden">
+<img alt="AI abstract visualization" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAl1HsGVgwQeZ4HnKz-sbBFGnohqyd-oWF8XYs3og0D7cD-euZq_hqMIAh8eap6XF48iniUcJR0uzdLlVhbYryQeZhcy3C8Y0cQ_2O3j2U6oTXv-gWjyGvDFrr_mmW2vkc51X23utUjJjRds2mwTwiyAvktrHWO1xcTLENIyg9FSZX2V-iBXjxogPQ-vdXof_5cEjsMhZ6zq1PiUlLxd6JSegiUG7xDbHpcBykQoJv2BKxnutg2_LVTxI3wuR17K5G24dBrX_qp8F14"/>
+<span class="absolute top-3 left-3 bg-white/90 dark:bg-black/80 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide text-primary shadow-sm">
+                                Công nghệ
+                            </span>
+</div>
+<div class="p-5 flex flex-col flex-grow">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-1 text-yellow-500 text-sm">
+<span class="material-icons-outlined text-base">star</span>
+<span class="font-medium text-text-main-light dark:text-white">4.9</span>
+<span class="text-text-muted-light dark:text-gray-500">(1.2k)</span>
+</div>
+<span class="text-xs font-medium text-green-600 bg-green-100 dark:bg-green-900/30 dark:text-green-400 px-2 py-0.5 rounded">Mới</span>
+</div>
+<h3 class="font-serif text-xl font-medium mb-2 leading-snug group-hover:text-primary transition-colors dark:text-white">
+                                Nhập môn Trí tuệ Nhân tạo &amp; Machine Learning
+                            </h3>
+<p class="text-sm text-text-muted-light dark:text-gray-400 mb-4 line-clamp-2 flex-grow">
+                                Tìm hiểu cơ bản về AI, cách xây dựng mô hình máy học đầu tiên của bạn với Python.
+                            </p>
+<div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-700">
+<div class="flex items-center gap-2">
+<img alt="Avatar giáo viên" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBznvZ1eN22vQVHx7PLn7UsszjfxMYfl5ZgONDJwN4AJDJ3RVvl65cZlD1P-FHtUfgRHb4COqiPZ0hWCRnJlFF4OUNvaEEpYRNUstmUPiGPNaC6Cm5nHfbKUYgiIJ7S8ma6AM0TEKKr2ODvTkV-fX_IB-ufCir6eIvMS10KKgJ4XVK9I9oZeoT-W2YYRShpy0tAbs3LnRXqtHUOtaStZ6Rtbeg6JUhx_Yl9HY6Rm82tuX2KcqkrqBSCwTeQaUKvMNZfqRWAWD1TdRJm"/>
+<span class="text-xs font-medium text-text-main-light dark:text-gray-300">Minh Đạt</span>
+</div>
+<span class="text-base font-bold text-primary">899.000đ</span>
+</div>
+</div>
+</article>
+<article class="group bg-white dark:bg-surface-dark rounded-2xl overflow-hidden shadow-sm hover:shadow-hover hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col h-full border border-gray-100 dark:border-gray-800">
+<div class="relative aspect-video overflow-hidden">
+<img alt="Minimalist desk setup" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXLGWQCs21uCH9GBYf-ZUbZQhxmY6QclC5ZZZQR8xB6Od5ATrelVLminSNDXQdWG8t2EOsbkQCHpTNDXEbWBur1SPq4VYuFYLadhxQ769jxqel1bohKVqAn3lXzrPqehQz4xMegRZ0JmIeccrCP4r6XpT95pe-3tqzMMJ6Lg3-qWS8WinRoJ-bt0xCVD_e4a_899jtSKvpUw7xXwQ5ptVBVsYKQlChnTXHFB1A4pKOvhQcYmU6Rs9ETW2I5XcRyKfPH2jZ7NZczz_b"/>
+<span class="absolute top-3 left-3 bg-white/90 dark:bg-black/80 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide text-blue-600 shadow-sm">
+                                Thiết kế
+                            </span>
+</div>
+<div class="p-5 flex flex-col flex-grow">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-1 text-yellow-500 text-sm">
+<span class="material-icons-outlined text-base">star</span>
+<span class="font-medium text-text-main-light dark:text-white">4.8</span>
+<span class="text-text-muted-light dark:text-gray-500">(856)</span>
+</div>
+</div>
+<h3 class="font-serif text-xl font-medium mb-2 leading-snug group-hover:text-primary transition-colors dark:text-white">
+                                UI/UX Design: Tư duy thiết kế tối giản
+                            </h3>
+<p class="text-sm text-text-muted-light dark:text-gray-400 mb-4 line-clamp-2 flex-grow">
+                                Học cách tạo ra những giao diện người dùng đẹp mắt, tinh tế và dễ sử dụng.
+                            </p>
+<div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-700">
+<div class="flex items-center gap-2">
+<img alt="Avatar giáo viên" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1ThRKWwNwTnr9-FSD9g4kdDvbwgCBp00v53_wsf0teHfAW0cxZGYyeJspzbyBL-0YXpIcMaAJoKYB2GmQPGZnjhRp4bbXK6ipVcvKr-CxRyn5tt5Vd5-SeGP4XegEa-2HdTcCc22ws0N_6wrU9SrYKt-VxIxigYuGkFpxpsJR7r0wFyRWzXm1CFXinL_O2nmdYa6-lK6Hm3SL1XMJLmhmEp-DumN7drfIfhJanW2Ys9cs5TEVaTn5jrAfCXZsVZobSd2fFIrNwcMy"/>
+<span class="text-xs font-medium text-text-main-light dark:text-gray-300">Lan Hương</span>
+</div>
+<span class="text-base font-bold text-primary">1.200.000đ</span>
+</div>
+</div>
+</article>
+<article class="group bg-white dark:bg-surface-dark rounded-2xl overflow-hidden shadow-sm hover:shadow-hover hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col h-full border border-gray-100 dark:border-gray-800">
+<div class="relative aspect-video overflow-hidden">
+<img alt="Business strategy meeting" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClzjn4KmZ48Q_O541Ou9eKGsmQZtRbSdwg0znbvlMAHc10DX_75YFUA_0f7t_Ev8xUCMV_9rDFua133vfrQUiHPLNUGXamYOyodXncyiH1WUc7GZDToI1kXuffQFUHUyu1XlmbHIvh_-8BwjZdQTSC_s-9A1eRcT93UMn3hBiNGnkws-3Cag6q1WqWbv8DRm_uFvf5isp8z7s64OTcTJcn0rQWkl6uFXm47nN5_l9JFqtdFBuzV8mpl1M58jKxihYF36vzZ9zWWS-k"/>
+<span class="absolute top-3 left-3 bg-white/90 dark:bg-black/80 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide text-purple-600 shadow-sm">
+                                Kinh doanh
+                            </span>
+</div>
+<div class="p-5 flex flex-col flex-grow">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-1 text-yellow-500 text-sm">
+<span class="material-icons-outlined text-base">star</span>
+<span class="font-medium text-text-main-light dark:text-white">4.7</span>
+<span class="text-text-muted-light dark:text-gray-500">(2.4k)</span>
+</div>
+</div>
+<h3 class="font-serif text-xl font-medium mb-2 leading-snug group-hover:text-primary transition-colors dark:text-white">
+                                Data Analysis cho Business Intelligence
+                            </h3>
+<p class="text-sm text-text-muted-light dark:text-gray-400 mb-4 line-clamp-2 flex-grow">
+                                Biến dữ liệu thô thành thông tin chi tiết có thể hành động để thúc đẩy doanh nghiệp.
+                            </p>
+<div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-700">
+<div class="flex items-center gap-2">
+<img alt="Avatar giáo viên" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnZD277Q5XYPz218Y5R-aHmwLuEyKE37bncYAklDR43sp9jmDVq3vI3XK9gYIfThNV3dK-P_qGxAx1rNhzEFy-dZcEQnFdhVcl1jMszW-mljP3BGTTC3xESzzPPBmBLSoYnZRFjSgbF3nk71QtMdoadWwPyNTWufJvOtNOOA2vu3sPC8UDlE_LTkw0jlEiaKuuY5ypsdju2rm7Fj8_NAiVQQ2j_0ctyYHuCaAsNFto4SZDsyZkSgPZyTdxJhkl4YWQttiWSnKjJva8"/>
+<span class="text-xs font-medium text-text-main-light dark:text-gray-300">Quang Huy</span>
+</div>
+<span class="text-base font-bold text-primary">1.500.000đ</span>
+</div>
+</div>
+</article>
+<article class="group bg-white dark:bg-surface-dark rounded-2xl overflow-hidden shadow-sm hover:shadow-hover hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col h-full border border-gray-100 dark:border-gray-800">
+<div class="relative aspect-video overflow-hidden">
+<img alt="Coding screen" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdxwktppGTlqzfevyEXb8WXQDgi2YNEsHsolvorXj_YtWVVgkzsCty-6-dBR2qpUPFV8fNMF-RNmn2aLJL7tAD8MuG-_i32qeTBG9XDhqPTCNR0wuNy-AXmo95HOmT49794a0wEpdDT-oW6jOw6PCbHfGdzEyqN4WnhTs_KVmq1vQOcYxaBJSic6m171ieI_GUEv9N_-vo6AXT8aao_SqMImXMQ4dn2EYsFBRUHUqGib0U35t727q99jFUqGV3Wp8wQFmXR2r5E0mF"/>
+<span class="absolute top-3 left-3 bg-white/90 dark:bg-black/80 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide text-primary shadow-sm">
+                                Công nghệ
+                            </span>
+</div>
+<div class="p-5 flex flex-col flex-grow">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-1 text-yellow-500 text-sm">
+<span class="material-icons-outlined text-base">star</span>
+<span class="font-medium text-text-main-light dark:text-white">5.0</span>
+<span class="text-text-muted-light dark:text-gray-500">(320)</span>
+</div>
+</div>
+<h3 class="font-serif text-xl font-medium mb-2 leading-snug group-hover:text-primary transition-colors dark:text-white">
+                                ReactJS &amp; NextJS: Xây dựng Web App hiện đại
+                            </h3>
+<p class="text-sm text-text-muted-light dark:text-gray-400 mb-4 line-clamp-2 flex-grow">
+                                Khóa học chuyên sâu từ cơ bản đến nâng cao về hệ sinh thái React.
+                            </p>
+<div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-700">
+<div class="flex items-center gap-2">
+<img alt="Avatar giáo viên" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZjaQeI936U2bnCnuhyvnt55r9Ypl2w0VtXsrlOWWTAPB5gXlAR3Yc9_Ytp6yF_Qngbsbis00l-zyGII3IhBpcwfnwckvtrNblTfToUfUeTQHENdlk_CwS2n-m7D3WNPVQfd0_xc-kHVIbRzQM3dK7BVKaM6n5yPZWrnQ9mZN_oCV6vn_UP50CIT_Fyuba2ljxC_WvnUCxrtgHsj_oGputd32BN-7BFLPx4Pzi6-R9UYNTKMb5K-cAe-ybpvzA4UdxgcyD3KvoM5MX"/>
+<span class="text-xs font-medium text-text-main-light dark:text-gray-300">Tuấn Anh</span>
+</div>
+<span class="text-base font-bold text-primary">1.800.000đ</span>
+</div>
+</div>
+</article>
+<article class="group bg-white dark:bg-surface-dark rounded-2xl overflow-hidden shadow-sm hover:shadow-hover hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col h-full border border-gray-100 dark:border-gray-800">
+<div class="relative aspect-video overflow-hidden">
+<img alt="Language learning books" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkz1urYfNsv18fWtVGBkCIJ8zvNFgITeLxFRgGQ5zSa-rX6NCQLXphBrO2QoAxy1UenB9owPNF68tfwd8ALC6-WPH4OjBk1dcMy3bcrlWuDUEq3OYZIw3bwRp4VVS2DLtjjwuogdmLv0pEvVD-of0Df2ZO6t57g4usiCFGzOHuuprz8uwNThQKPzvFYeHR4fIEvk7vi1i6S0s1-rgBs9Jp_iosa22hO7rbsgd-uVhJEduwyeAXJqvo91yQQqwJXqU4Q645T3SSY5N6"/>
+<span class="absolute top-3 left-3 bg-white/90 dark:bg-black/80 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide text-pink-600 shadow-sm">
+                                Ngoại ngữ
+                            </span>
+</div>
+<div class="p-5 flex flex-col flex-grow">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-1 text-yellow-500 text-sm">
+<span class="material-icons-outlined text-base">star</span>
+<span class="font-medium text-text-main-light dark:text-white">4.5</span>
+<span class="text-text-muted-light dark:text-gray-500">(5.6k)</span>
+</div>
+</div>
+<h3 class="font-serif text-xl font-medium mb-2 leading-snug group-hover:text-primary transition-colors dark:text-white">
+                                Tiếng Anh Giao Tiếp cho người đi làm
+                            </h3>
+<p class="text-sm text-text-muted-light dark:text-gray-400 mb-4 line-clamp-2 flex-grow">
+                                Tự tin giao tiếp trong môi trường công sở quốc tế chỉ sau 3 tháng.
+                            </p>
+<div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-700">
+<div class="flex items-center gap-2">
+<img alt="Avatar giáo viên" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAz3D6uoGxeNYgvr5inpcjSMZ1eCAT8H6XV-rhhG6_GjgULJSVtrfmej-bEL9kbBFk8AMYm-rvkka9w4nkmKNf2WiFAEUhfakibNsh5CygMwAvHXIejKkIX2w09Q_NY0qmcXX8sG4SilRa_E3GQ30zcPcDFeSBiF-chQX2NYXkiwdykom6M8qNcudFxWaO2grrhM1gt_G0I7gB7PamG-Mz5CRK7AYZx80LKlewgoOBme-FNcWiiCQir3bN1kN460qPOvj3c8_8BowRA"/>
+<span class="text-xs font-medium text-text-main-light dark:text-gray-300">Ms. Jessica</span>
+</div>
+<span class="text-base font-bold text-primary">699.000đ</span>
+</div>
+</div>
+</article>
+<article class="group bg-white dark:bg-surface-dark rounded-2xl overflow-hidden shadow-sm hover:shadow-hover hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col h-full border border-gray-100 dark:border-gray-800">
+<div class="relative aspect-video overflow-hidden">
+<img alt="Gradient abstract art" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHnlko4vxzIoWp2Gi8CgJnMw8ngj7P-xX_TJABxsKrA2tj0yAhK0fT2uPa2JSrP7bRgSAsZbieIsTblwDScwN30y6C7m3D2IqQXN7JA2gwyUovs_QKcogtK3X6OfGo2YRHHmu0HptU0fi7I56Yw59YcVM1QCfJjGZuBb4VC8JnhndSlXjk-cv5DJKgbpYMYrI0nJzRzoWgxJEop_m30fILK1G9lgpHY4EwP4zqQUqqY5-5uR4D5IefaQVKO5X3Uz8K9U2r53dT-CkP"/>
+<span class="absolute top-3 left-3 bg-white/90 dark:bg-black/80 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide text-blue-600 shadow-sm">
+                                Thiết kế
+                            </span>
+</div>
+<div class="p-5 flex flex-col flex-grow">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-1 text-yellow-500 text-sm">
+<span class="material-icons-outlined text-base">star</span>
+<span class="font-medium text-text-main-light dark:text-white">4.9</span>
+<span class="text-text-muted-light dark:text-gray-500">(120)</span>
+</div>
+<span class="text-xs font-medium text-green-600 bg-green-100 dark:bg-green-900/30 dark:text-green-400 px-2 py-0.5 rounded">Mới</span>
+</div>
+<h3 class="font-serif text-xl font-medium mb-2 leading-snug group-hover:text-primary transition-colors dark:text-white">
+                                Photoshop Mastery: Từ cơ bản đến chuyên gia
+                            </h3>
+<p class="text-sm text-text-muted-light dark:text-gray-400 mb-4 line-clamp-2 flex-grow">
+                                Chỉnh sửa ảnh, thiết kế poster, banner quảng cáo chuyên nghiệp.
+                            </p>
+<div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-700">
+<div class="flex items-center gap-2">
+<img alt="Avatar giáo viên" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJcULb8wDI0Y5Rwx6xw7teQF8dIxq5tjHuPSSnsixdhl-38A4TIrr705enB1MF0_F87bh7HDyON5FwjLVt6Hz73L7Mhxz5LA_cCDKK9_NhHoCbYcB2Sup_OhN9wEfao6tsd7TYfd1akrph5bzCE9pZhnadALQnZlR0b7KPoBeMsPgoyfGeERBRjDTCfKwXhXEeU0GfGN_nBron5WdlROmB1hqaPoYXVNpzECW-R1E3BaLAK162XhrgvQNlHaTD4VDzycmuRDagmeJn"/>
+<span class="text-xs font-medium text-text-main-light dark:text-gray-300">Đức Mạnh</span>
+</div>
+<span class="text-base font-bold text-primary">599.000đ</span>
+</div>
+</div>
+</article>
+</div>
+<div class="mt-16 flex justify-center">
+<nav class="flex items-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 dark:border-gray-700 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+<span class="material-icons-outlined text-sm">chevron_left</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-primary text-white font-medium shadow-sm">1</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full border border-transparent hover:bg-gray-100 dark:hover:bg-gray-800 text-text-main-light dark:text-white transition-colors">2</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full border border-transparent hover:bg-gray-100 dark:hover:bg-gray-800 text-text-main-light dark:text-white transition-colors">3</button>
+<span class="px-2 text-gray-400">...</span>
+<button class="w-10 h-10 flex items-center justify-center rounded-full border border-transparent hover:bg-gray-100 dark:hover:bg-gray-800 text-text-main-light dark:text-white transition-colors">8</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 dark:border-gray-700 text-text-main-light dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+<span class="material-icons-outlined text-sm">chevron_right</span>
+</button>
+</nav>
+</div>
+</div>
+</div>
+</main>
+<footer class="bg-surface-light dark:bg-surface-dark pt-16 pb-8 border-t border-gray-200 dark:border-gray-800">
+<div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+<div class="col-span-1 md:col-span-1">
+<div class="flex items-center gap-2 mb-4">
+<div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-white">
+<span class="material-icons-outlined text-xs">psychology</span>
+</div>
+<span class="font-serif text-xl font-bold tracking-tight">ThinkAI</span>
+</div>
+<p class="text-sm text-text-muted-light dark:text-gray-400 leading-relaxed">
+                    Nền tảng giáo dục thông minh, nơi tri thức được lan tỏa một cách tinh tế và hiệu quả nhất.
+                </p>
+</div>
+<div>
+<h4 class="font-bold text-text-main-light dark:text-white mb-4">Khám phá</h4>
+<ul class="space-y-2 text-sm text-text-muted-light dark:text-gray-400">
+<li><a class="hover:text-primary transition-colors" href="#">Về chúng tôi</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Khóa học</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Blog</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Sự kiện</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-text-main-light dark:text-white mb-4">Hỗ trợ</h4>
+<ul class="space-y-2 text-sm text-text-muted-light dark:text-gray-400">
+<li><a class="hover:text-primary transition-colors" href="#">Trung tâm trợ giúp</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Điều khoản sử dụng</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Chính sách bảo mật</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-text-main-light dark:text-white mb-4">Kết nối</h4>
+<div class="flex gap-4">
+<a class="w-10 h-10 rounded-full bg-white dark:bg-black/20 flex items-center justify-center text-gray-500 hover:text-primary hover:bg-gray-50 dark:hover:bg-black/40 transition-all" href="#">
+<span class="material-icons-outlined">facebook</span>
+</a>
+<a class="w-10 h-10 rounded-full bg-white dark:bg-black/20 flex items-center justify-center text-gray-500 hover:text-primary hover:bg-gray-50 dark:hover:bg-black/40 transition-all" href="#">
+<span class="material-icons-outlined">alternate_email</span>
+</a>
+</div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-6 text-center pt-8 border-t border-gray-200/50 dark:border-gray-700/50">
+<p class="text-xs text-text-muted-light dark:text-gray-500">© 2024 ThinkAI. Designed with calm.</p>
+</div>
+</footer>
+
+</body></html>

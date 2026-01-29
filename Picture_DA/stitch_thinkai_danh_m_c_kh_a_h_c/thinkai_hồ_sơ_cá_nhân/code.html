@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ThinkAI - Hồ sơ cá nhân</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Noto+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#3c83f6",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101722",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.375rem", 
+                        "lg": "0.5rem", 
+                        "xl": "0.75rem", 
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col font-display antialiased selection:bg-primary/20 selection:text-primary">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-slate-200 dark:border-gray-800">
+<div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-16">
+<!-- Logo -->
+<div class="flex items-center gap-3">
+<div class="text-primary">
+<svg fill="none" height="32" viewbox="0 0 48 48" width="32" xmlns="http://www.w3.org/2000/svg">
+<path d="M36.7273 44C33.9891 44 31.6043 39.8386 30.3636 33.69C29.123 39.8386 26.7382 44 24 44C21.2618 44 18.877 39.8386 17.6364 33.69C16.3957 39.8386 14.0109 44 11.2727 44C7.25611 44 4 35.0457 4 24C4 12.9543 7.25611 4 11.2727 4C14.0109 4 16.3957 8.16144 17.6364 14.31C18.877 8.16144 21.2618 4 24 4C26.7382 4 29.123 8.16144 30.3636 14.31C31.6043 8.16144 33.9891 4 36.7273 4C40.7439 4 44 12.9543 44 24C44 35.0457 40.7439 44 36.7273 44Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold tracking-tight">ThinkAI</h2>
+</div>
+<!-- Nav Links -->
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary text-sm font-medium transition-colors" href="#">Học tập</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary text-sm font-medium transition-colors" href="#">Cộng đồng</a>
+<a class="text-primary text-sm font-semibold" href="#">Hồ sơ</a>
+</nav>
+<!-- User/Actions -->
+<div class="flex items-center gap-4">
+<button class="hidden sm:flex items-center justify-center h-9 px-4 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary text-sm font-medium transition-colors">
+                        Đăng xuất
+                    </button>
+<div class="relative group cursor-pointer">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-9 ring-2 ring-slate-100 dark:ring-gray-800" data-alt="Small user avatar thumbnail" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA_WzbXprh3pkrXASqLpH45u28nlNqJXE3wTnwRnOyFWse1HbiIBCXbSfeVP_5fu1ijD26lu_7zbu9JfPIL8pWSr2DD0BKapPp1LcS_zEjYMOMHYykQ986AknLB91xTP0PF_IQXv48VlhjhUI6cJYDAVZx2sHuOiVB2pXECnlwUxyhCI-7SDmQB_uNY5S15BG7W82UdFoOe8DNr7uS-xEJRKBe8y2z1zq1JbcuYmUApHEIErNwIqkk1LIBp2RyqRrKsm1no1LgHTJIT");'></div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow w-full max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 mb-8 text-sm">
+<a class="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200 transition-colors" href="#">Trang chủ</a>
+<span class="text-slate-400 dark:text-slate-600">/</span>
+<span class="text-slate-900 dark:text-white font-medium">Hồ sơ cá nhân</span>
+</nav>
+<!-- Profile Island Container -->
+<div class="max-w-4xl mx-auto">
+<div class="bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-slate-200 dark:border-gray-800 overflow-hidden">
+<!-- Hero / Cover Area (Optional visual element) -->
+<div class="h-32 w-full bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-900 relative" data-alt="Soft abstract blue gradient background">
+<div class="absolute inset-0 bg-primary/5 pattern-grid-lg"></div>
+</div>
+<!-- Profile Header Content -->
+<div class="px-8 pb-8 -mt-16 relative">
+<div class="flex flex-col items-center">
+<!-- Avatar -->
+<div class="relative group">
+<div class="size-32 rounded-full border-4 border-white dark:border-gray-900 bg-white dark:bg-gray-800 shadow-md overflow-hidden cursor-pointer">
+<div class="w-full h-full bg-center bg-no-repeat bg-cover transition-transform duration-500 group-hover:scale-110" data-alt="User profile picture, man smiling" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAOArFZwNTir6Jea0_HBJwjKfoJLYnI0sYewbHO6fz3NYhQpNeecmLy4X96c9J3YGbK_PpQyhQ0tMi34c64RdChhXm97h1rID4XDjd05G-HjbaP2tM5w-zqf10y5kppVW8LA9L-JjMDJmS88pbis8Jl3kvbbnPExkNo1blsXSTJiULebtEksVjNfIm0OFyR9OLmj-pcDhOxPAwylTDOnE7_oyF7JoZz8eGL24gNrzDWJvbeULeedywzItvf1fdUd06EpQ4rn9zO1INV");'>
+</div>
+<!-- Hover Overlay -->
+<div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+<span class="material-symbols-outlined text-white">photo_camera</span>
+</div>
+</div>
+<button class="absolute bottom-1 right-1 bg-white dark:bg-gray-800 text-slate-700 dark:text-slate-300 p-1.5 rounded-full shadow-sm border border-slate-200 dark:border-gray-700 hover:text-primary transition-colors" title="Cập nhật ảnh">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</div>
+<!-- Name & Tagline -->
+<div class="mt-4 text-center">
+<h1 class="text-2xl font-bold text-slate-900 dark:text-white">Nguyễn Văn A</h1>
+<div class="flex items-center justify-center gap-2 mt-1">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
+<span class="material-symbols-outlined filled text-[14px]">school</span>
+                                    Học viên xuất sắc
+                                </span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-3 max-w-md mx-auto leading-relaxed">
+                                Đam mê AI và Machine Learning. Luôn tìm kiếm cơ hội để học hỏi và chia sẻ kiến thức với cộng đồng.
+                            </p>
+</div>
+</div>
+</div>
+<!-- Divider -->
+<div class="h-px w-full bg-slate-100 dark:bg-gray-800"></div>
+<div class="grid lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-slate-100 dark:divide-gray-800">
+<!-- Column 1: Personal Info -->
+<div class="lg:col-span-2 p-8">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary">person</span>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Thông tin cá nhân</h3>
+</div>
+<div class="grid sm:grid-cols-2 gap-6">
+<!-- Name Input -->
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300">Họ và tên</label>
+<input class="w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-gray-700 bg-slate-50 dark:bg-gray-800/50 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none text-sm" placeholder="Nhập họ tên" type="text" value="Nguyễn Văn A"/>
+</div>
+<!-- Email Input -->
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300">Email</label>
+<div class="relative">
+<input class="w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-gray-700 bg-slate-100 dark:bg-gray-800 text-slate-500 dark:text-slate-400 cursor-not-allowed outline-none text-sm pr-10" disabled="" type="email" value="nguyenvana@example.com"/>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-slate-400 text-[18px]">lock</span>
+</div>
+</div>
+<!-- Phone Input -->
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300">Số điện thoại</label>
+<input class="w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-gray-700 bg-slate-50 dark:bg-gray-800/50 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none text-sm" type="tel" value="0912 345 678"/>
+</div>
+<!-- Location Input -->
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300">Địa chỉ</label>
+<input class="w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-gray-700 bg-slate-50 dark:bg-gray-800/50 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none text-sm" type="text" value="Hà Nội, Việt Nam"/>
+</div>
+<!-- Bio Input -->
+<div class="sm:col-span-2 flex flex-col gap-2">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300">Giới thiệu bản thân</label>
+<textarea class="w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-gray-700 bg-slate-50 dark:bg-gray-800/50 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none text-sm resize-none" rows="3">Đam mê AI và Machine Learning. Luôn tìm kiếm cơ hội để học hỏi và chia sẻ kiến thức với cộng đồng.</textarea>
+</div>
+</div>
+<!-- Linked Accounts Section inside main column -->
+<div class="mt-10">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary">link</span>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Tài khoản liên kết</h3>
+</div>
+<div class="space-y-4">
+<!-- Google -->
+<div class="flex items-center justify-between p-3 rounded-xl border border-slate-100 dark:border-gray-800 bg-slate-50 dark:bg-gray-800/30">
+<div class="flex items-center gap-3">
+<div class="bg-white p-2 rounded-lg shadow-sm border border-slate-100">
+<svg class="size-5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.2 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
+</svg>
+</div>
+<div>
+<p class="text-sm font-semibold text-slate-900 dark:text-white">Google</p>
+<p class="text-xs text-slate-500">Đã kết nối</p>
+</div>
+</div>
+<button class="text-xs font-medium text-slate-500 hover:text-red-500 transition-colors">Ngắt kết nối</button>
+</div>
+<!-- Github -->
+<div class="flex items-center justify-between p-3 rounded-xl border border-slate-100 dark:border-gray-800 bg-slate-50 dark:bg-gray-800/30">
+<div class="flex items-center gap-3">
+<div class="bg-white dark:bg-gray-700 p-2 rounded-lg shadow-sm border border-slate-100 dark:border-gray-600">
+<svg class="size-5 dark:fill-white" fill="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.285 0 .315.225.69.825.57C20.565 21.795 24 17.31 24 12c0-6.63-5.37-12-12-12z"></path>
+</svg>
+</div>
+<div>
+<p class="text-sm font-semibold text-slate-900 dark:text-white">Github</p>
+<p class="text-xs text-slate-500">Chưa kết nối</p>
+</div>
+</div>
+<button class="text-xs font-medium text-primary hover:text-blue-600 transition-colors">Kết nối</button>
+</div>
+</div>
+</div>
+<!-- Save Actions -->
+<div class="mt-8 flex justify-end">
+<button class="bg-primary hover:bg-blue-600 text-white font-medium py-2.5 px-6 rounded-lg transition-all shadow-md shadow-primary/20 flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">save</span>
+                                Lưu thay đổi
+                            </button>
+</div>
+</div>
+<!-- Column 2: Badges / Achievements -->
+<div class="p-8 bg-slate-50 dark:bg-gray-900/50">
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-yellow-500">military_tech</span>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Thành tựu</h3>
+</div>
+<span class="text-xs font-semibold bg-slate-200 dark:bg-gray-700 text-slate-600 dark:text-slate-300 px-2 py-0.5 rounded-md">8/12</span>
+</div>
+<div class="grid grid-cols-3 gap-3">
+<!-- Unlocked Badge 1 -->
+<div class="aspect-square flex flex-col items-center justify-center p-2 rounded-xl bg-white dark:bg-gray-800 border border-blue-100 dark:border-gray-700 shadow-sm group hover:border-primary/50 transition-colors cursor-help relative">
+<div class="size-10 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-primary mb-2">
+<span class="material-symbols-outlined filled">local_fire_department</span>
+</div>
+<span class="text-[10px] font-semibold text-center text-slate-700 dark:text-slate-300 leading-tight">7 Ngày Streak</span>
+</div>
+<!-- Unlocked Badge 2 -->
+<div class="aspect-square flex flex-col items-center justify-center p-2 rounded-xl bg-white dark:bg-gray-800 border border-blue-100 dark:border-gray-700 shadow-sm group hover:border-primary/50 transition-colors cursor-help">
+<div class="size-10 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-primary mb-2">
+<span class="material-symbols-outlined filled">function</span>
+</div>
+<span class="text-[10px] font-semibold text-center text-slate-700 dark:text-slate-300 leading-tight">Toán học</span>
+</div>
+<!-- Unlocked Badge 3 -->
+<div class="aspect-square flex flex-col items-center justify-center p-2 rounded-xl bg-white dark:bg-gray-800 border border-blue-100 dark:border-gray-700 shadow-sm group hover:border-primary/50 transition-colors cursor-help">
+<div class="size-10 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-primary mb-2">
+<span class="material-symbols-outlined filled">forum</span>
+</div>
+<span class="text-[10px] font-semibold text-center text-slate-700 dark:text-slate-300 leading-tight">Thảo luận</span>
+</div>
+<!-- Unlocked Badge 4 -->
+<div class="aspect-square flex flex-col items-center justify-center p-2 rounded-xl bg-white dark:bg-gray-800 border border-blue-100 dark:border-gray-700 shadow-sm group hover:border-primary/50 transition-colors cursor-help">
+<div class="size-10 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-primary mb-2">
+<span class="material-symbols-outlined filled">school</span>
+</div>
+<span class="text-[10px] font-semibold text-center text-slate-700 dark:text-slate-300 leading-tight">Học viên</span>
+</div>
+<!-- Unlocked Badge 5 -->
+<div class="aspect-square flex flex-col items-center justify-center p-2 rounded-xl bg-white dark:bg-gray-800 border border-blue-100 dark:border-gray-700 shadow-sm group hover:border-primary/50 transition-colors cursor-help">
+<div class="size-10 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-primary mb-2">
+<span class="material-symbols-outlined filled">edit_document</span>
+</div>
+<span class="text-[10px] font-semibold text-center text-slate-700 dark:text-slate-300 leading-tight">Tác giả</span>
+</div>
+<!-- Unlocked Badge 6 -->
+<div class="aspect-square flex flex-col items-center justify-center p-2 rounded-xl bg-white dark:bg-gray-800 border border-blue-100 dark:border-gray-700 shadow-sm group hover:border-primary/50 transition-colors cursor-help">
+<div class="size-10 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-primary mb-2">
+<span class="material-symbols-outlined filled">verified</span>
+</div>
+<span class="text-[10px] font-semibold text-center text-slate-700 dark:text-slate-300 leading-tight">Xác thực</span>
+</div>
+<!-- Unlocked Badge 7 -->
+<div class="aspect-square flex flex-col items-center justify-center p-2 rounded-xl bg-white dark:bg-gray-800 border border-blue-100 dark:border-gray-700 shadow-sm group hover:border-primary/50 transition-colors cursor-help">
+<div class="size-10 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-primary mb-2">
+<span class="material-symbols-outlined filled">lightbulb</span>
+</div>
+<span class="text-[10px] font-semibold text-center text-slate-700 dark:text-slate-300 leading-tight">Sáng tạo</span>
+</div>
+<!-- Unlocked Badge 8 -->
+<div class="aspect-square flex flex-col items-center justify-center p-2 rounded-xl bg-white dark:bg-gray-800 border border-blue-100 dark:border-gray-700 shadow-sm group hover:border-primary/50 transition-colors cursor-help">
+<div class="size-10 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-primary mb-2">
+<span class="material-symbols-outlined filled">rocket_launch</span>
+</div>
+<span class="text-[10px] font-semibold text-center text-slate-700 dark:text-slate-300 leading-tight">Khởi đầu</span>
+</div>
+<!-- Locked Badge -->
+<div class="aspect-square flex flex-col items-center justify-center p-2 rounded-xl bg-slate-100 dark:bg-gray-800 border border-slate-200 dark:border-gray-700 opacity-60">
+<div class="size-10 rounded-full bg-slate-200 dark:bg-gray-700 flex items-center justify-center text-slate-400 mb-2">
+<span class="material-symbols-outlined">diamond</span>
+</div>
+<span class="text-[10px] font-medium text-center text-slate-500 leading-tight">Đại gia</span>
+</div>
+<!-- Locked Badge -->
+<div class="aspect-square flex flex-col items-center justify-center p-2 rounded-xl bg-slate-100 dark:bg-gray-800 border border-slate-200 dark:border-gray-700 opacity-60">
+<div class="size-10 rounded-full bg-slate-200 dark:bg-gray-700 flex items-center justify-center text-slate-400 mb-2">
+<span class="material-symbols-outlined">psychology</span>
+</div>
+<span class="text-[10px] font-medium text-center text-slate-500 leading-tight">Bậc thầy</span>
+</div>
+<!-- Locked Badge -->
+<div class="aspect-square flex flex-col items-center justify-center p-2 rounded-xl bg-slate-100 dark:bg-gray-800 border border-slate-200 dark:border-gray-700 opacity-60">
+<div class="size-10 rounded-full bg-slate-200 dark:bg-gray-700 flex items-center justify-center text-slate-400 mb-2">
+<span class="material-symbols-outlined">trophy</span>
+</div>
+<span class="text-[10px] font-medium text-center text-slate-500 leading-tight">Vô địch</span>
+</div>
+<!-- Locked Badge -->
+<div class="aspect-square flex flex-col items-center justify-center p-2 rounded-xl bg-slate-100 dark:bg-gray-800 border border-slate-200 dark:border-gray-700 opacity-60">
+<div class="size-10 rounded-full bg-slate-200 dark:bg-gray-700 flex items-center justify-center text-slate-400 mb-2">
+<span class="material-symbols-outlined">stars</span>
+</div>
+<span class="text-[10px] font-medium text-center text-slate-500 leading-tight">Huyền thoại</span>
+</div>
+</div>
+<div class="mt-6 p-4 rounded-xl bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-900/50">
+<h4 class="text-xs font-bold uppercase tracking-wide text-indigo-800 dark:text-indigo-300 mb-2">Mẹo kiếm Badge</h4>
+<p class="text-xs text-indigo-700 dark:text-indigo-200">Hoàn thành khóa học Python Cơ bản để mở khóa huy hiệu "Lập trình viên".</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

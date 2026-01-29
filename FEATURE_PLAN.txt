@@ -1,0 +1,294 @@
+================================================================================
+                    THINKAI - KẾ HOẠCH PHÂN CHIA TÍNH NĂNG
+================================================================================
+Cập nhật: 2026-01-30
+Team: 7 thành viên x 5 tính năng = 35 tính năng
+Nguyên tắc: Phân chia theo MODULE để dễ thực hiện, debug và viết test
+================================================================================
+
+--------------------------------------------------------------------------------
+1. BÌNH MINH — Module: AUTHENTICATION & USER PROFILE
+--------------------------------------------------------------------------------
+   Làm ĐẦU TIÊN vì các module khác phụ thuộc vào Auth!
+
+   [1] Đăng ký tài khoản (Email/Password)
+       - API: POST /auth/register
+       - Màn hình: Register Page
+       - Độ khó: ⭐⭐
+
+   [2] Đăng nhập (Email/Password)
+       - API: POST /auth/login
+       - Màn hình: Login Page
+       - Độ khó: ⭐⭐
+
+   [3] Đăng nhập Google OAuth
+       - API: POST /auth/google
+       - Màn hình: Login Page (nút Google)
+       - Độ khó: ⭐⭐⭐
+
+   [4] Quản lý Profile (Xem/Sửa thông tin cá nhân)
+       - API: GET/PUT /users/me
+       - Màn hình: Profile Page
+       - Độ khó: ⭐⭐
+
+   [5] Đổi mật khẩu
+       - API: PUT /users/me/password
+       - Màn hình: Profile Page
+       - Độ khó: ⭐
+
+   >>> Output: Auth Context, JWT handling, Protected routes
+
+--------------------------------------------------------------------------------
+2. HOÀNG MINH — Module: COURSE CATALOG & ENROLLMENT
+--------------------------------------------------------------------------------
+   Phụ thuộc: Auth module (Bình Minh)
+
+   [1] Trang chủ (Landing Page)
+       - Màn hình: Home Page
+       - Độ khó: ⭐⭐
+
+   [2] Danh sách khóa học (Filter, Search, Sort, Pagination)
+       - API: GET /courses
+       - Màn hình: Courses List Page
+       - Độ khó: ⭐⭐⭐
+
+   [3] Chi tiết khóa học
+       - API: GET /courses/{id}
+       - Màn hình: Course Detail Page
+       - Độ khó: ⭐⭐
+
+   [4] Đăng ký khóa học (Enroll)
+       - API: POST /courses/{id}/enroll
+       - Màn hình: Course Detail Page (nút Đăng ký)
+       - Độ khó: ⭐⭐
+
+   [5] Khóa học của tôi (My Courses)
+       - API: GET /users/me/courses
+       - Màn hình: My Courses Page
+       - Độ khó: ⭐⭐
+
+   >>> Output: Course listing, Course cards, Enrollment system
+
+--------------------------------------------------------------------------------
+3. ANH KHOA — Module: LEARNING ROOM & PROGRESS
+--------------------------------------------------------------------------------
+   Phụ thuộc: Course module (Hoàng Minh)
+
+   [1] Learning Room Layout (Video bên trái + Sidebar bên phải)
+       - Màn hình: Learning Room
+       - Độ khó: ⭐⭐⭐
+
+   [2] Video Player (Play, Pause, Speed control, Seek bar)
+       - Màn hình: Learning Room
+       - Độ khó: ⭐⭐⭐
+
+   [3] PDF Viewer
+       - Màn hình: Learning Room
+       - Độ khó: ⭐⭐
+
+   [4] Đánh dấu hoàn thành bài học
+       - API: POST /courses/lessons/{id}/complete
+       - Màn hình: Learning Room
+       - Độ khó: ⭐⭐
+
+   [5] Dashboard Sinh viên (Overview + Tiến độ học tập)
+       - API: GET /users/me/dashboard
+       - Màn hình: Student Dashboard
+       - Độ khó: ⭐⭐⭐
+
+   >>> Output: Video/PDF players, Progress tracking, Student dashboard
+
+--------------------------------------------------------------------------------
+4. BÒ TRANG — Module: AI TUTOR (GIA SƯ ẢO)
+--------------------------------------------------------------------------------
+   Phụ thuộc: Learning Room (Anh Khoa), Gemini API
+
+   [1] AI Chat Widget (Floating button + Modal)
+       - Màn hình: Learning Room
+       - Độ khó: ⭐⭐⭐
+
+   [2] Chat với AI Tutor (Context-aware, hiểu nội dung bài học)
+       - API: POST /ai/chat
+       - Màn hình: AI Chat Modal
+       - Độ khó: ⭐⭐⭐
+
+   [3] Hiển thị Citations (nguồn tham khảo từ bài giảng)
+       - Màn hình: AI Chat Modal
+       - Độ khó: ⭐⭐
+
+   [4] Gợi ý câu hỏi tiếp theo
+       - Màn hình: AI Chat Modal
+       - Độ khó: ⭐⭐
+
+   [5] Tóm tắt bài học bằng AI
+       - API: POST /ai/summarize
+       - Màn hình: Learning Room
+       - Độ khó: ⭐⭐⭐
+
+   >>> Output: AI Chat component, Streaming responses, Summary feature
+
+--------------------------------------------------------------------------------
+5. MAI PHÁP — Module: SMART EXAM (LÀM BÀI THI)
+--------------------------------------------------------------------------------
+   Phụ thuộc: Course module (Hoàng Minh)
+
+   [1] Danh sách bài thi của khóa học
+       - API: GET /courses/{id}/exams
+       - Màn hình: Course Detail
+       - Độ khó: ⭐⭐
+
+   [2] Giao diện làm bài thi (Countdown Timer + Question Navigation)
+       - API: POST /exams/{id}/start
+       - Màn hình: Exam Taking Page
+       - Độ khó: ⭐⭐⭐
+
+   [3] Nộp bài thi
+       - API: POST /exams/{id}/submit
+       - Màn hình: Exam Taking Page
+       - Độ khó: ⭐⭐
+
+   [4] Xem kết quả + AI Feedback (phân tích điểm mạnh/yếu)
+       - Màn hình: Exam Result Page
+       - Độ khó: ⭐⭐⭐
+
+   [5] Lịch sử làm bài
+       - API: GET /exams/history
+       - Màn hình: Exam History Page
+       - Độ khó: ⭐⭐
+
+   >>> Output: Exam UI, Timer logic, Result display with AI feedback
+
+--------------------------------------------------------------------------------
+6. TRỌNG NGHĨA — Module: TEACHER PORTAL (QUẢN LÝ KHÓA HỌC)
+--------------------------------------------------------------------------------
+   Phụ thuộc: Auth (Bình Minh)
+
+   [1] Dashboard Giảng viên (Thống kê học viên, tiến độ)
+       - API: GET /teacher/dashboard
+       - Màn hình: Teacher Dashboard
+       - Độ khó: ⭐⭐⭐
+
+   [2] Tạo khóa học mới
+       - API: POST /teacher/courses
+       - Màn hình: Create Course Page
+       - Độ khó: ⭐⭐⭐
+
+   [3] Upload nội dung bài học (Video/PDF với progress bar)
+       - API: POST /teacher/lessons/upload
+       - Màn hình: Lesson Upload Page
+       - Độ khó: ⭐⭐⭐
+
+   [4] Sắp xếp thứ tự bài học (Drag & Drop)
+       - API: PUT /teacher/courses/{id}/lessons/order
+       - Màn hình: Course Editor
+       - Độ khó: ⭐⭐
+
+   [5] Tạo đề thi bằng AI (Auto-generate từ nội dung)
+       - API: POST /exams/generate
+       - Màn hình: Create Exam Page
+       - Độ khó: ⭐⭐⭐
+
+   >>> Output: Teacher dashboard, Course CRUD, AI exam generation
+
+--------------------------------------------------------------------------------
+7. THÁI NGUYÊN — Module: ADMIN PANEL
+--------------------------------------------------------------------------------
+   Phụ thuộc: Auth (Bình Minh), các module khác để test
+
+   [1] Admin Dashboard (Thống kê tổng hệ thống)
+       - API: GET /admin/dashboard
+       - Màn hình: Admin Dashboard
+       - Độ khó: ⭐⭐⭐
+
+   [2] Quản lý Users (Xem danh sách, Khóa/Mở tài khoản)
+       - API: GET/PUT /admin/users
+       - Màn hình: User Management
+       - Độ khó: ⭐⭐⭐
+
+   [3] Quản lý Khóa học (Duyệt/Từ chối/Xóa)
+       - API: GET/PUT/DELETE /admin/courses
+       - Màn hình: Course Management
+       - Độ khó: ⭐⭐
+
+   [4] Cấu hình AI Prompts (System prompt cho AI Tutor và Exam)
+       - API: PUT /admin/settings/ai-prompts
+       - Màn hình: AI Settings Page
+       - Độ khó: ⭐⭐
+
+   [5] Đánh giá & Nhận xét khóa học (Rating + Review System)
+       - API: POST/GET /courses/{id}/reviews
+       - Màn hình: Course Detail (phần Review)
+       - Độ khó: ⭐⭐⭐
+
+   >>> Output: Admin panel, User/Course management, Review system
+
+================================================================================
+                           SƠ ĐỒ PHỤ THUỘC (DEPENDENCIES)
+================================================================================
+
+    Bình Minh (Auth) ──┬──► Hoàng Minh (Course) ──► Anh Khoa (Learning)
+                       │                                    │
+                       │                                    ▼
+                       │                    Bò Trang (AI) ◄─┘
+                       │                                    
+                       ├──► Trọng Nghĩa (Teacher) ──► Mai Pháp (Exam)
+                       │
+                       └──► Thái Nguyên (Admin)
+
+================================================================================
+                           TIMELINE ĐỀ XUẤT (12 TUẦN)
+================================================================================
+
+    Tuần 1-2:   Bình Minh hoàn thành Auth (BẮT BUỘC XONG TRƯỚC)
+    Tuần 2-4:   Hoàng Minh làm Course Catalog
+    Tuần 3-5:   Anh Khoa làm Learning Room
+    Tuần 4-6:   Bò Trang làm AI Tutor
+    Tuần 5-7:   Mai Pháp làm Smart Exam
+    Tuần 6-8:   Trọng Nghĩa làm Teacher Portal
+    Tuần 7-9:   Thái Nguyên làm Admin Panel
+    Tuần 10-12: TẤT CẢ - Integration, Testing, Fix bugs
+
+================================================================================
+                           CHECKLIST CHO MỖI TÍNH NĂNG
+================================================================================
+
+    Khi làm mỗi tính năng, đảm bảo hoàn thành:
+
+    [ ] UI/UX Design    - Thiết kế theo Design System (DESIGN_SYSTEM.md)
+    [ ] Frontend        - React components + gọi API
+    [ ] Backend         - REST API + Business logic
+    [ ] Database        - Schema nếu cần table mới
+    [ ] Unit Tests      - Test Frontend + Backend riêng
+    [ ] Integration     - Test luồng End-to-End
+    [ ] Documentation   - Ghi chú API + README
+
+================================================================================
+                           LƯU Ý QUAN TRỌNG
+================================================================================
+
+    ★ Branch naming: feature/[tên-module]/[tên-tính-năng]
+      Ví dụ: feature/auth/register, feature/course/list
+
+    ★ PR Review: Ít nhất 1 người khác review trước khi merge
+
+    ★ Tuân thủ Design System trong file DESIGN_SYSTEM.md
+
+    ★ Communicate sớm nếu bị block hoặc cần hỗ trợ
+
+    ★ Reuse components khi có thể (đừng code lại từ đầu)
+
+================================================================================
+                              LIÊN HỆ HỖ TRỢ
+================================================================================
+
+    Nếu có thắc mắc về:
+    - Auth/Security    → Bình Minh
+    - Course/Learning  → Hoàng Minh, Anh Khoa  
+    - AI Features      → Bò Trang
+    - Exam System      → Mai Pháp
+    - Teacher Portal   → Trọng Nghĩa
+    - Admin/Review     → Thái Nguyên
+
+================================================================================
+                              GOOD LUCK TEAM! 🚀
+================================================================================

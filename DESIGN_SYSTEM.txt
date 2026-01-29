@@ -1,0 +1,88 @@
+THINKAI - HỆ THỐNG THIẾT KẾ (DESIGN SYSTEM)
+ 
+ Phiên bản: 1.1.0 (Zen Harmony Edition)  
+ Cập nhật cuối: 2026-01-30  
+ Dự án: ThinkAI - Nền tảng Giáo dục Thông minh
+ 
+ ================================================================================
+ 
+ 1. TRIẾT LÝ THIẾT KẾ (DESIGN PHILOSOPHY)
+ 
+ Phong cách Zen Harmony hướng tới sự cân bằng giữa tính thẩm mỹ hiện đại và sự tĩnh lặng tối giản.
+ 
+ * Sự Tĩnh Lặng (Zen): Màu sắc hữu cơ, khoảng trắng rộng.
+ * Sự Cân Bằng (Symmetry): Bố cục căn giữa tuyệt đối.
+ * Tính Hiện Đại (Modern): Đổ bóng mờ, bo góc lớn, Glassmorphism.
+ * Dễ Tiếp Cận (Accessible): Độ tương phản text cao.
+ 
+ ================================================================================
+ 
+ 2. CÁC THÀNH PHẦN CƠ BẢN (DESIGN TOKENS)
+ 
+ 2.1. Bảng màu "Zen Harmony"
+ - Background: #F9F8F3 (Kem Giấy)
+ - Text: #1F2937 (Xám Than)
+ - Accent: #3B82F6 (Xanh Dương Zen)
+ - Highlight: #EE8B60 (Cam San Hô)
+ - Surface: #FFFFFF (Trắng)
+ 
+ 2.2. Kiểu chữ (Typography)
+ - Tiêu đề: Playfair Display / Newsreader (Serif).
+ - Nội dung: Inter / Satoshi (Sans-serif).
+ 
+ 2.3. Bo góc (Border Radius)
+ - radius-lg: 40px - 48px (Mockup, panels lớn).
+ - radius-md: 16px (Cards, Inputs).
+ - radius-full: Pill-shaped buttons.
+ 
+ ================================================================================
+ 
+ 3. CHI TIẾT THÀNH PHẦN (COMPONENT DETAILS)
+ 
+ 3.1. Thẻ nội dung (Cards)
+ - Course Card: Tỷ lệ 16:9, bo góc 24px, đổ bóng mờ.
+ - Dashboard Card: Số liệu thống kê, bo góc 16px, icon pastel.
+ - Lesson Card: Chỉ báo trạng thái màu Xanh/Cam.
+ 
+ 3.2. Chat AI Widget
+ - Bong bóng chat bo góc lớn, mềm mại.
+ - Thanh input dạng viên thuốc (Pill) full-width.
+ - Hiệu ứng Glassmorphism (nền mờ 16px).
+ 
+ ================================================================================
+ 
+ 4. BỐ CỤC TRANG THỰC TẾ (PRACTICAL PATTERNS) - Phân tích từ 20+ trang interface:
+ 
+ 4.1. Trang chủ (Landing Page)
+ - Tiêu đề lớn, sử dụng chữ in nghiêng ("*học tập*") để nhấn mạnh.
+ - Mockup Dashboard lồng trong khung trình duyệt bo góc 48px.
+ 
+ 4.2. Dashboard Sinh viên
+ - Sidebar trái dùng Glassmorphism, icon nét mảnh (Outline).
+ - Lời chào cá nhân hóa dùng font Serif lớn.
+ - Tích hợp lịch tiến độ ở góc phải.
+ 
+ 4.3. Gia sư ảo 24/7 (AI Tutor)
+ - Căn giữa tuyệt đối khung hội thoại.
+ - Có các nút gợi ý nhanh dưới câu trả lời của AI.
+ 
+ ================================================================================
+ 
+ 5. THÔNG SỐ KỸ THUẬT (TECHNICAL SPECS)
+ 
+ - Bo góc mockup: rounded-[48px]
+ - Bo góc Card: rounded-2xl
+ - Hiệu ứng mờ: backdrop-filter: blur(16px)
+ - Đổ bóng Zen: shadow-[0_25px_50px_-12px_rgba(0,0,0,0.1)]
+ 
+ ================================================================================
+ 
+ 6. HƯỚNG DẪN TRẢI NGHIỆM (UX GUIDELINES)
+ 
+ - Hiệu ứng gõ chữ cho AI.
+ - Chuyển động mượt mà (500ms ease-in-out).
+ - Whitespace tối thiểu 24px giữa các khối.
+ 
+ --------------------------------------------------------------------------------
+ ThinkAI Design System - Thiết kế lấy cảm hứng từ sự tĩnh lặng và hiệu quả.
+ --------------------------------------------------------------------------------
