@@ -1,8 +1,11 @@
 # 📋 ThinkAI - Kế Hoạch Phân Chia Tính Năng
 
-**Version:** 1.0.0  
-**Cập nhật:** 2026-01-30  
+**Version:** 1.1.0  
+**Cập nhật:** 2026-02-07  
 **Team:** 7 thành viên × 5 tính năng = **35 tính năng**
+
+> [!IMPORTANT]
+> **Scope:** Nền tảng học **TIẾNG ANH** - Hỗ trợ luyện thi TOEIC/IELTS
 
 ---
 
@@ -83,7 +86,7 @@
 | # | Tính năng | Độ khó | API liên quan | Màn hình |
 |---|-----------|--------|---------------|----------|
 | 1 | Danh sách bài thi của khóa học | ⭐⭐ | `GET /courses/{id}/exams` | Course Detail |
-| 2 | Giao diện làm bài thi (Timer + Navigation) | ⭐⭐⭐ | `POST /exams/{id}/start` | Exam Taking Page |
+| 2 | Giao diện làm bài TOEIC/IELTS (Listening + Reading) | ⭐⭐⭐ | `POST /exams/{id}/start` | Exam Taking Page |
 | 3 | Nộp bài thi | ⭐⭐ | `POST /exams/{id}/submit` | Exam Taking Page |
 | 4 | Xem kết quả + AI Feedback | ⭐⭐⭐ | - | Exam Result Page |
 | 5 | Lịch sử làm bài | ⭐⭐ | `GET /exams/history` | Exam History Page |
@@ -101,7 +104,7 @@
 | 2 | Tạo khóa học mới | ⭐⭐⭐ | `POST /teacher/courses` | Create Course Page |
 | 3 | Upload nội dung bài học (Video/PDF) | ⭐⭐⭐ | `POST /teacher/lessons/upload` | Lesson Upload Page |
 | 4 | Sắp xếp thứ tự bài học (Drag & Drop) | ⭐⭐ | `PUT /teacher/courses/{id}/lessons/order` | Course Editor |
-| 5 | Tạo đề thi bằng AI | ⭐⭐⭐ | `POST /exams/generate` | Create Exam Page |
+| 5 | Quản lý ngân hàng câu hỏi TOEIC/IELTS | ⭐⭐⭐ | `POST /questions/import` | Question Bank Page |
 
 **Dependencies:** Auth (Bình Minh), File upload service  
 **Output:** Teacher dashboard, Course CRUD, AI exam generation

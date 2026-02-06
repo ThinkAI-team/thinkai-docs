@@ -1,9 +1,12 @@
 ================================================================================
                     THINKAI - KẾ HOẠCH PHÂN CHIA TÍNH NĂNG
 ================================================================================
-Cập nhật: 2026-01-30
+Cập nhật: 2026-02-07
 Team: 7 thành viên x 5 tính năng = 35 tính năng
 Nguyên tắc: Phân chia theo MODULE để dễ thực hiện, debug và viết test
+
+>>> SCOPE: Nền tảng học TIẾNG ANH - Hỗ trợ luyện thi TOEIC/IELTS <<<
+
 ================================================================================
 
 --------------------------------------------------------------------------------
@@ -137,7 +140,7 @@ Nguyên tắc: Phân chia theo MODULE để dễ thực hiện, debug và viết
        - Màn hình: Course Detail
        - Độ khó: ⭐⭐
 
-   [2] Giao diện làm bài thi (Countdown Timer + Question Navigation)
+   [2] Giao diện làm bài TOEIC/IELTS (Listening + Reading + Timer)
        - API: POST /exams/{id}/start
        - Màn hình: Exam Taking Page
        - Độ khó: ⭐⭐⭐
@@ -183,12 +186,12 @@ Nguyên tắc: Phân chia theo MODULE để dễ thực hiện, debug và viết
        - Màn hình: Course Editor
        - Độ khó: ⭐⭐
 
-   [5] Tạo đề thi bằng AI (Auto-generate từ nội dung)
-       - API: POST /exams/generate
-       - Màn hình: Create Exam Page
+   [5] Quản lý ngân hàng câu hỏi TOEIC/IELTS
+       - API: POST /questions/import, GET /questions/bank
+       - Màn hình: Question Bank Page
        - Độ khó: ⭐⭐⭐
 
-   >>> Output: Teacher dashboard, Course CRUD, AI exam generation
+   >>> Output: Teacher dashboard, Course CRUD, Question bank management
 
 --------------------------------------------------------------------------------
 7. THÁI NGUYÊN — Module: ADMIN PANEL

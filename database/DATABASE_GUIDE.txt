@@ -1,9 +1,12 @@
 ================================================================================
                     THINKAI DATABASE - HƯỚNG DẪN SỬ DỤNG
 ================================================================================
-Cập nhật: 2026-01-30
+Cập nhật: 2026-02-07
 Database: MySQL 8.0
 File SQL: database/thinkai_schema.sql
+
+>>> SCOPE: Nền tảng học TIẾNG ANH - Hỗ trợ luyện thi TOEIC/IELTS <<<
+
 ================================================================================
 
                               TỔNG QUAN CẤU TRÚC
@@ -28,11 +31,13 @@ Database ThinkAI gồm 15 bảng chính, được chia theo các module:
     │  ├── ai_chat_logs    : Lịch sử chat với AI Tutor                        │
     │  └── ai_summaries    : Tóm tắt bài học do AI tạo                        │
     ├─────────────────────────────────────────────────────────────────────────┤
-    │  EXAM MODULE (Mai Pháp)                                                 │
-    │  ├── exams           : Bài thi                                          │
-    │  ├── questions       : Câu hỏi trong bài thi                            │
-    │  ├── exam_attempts   : Lịch sử làm bài (điểm, feedback AI)              │
-    │  └── exam_answers    : Chi tiết câu trả lời                             │
+    │  EXAM MODULE (Mai Pháp) - TOEIC/IELTS                                   │
+    │  ├── question_bank  : Ngân hàng câu hỏi TOEIC/IELTS                     │
+    │  ├── exams          : Bài thi (TOEIC/IELTS)                             │
+    │  ├── exam_questions : Liên kết đề thi với câu hỏi từ ngân hàng          │
+    │  ├── questions      : Câu hỏi trong bài thi (legacy)                    │
+    │  ├── exam_attempts  : Lịch sử làm bài (điểm, feedback AI)              │
+    │  └── exam_answers   : Chi tiết câu trả lời                             │
     ├─────────────────────────────────────────────────────────────────────────┤
     │  TEACHER MODULE (Trọng Nghĩa)                                           │
     │  └── (Sử dụng các bảng courses, lessons, exams với quyền Teacher)       │
@@ -140,24 +145,58 @@ Database ThinkAI gồm 15 bảng chính, được chia theo các module:
 
 --------------------------------------------------------------------------------
 
-7. EXAMS (Bài thi)
+7. QUESTION_BANK (Ngân hàng câu hỏi TOEIC/IELTS) [MỚI]
 --------------------------------------------------------------------------------
-   Lưu thông tin bài thi của khóa học.
+   Lưu trữ ngân hàng câu hỏi cho TOEIC và IELTS.
 
    Các cột quan trọng:
-   - course_id         : FK → courses.id
+   - exam_type       : TOEIC / IELTS
+   - section         : LISTENING / READING / WRITING / SPEAKING
+   - part            : PART_1 đến PART_7 (theo cấu trúc TOEIC)
+   - content         : Nội dung câu hỏi
+   - options         : JSON array các đáp án
+   - correct_answer  : Đáp án đúng
+   - audio_url       : URL audio (cho Listening)
+   - image_url       : URL hình ảnh minh họa
+   - difficulty      : EASY / MEDIUM / HARD
+   - tags            : JSON array tags ["grammar", "vocabulary"]
+
+   Người phụ trách: Mai Pháp, Trọng Nghĩa
+
+--------------------------------------------------------------------------------
+
+8. EXAMS (Bài thi TOEIC/IELTS) [ĐÃ SỬA]
+--------------------------------------------------------------------------------
+   Lưu thông tin bài thi TOEIC hoặc IELTS.
+
+   Các cột quan trọng:
+   - exam_type         : TOEIC / IELTS
    - title             : Tên bài thi
-   - difficulty        : EASY / MEDIUM / HARD
-   - time_limit_minutes: Thời gian làm bài (phút)
+   - description       : Mô tả bài thi
+   - time_limit_minutes: Thời gian làm bài (TOEIC: 120 phút)
    - passing_score     : Điểm đạt (%)
-   - is_ai_generated   : Có phải AI tạo không
+   - is_random_order   : Có trộn thứ tự câu hỏi không
+   - part_config       : JSON cấu hình số câu mỗi part {"PART_1": 6, ...}
    - created_by        : FK → users.id (Teacher/Admin)
 
    Người phụ trách: Mai Pháp (Student làm bài), Trọng Nghĩa (Teacher tạo)
 
 --------------------------------------------------------------------------------
 
-8. QUESTIONS (Câu hỏi)
+9. EXAM_QUESTIONS (Liên kết đề - câu hỏi) [MỚI]
+--------------------------------------------------------------------------------
+   Bảng trung gian liên kết đề thi với câu hỏi từ ngân hàng.
+
+   Các cột quan trọng:
+   - exam_id        : FK → exams.id
+   - question_id    : FK → question_bank.id
+   - order_index    : Thứ tự câu hỏi trong đề
+
+   Người phụ trách: Mai Pháp, Trọng Nghĩa
+
+--------------------------------------------------------------------------------
+
+10. QUESTIONS (Câu hỏi - Legacy)
 --------------------------------------------------------------------------------
    Lưu các câu hỏi trong bài thi.
 

@@ -100,16 +100,41 @@ erDiagram
         datetime completed_at
     }
 
-    EXAMS {
+    QUESTION_BANK {
         bigint id PK
-        bigint course_id FK
-        varchar title
+        enum exam_type "TOEIC, IELTS"
+        enum section "LISTENING, READING, WRITING, SPEAKING"
+        enum part "PART_1, PART_2, ..., PART_7"
+        text content
+        json options
+        varchar correct_answer
+        text explanation
+        varchar audio_url "For listening"
+        varchar image_url "For illustrations"
         enum difficulty "EASY, MEDIUM, HARD"
-        int time_limit_minutes
-        int passing_score
-        boolean is_ai_generated
+        json tags
         bigint created_by FK
         datetime created_at
+    }
+
+    EXAMS {
+        bigint id PK
+        enum exam_type "TOEIC, IELTS"
+        varchar title
+        text description
+        int time_limit_minutes
+        int passing_score
+        boolean is_random_order "Shuffle questions"
+        json part_config "Number of questions per part"
+        bigint created_by FK
+        datetime created_at
+    }
+
+    EXAM_QUESTIONS {
+        bigint id PK
+        bigint exam_id FK
+        bigint question_id FK "from question_bank"
+        int order_index
     }
 
     QUESTIONS {
