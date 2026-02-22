@@ -1,0 +1,210 @@
+================================================================================
+                    THINKAI - TEST CASES: LOGIN API
+                    POST /auth/login
+                    Tested: 2026-02-22
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+  PREREQUISITES
+────────────────────────────────────────────────────────────────────────────────
+
+  1. Docker container thinkai-mysql đang chạy:
+     docker ps | grep thinkai-mysql
+
+  2. Spring Boot đang chạy trên port 8080:
+     cd thinkai-backend && ./mvnw spring-boot:run
+
+  3. Có ít nhất 1 user trong DB để test (từ register hoặc seed data)
+
+================================================================================
+                        API TEST CASES
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+  TC-LOG-01: Đăng nhập thành công
+────────────────────────────────────────────────────────────────────────────────
+
+  Request:
+  curl -s -X POST http://localhost:8080/auth/login \
+    -H "Content-Type: application/json" \
+    -d '{
+      "email": "minh@thinkai.vn",
+      "password": "Abc12345"
+    }'
+
+  Expected: 200 OK
+  {
+    "token": "eyJhbGciOi...",
+    "email": "minh@thinkai.vn",
+    "fullName": "Bình Minh",
+    "role": "STUDENT"
+  }
+
+────────────────────────────────────────────────────────────────────────────────
+  TC-LOG-02: Email không tồn tại (generic error - bảo mật)
+────────────────────────────────────────────────────────────────────────────────
+
+  Request:
+  curl -s -X POST http://localhost:8080/auth/login \
+    -H "Content-Type: application/json" \
+    -d '{
+      "email": "khongtontai@thinkai.vn",
+      "password": "Abc12345"
+    }'
+
+  Expected: 401 Unauthorized
+  {
+    "error": "Unauthorized",
+    "message": "Email hoặc mật khẩu không đúng",
+    "status": 401
+  }
+
+────────────────────────────────────────────────────────────────────────────────
+  TC-LOG-03: Mật khẩu sai (same generic error - bảo mật)
+────────────────────────────────────────────────────────────────────────────────
+
+  Request:
+  curl -s -X POST http://localhost:8080/auth/login \
+    -H "Content-Type: application/json" \
+    -d '{
+      "email": "minh@thinkai.vn",
+      "password": "SaiMatKhau123"
+    }'
+
+  Expected: 401 Unauthorized
+  {
+    "error": "Unauthorized",
+    "message": "Email hoặc mật khẩu không đúng",
+    "status": 401
+  }
+
+  ⚠️  LƯU Ý: TC-LOG-02 và TC-LOG-03 trả về CÙNG thông báo lỗi
+  → Không tiết lộ email có tồn tại hay không (best practice bảo mật)
+
+────────────────────────────────────────────────────────────────────────────────
+  TC-LOG-04: Email rỗng
+────────────────────────────────────────────────────────────────────────────────
+
+  Request:
+  curl -s -X POST http://localhost:8080/auth/login \
+    -H "Content-Type: application/json" \
+    -d '{
+      "email": "",
+      "password": "Abc12345"
+    }'
+
+  Expected: 400 Bad Request
+  {
+    "error": "Validation Failed",
+    "errors": { "email": "Email không được để trống" },
+    "status": 400
+  }
+
+────────────────────────────────────────────────────────────────────────────────
+  TC-LOG-05: Password rỗng
+────────────────────────────────────────────────────────────────────────────────
+
+  Request:
+  curl -s -X POST http://localhost:8080/auth/login \
+    -H "Content-Type: application/json" \
+    -d '{
+      "email": "minh@thinkai.vn",
+      "password": ""
+    }'
+
+  Expected: 400 Bad Request
+  {
+    "error": "Validation Failed",
+    "errors": { "password": "Mật khẩu không được để trống" },
+    "status": 400
+  }
+
+────────────────────────────────────────────────────────────────────────────────
+  TC-LOG-06: Email sai format
+────────────────────────────────────────────────────────────────────────────────
+
+  Request:
+  curl -s -X POST http://localhost:8080/auth/login \
+    -H "Content-Type: application/json" \
+    -d '{
+      "email": "khong-phai-email",
+      "password": "Abc12345"
+    }'
+
+  Expected: 400 Bad Request
+  {
+    "error": "Validation Failed",
+    "errors": { "email": "Email không hợp lệ" },
+    "status": 400
+  }
+
+────────────────────────────────────────────────────────────────────────────────
+  TC-LOG-07: Body rỗng
+────────────────────────────────────────────────────────────────────────────────
+
+  Request:
+  curl -s -X POST http://localhost:8080/auth/login \
+    -H "Content-Type: application/json" \
+    -d '{}'
+
+  Expected: 400 Bad Request
+  {
+    "error": "Validation Failed",
+    "errors": {
+      "email": "Email không được để trống",
+      "password": "Mật khẩu không được để trống"
+    },
+    "status": 400
+  }
+
+────────────────────────────────────────────────────────────────────────────────
+  TC-LOG-08: Tài khoản bị khóa (isActive = false)
+────────────────────────────────────────────────────────────────────────────────
+
+  Setup: UPDATE users SET is_active = 0 WHERE email = 'test@thinkai.vn';
+
+  Request:
+  curl -s -X POST http://localhost:8080/auth/login \
+    -H "Content-Type: application/json" \
+    -d '{
+      "email": "test@thinkai.vn",
+      "password": "đúng-password"
+    }'
+
+  Expected: 403 Forbidden
+  {
+    "error": "Forbidden",
+    "message": "Tài khoản đã bị khóa",
+    "status": 403
+  }
+
+  Cleanup: UPDATE users SET is_active = 1 WHERE email = 'test@thinkai.vn';
+
+================================================================================
+                        BẢNG TÓM TẮT KẾT QUẢ
+================================================================================
+
+  | Test Case   | Mô tả                    | Expected | Kết quả | Ghi chú                              |
+  |-------------|--------------------------|----------|---------|--------------------------------------|
+  | TC-LOG-01   | Đăng nhập thành công     | 200 OK   | [✅]    | JWT trả về đúng                      |
+  | TC-LOG-02   | Email không tồn tại      | 401      | [✅]    | Generic error (bảo mật)              |
+  | TC-LOG-03   | Mật khẩu sai             | 401      | [✅]    | Same generic error                   |
+  | TC-LOG-04   | Email rỗng               | 400      | [✅]    | "Email không được để trống"          |
+  | TC-LOG-05   | Password rỗng            | 400      | [✅]    | "Mật khẩu không được để trống"       |
+  | TC-LOG-06   | Email sai format          | 400      | [✅]    | "Email không hợp lệ"                |
+  | TC-LOG-07   | Body rỗng                | 400      | [✅]    | 2 lỗi validation                    |
+  | TC-LOG-08   | Tài khoản bị khóa        | 403      | [--]    | Cần setup manual                     |
+
+  Tested on: 2026-02-22 18:48 (UTC+7)
+  Tester: Antigravity Agent
+
+================================================================================
+                            GHI CHÚ
+================================================================================
+
+  • TC-LOG-02 và TC-LOG-03 trả CÙNG error message → bảo mật
+  • Login không tạo record mới trong DB (read-only)
+  • JWT token có thời hạn 24h (86400000ms)
+  • Token chứa claims: role, fullName
+
+================================================================================
