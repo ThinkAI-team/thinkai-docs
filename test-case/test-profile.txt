@@ -1,0 +1,133 @@
+================================================================================
+                    THINKAI - TEST CASES: PROFILE API
+                    GET/PUT /users/me, PUT /users/me/password
+                    Tested: 2026-02-22
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+  PREREQUISITES
+────────────────────────────────────────────────────────────────────────────────
+
+  1. Docker container thinkai-mysql đang chạy
+  2. Spring Boot đang chạy trên port 8080
+  3. Có user đã register + lấy JWT token bằng login
+
+  Lấy token:
+  TOKEN=$(curl -s -X POST http://localhost:8080/auth/login \
+    -H "Content-Type: application/json" \
+    -d '{"email":"minh@thinkai.vn","password":"Abc12345"}' \
+    | python3 -c "import sys,json; print(json.load(sys.stdin)['token'])")
+
+================================================================================
+                        API TEST CASES
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+  TC-PRO-01: GET /users/me — Xem profile (có JWT)
+────────────────────────────────────────────────────────────────────────────────
+
+  Request:
+  curl -s http://localhost:8080/users/me \
+    -H "Authorization: Bearer $TOKEN"
+
+  Expected: 200 OK
+  {
+    "email": "minh@thinkai.vn",
+    "fullName": "Bình Minh",
+    "phoneNumber": null,
+    "avatarUrl": null,
+    "role": "STUDENT",
+    "createdAt": "2026-02-22T18:02:41"
+  }
+
+────────────────────────────────────────────────────────────────────────────────
+  TC-PRO-02: GET /users/me — Không có JWT
+────────────────────────────────────────────────────────────────────────────────
+
+  Request:
+  curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/users/me
+
+  Expected: 403 Forbidden
+
+────────────────────────────────────────────────────────────────────────────────
+  TC-PRO-03: PUT /users/me — Cập nhật fullName + phoneNumber
+────────────────────────────────────────────────────────────────────────────────
+
+  Request:
+  curl -s -X PUT http://localhost:8080/users/me \
+    -H "Authorization: Bearer $TOKEN" \
+    -H "Content-Type: application/json" \
+    -d '{"fullName":"Bình Minh Updated","phoneNumber":"0901234567"}'
+
+  Expected: 200 OK (fullName + phoneNumber updated)
+
+────────────────────────────────────────────────────────────────────────────────
+  TC-PRO-04: PUT /users/me — fullName rỗng
+────────────────────────────────────────────────────────────────────────────────
+
+  Request:
+  curl -s -X PUT http://localhost:8080/users/me \
+    -H "Authorization: Bearer $TOKEN" \
+    -H "Content-Type: application/json" \
+    -d '{"fullName":"","phoneNumber":"0901234567"}'
+
+  Expected: 400 Bad Request
+  { "errors": { "fullName": "Họ tên không được để trống" } }
+
+────────────────────────────────────────────────────────────────────────────────
+  TC-PRO-05: PUT /users/me/password — Đổi mật khẩu thành công
+────────────────────────────────────────────────────────────────────────────────
+
+  Request:
+  curl -s -X PUT http://localhost:8080/users/me/password \
+    -H "Authorization: Bearer $TOKEN" \
+    -H "Content-Type: application/json" \
+    -d '{"currentPassword":"Abc12345","newPassword":"NewPass123","confirmNewPassword":"NewPass123"}'
+
+  Expected: 200 OK
+  { "message": "Đổi mật khẩu thành công" }
+
+────────────────────────────────────────────────────────────────────────────────
+  TC-PRO-06: PUT /users/me/password — Mật khẩu hiện tại sai
+────────────────────────────────────────────────────────────────────────────────
+
+  Request:
+  curl -s -X PUT http://localhost:8080/users/me/password \
+    -H "Authorization: Bearer $TOKEN" \
+    -H "Content-Type: application/json" \
+    -d '{"currentPassword":"SaiPassword","newPassword":"NewPass456","confirmNewPassword":"NewPass456"}'
+
+  Expected: 400 Bad Request
+  { "message": "Mật khẩu hiện tại không đúng" }
+
+────────────────────────────────────────────────────────────────────────────────
+  TC-PRO-07: PUT /users/me/password — Xác nhận mật khẩu không khớp
+────────────────────────────────────────────────────────────────────────────────
+
+  Request:
+  curl -s -X PUT http://localhost:8080/users/me/password \
+    -H "Authorization: Bearer $TOKEN" \
+    -H "Content-Type: application/json" \
+    -d '{"currentPassword":"Abc12345","newPassword":"Abc99999","confirmNewPassword":"Abc88888"}'
+
+  Expected: 400 Bad Request
+  { "message": "Mật khẩu xác nhận không khớp" }
+
+================================================================================
+                        BẢNG TÓM TẮT KẾT QUẢ
+================================================================================
+
+  | Test Case   | Mô tả                       | Expected | Kết quả |
+  |-------------|-----------------------------|----------|---------|
+  | TC-PRO-01   | GET profile (có JWT)        | 200      | [✅]    |
+  | TC-PRO-02   | GET profile (không JWT)     | 403      | [✅]    |
+  | TC-PRO-03   | PUT update name+phone       | 200      | [✅]    |
+  | TC-PRO-04   | PUT empty fullName          | 400      | [✅]    |
+  | TC-PRO-05   | PUT change password OK      | 200      | [✅]    |
+  | TC-PRO-06   | PUT wrong current password  | 400      | [✅]    |
+  | TC-PRO-07   | PUT confirm mismatch        | 400      | [✅]    |
+
+  Tested on: 2026-02-22 19:20 (UTC+7)
+  JWT Auth Filter: WORKING ✅
+
+================================================================================
