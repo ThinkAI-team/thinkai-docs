@@ -1,0 +1,23 @@
+DANH SACH CAC BUOC DEPLOY NHANH (QUICK STEPS)
+===========================================
+
+1. SSH vao may chu:
+   ssh -i /home/binhminh/Downloads/ssh-key-2026-03-16.key ubuntu@159.13.48.35
+
+2. Tai code moi:
+   cd thinkai-backend && git pull origin main
+
+3. Kiem tra file .env:
+   cat .env
+   (Dam bao DB_URL dung IP noi bo cua database OCI)
+
+4. Restart Docker:
+   docker compose up -d --build
+
+5. Kiem tra Log:
+   docker logs -f <ten_container_backend>
+
+6. Dia chi API khi deploy xong:
+   http://159.13.48.35:8081/api/v1/...
+
+Luu y: Luon backup file SSH key va mat khau Database.
