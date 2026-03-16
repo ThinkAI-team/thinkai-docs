@@ -1,0 +1,19 @@
+QUY TRINH DEPLOY FRONTEND NHANH
+==============================
+
+1. Kiem tra code tai Fedora:
+   npm run build
+
+2. Push GitHub:
+   git push origin main
+
+3. Vercel Dashboard:
+   - Dashboard > Project > Settings > Environment Variables
+   - Cap nhat: NEXT_PUBLIC_API_URL = http://159.13.48.35:8081
+   - Cap nhat: NEXT_PUBLIC_GOOGLE_CLIENT_ID = <ID_CUA_BAN>
+
+4. Google Console:
+   - Cap nhat 'Authorized JavaScript origins' voi domain moi tu Vercel.
+
+5. Kiem tra:
+   Truy cap link .vercel.app de kiem tra ket noi den Backend Oracle.
