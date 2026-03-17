@@ -66,18 +66,22 @@
 
 ---
 
-### 4️⃣ Bò Trang — Module: **AI Tutor (Gia sư ảo)**
+### 4️⃣ Bò Trang — Module: **AI Tutor Backend (Gia sư ảo)**
 
-| # | Tính năng | Độ khó | API liên quan | Màn hình |
-|---|-----------|--------|---------------|----------|
-| 1 | AI Chat Widget (Floating button + Modal) | ⭐⭐⭐ | - | Learning Room |
-| 2 | Chat với AI Tutor (Context-aware) | ⭐⭐⭐ | `POST /ai/chat` | AI Chat Modal |
-| 3 | Hiển thị citations (nguồn tham khảo) | ⭐⭐ | - | AI Chat Modal |
-| 4 | Gợi ý câu hỏi tiếp theo | ⭐⭐ | - | AI Chat Modal |
-| 5 | Tóm tắt bài học (AI Summary) | ⭐⭐⭐ | `POST /ai/summarize` | Learning Room |
+| # | Tính năng | Độ khó | API liên quan | Loại |
+|---|-----------|--------|---------------|------|
+| 1 | Chat với AI Tutor (Context-aware) | ⭐⭐⭐ | `POST /ai/chat` | Backend + Frontend |
+| 2 | Tóm tắt bài học bằng AI | ⭐⭐⭐ | `POST /ai/summarize` | Backend + Frontend |
+| 3 | Lịch sử chat AI (Xem lại, xóa cuộc hội thoại) | ⭐⭐ | `GET /ai/chat/history`, `GET /ai/chat/{id}`, `DELETE /ai/chat/{id}` | Backend |
+| 4 | AI Settings per User (Ngôn ngữ, độ dài response) | ⭐ | `GET /ai/settings`, `PUT /ai/settings` | Backend |
+| 5 | Đánh giá phản hồi AI (Thumbs up/down) | ⭐ | `POST /ai/chat/{messageId}/feedback` | Backend |
 
-**Dependencies:** Learning Room (Anh Khoa), Gemini API integration  
-**Output:** AI Chat component, Streaming responses, Summary feature
+**Dependencies:** Auth (Bình Minh), Gemini API integration
+**Output:** AI Chat API, AI Summary API, Chat history, AI Settings, Feedback system
+
+> [!NOTE]
+> 3 tính năng frontend gốc (AI Chat Widget, Hiển thị Citations, Gợi ý câu hỏi) đã chuyển sang Bình Minh.
+> Thay bằng 3 tính năng backend phụ trợ AI Chat: Lịch sử chat, AI Settings, Đánh giá phản hồi.
 
 ---
 
