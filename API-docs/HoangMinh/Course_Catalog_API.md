@@ -221,7 +221,55 @@
     }
   ]
 }
+
+---
+
+## Tính năng 5: Quản lý khóa học (Giảng viên)
+
+| Field        | Value                                      |
+| ------------ | ------------------------------------------ |
+| **Prefix**   | `/teacher/courses`                         |
+| **Auth**     | Bearer Token (**TEACHER** / **ADMIN**)     |
+| **Branch**   | `feature/course-catalog/enrollment` (merged) |
+
+### Danh sách API quản lý
+
+| Method | Endpoint | Description | Response Data |
+|--------|----------|-------------|---------------|
+| `POST` | `/` | Tạo khóa học mới | `Course` object |
+| `GET` | `/` | Lấy danh sách khóa học của giảng viên | `Page<Course>` |
+| `GET` | `/{id}` | Lấy chi tiết khóa học quản lý | `Course` object |
+| `PUT` | `/{id}` | Cập nhật thông tin khóa học | `Course` object |
+| `DELETE` | `/{id}` | Xóa khóa học | No Content |
+| `PUT` | `/{id}/publish` | Yêu cầu công bố khóa học (`status = PENDING`) | `Course` object |
+
+### Request Body (Tạo/Cập nhật): `CourseRequest`
+
+```json
+{
+  "title": "React Masterclass",
+  "description": "Học từ Zero đến Hero...",
+  "thumbnailUrl": "https://...",
+  "price": 499000
+}
 ```
+
+### Business Logic & Security
+
+1. **Phân quyền:** Chỉ `TEACHER` hoặc `ADMIN` mới có quyền truy cập. 
+2. **Sở hữu:** Giảng viên chỉ có quyền sửa/xóa/xem chi tiết những khóa học do chính mình tạo ra (`instructorId` khớp với User ID từ token).
+3. **Quy trình công bố:**
+   - Mặc định khóa học mới tạo có `status = DRAFT` và `isPublished = false`.
+   - Khi gọi API `/publish`, chuyển `status` sang `PENDING` để Chờ duyệt (Admin sẽ duyệt sau).
+
+### Files
+
+| File | Type |
+|------|------|
+| `dto/CourseRequest.java` | DTO nhập liệu chung |
+| `controller/TeacherCourseController.java` | Endpoint prefix `/teacher/courses` |
+| `service/CourseService.java` | Logic CRUD & Ownership check |
+| `entity/Course.java` | Enum `Status {DRAFT, PENDING, APPROVED, REJECTED}` |
 
 ---
 
@@ -247,6 +295,7 @@ Tất cả API đều trả format:
 | `GET /courses/{id}` | Optional (JWT nếu có) |
 | `POST /courses/{id}/enroll` | **@StudentOnly** (JWT bắt buộc) |
 | `GET /users/me/courses` | Authenticated |
+| `/teacher/courses/**` | **TEACHER** / **ADMIN** |
 
 ### Yêu cầu môi trường
 
@@ -261,4 +310,4 @@ MAIL_PASSWORD=<password>
 ---
 
 > **Thực hiện bởi:** Lại Vũ Hoàng Minh
-> **Ngày hoàn thành:** 16/03/2026
+> **Ngày hoàn thành:** 19/03/2026
