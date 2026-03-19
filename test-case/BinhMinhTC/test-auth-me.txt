@@ -1,0 +1,252 @@
+================================================================================
+          THINKAI — TEST CASE: LẤY THÔNG TIN USER HIỆN TẠI (AUTH ME)
+================================================================================
+Ngày tạo: 2026-03-19
+Tester: Bình Minh
+API Endpoint: GET /auth/me
+URL: http://localhost:8081/auth/me
+Auth: Bearer Token (bắt buộc)
+
+================================================================================
+                       PHẦN 0: CHUẨN BỊ MÔI TRƯỜNG
+================================================================================
+
+  [0.1] Khởi động MySQL Container
+  --------------------------------
+  Terminal:
+     
+     cd /home/binhminh/Developer/DA/thinkai-backend
+     docker compose up -d
+     
+  Kiểm tra: docker ps (thinkai-mysql STATUS Up)
+
+  [0.2] Khởi động Spring Boot App
+  ---------------------------------
+  Terminal:
+     
+     cd /home/binhminh/Developer/DA/thinkai-backend
+     ./mvnw spring-boot:run
+     
+  Đợi: "Started DemoApplication in X.XXX seconds"
+
+  [0.3] Tạo user test và lấy token
+  ---------------------------------
+  Đăng ký user test (nếu chưa có):
+     
+     curl -s -X POST http://localhost:8081/auth/register \
+       -H "Content-Type: application/json" \
+       -d '{"firstName":"Test","lastName":"User","email":"authtest@thinkai.vn","password":"Abc12345","confirmPassword":"Abc12345"}'
+     
+  Lưu token từ response để dùng cho các test case bên dưới
+
+================================================================================
+                   PHẦN 1: TEST CASES — BRUNO API CLIENT
+================================================================================
+
+  --------------------------------------------------------------------------
+  TC-AUTHME-01: Lấy thông tin user thành công (Happy Path)
+  --------------------------------------------------------------------------
+  Mục đích: Kiểm tra lấy thông tin user đang đăng nhập
+  Mức độ: CRITICAL
+  Tiền điều kiện: Có token hợp lệ từ đăng nhập/register
+  
+  [Bruno Setup]
+  - Method: GET
+  - URL: http://localhost:8081/auth/me
+  - Tab Headers:
+    • Content-Type = application/json
+    • Authorization = Bearer <TOKEN>
+  
+  [Expected Response]
+  - Status: 200 OK
+  - Body:
+     {
+       "token": "eyJhbGciOiJIUzI1NiJ9...",
+       "email": "authtest@thinkai.vn",
+       "fullName": "Test User",
+       "role": "STUDENT",
+       "hasPassword": true,
+       "isGoogleUser": false
+     }
+  
+  [Kiểm tra thêm]
+  ✓ token trả về là token mới (có thể refresh)
+  ✓ email, fullName, role khớp với user đăng nhập
+  ✓ hasPassword = true (đăng ký bằng email)
+  ✓ isGoogleUser = false
+
+  --------------------------------------------------------------------------
+  TC-AUTHME-02: Lấy thông tin user Google
+  --------------------------------------------------------------------------
+  Mục đích: Kiểm tra với user đăng nhập bằng Google
+  Mức độ: HIGH
+  Tiền điều kiện: Có token từ đăng nhập Google
+  
+  [Bruno Setup]
+  - Method: GET
+  - URL: http://localhost:8081/auth/me
+  - Tab Headers:
+    • Authorization = Bearer <GOOGLE_TOKEN>
+  
+  [Expected Response]
+  - Status: 200 OK
+  - Body:
+     {
+       "token": "eyJhbGciOiJIUzI1NiJ9...",
+       "email": "googleuser@gmail.com",
+       "fullName": "Google User",
+       "role": "STUDENT",
+       "hasPassword": false,
+       "isGoogleUser": true,
+       "avatarUrl": "https://lh3.googleusercontent.com/..."
+     }
+  
+  [Kiểm tra thêm]
+  ✓ hasPassword = false
+  ✓ isGoogleUser = true
+  ✓ avatarUrl có giá trị từ Google
+
+  --------------------------------------------------------------------------
+  TC-AUTHME-03: Không có token (Unauthorized)
+  --------------------------------------------------------------------------
+  Mục đích: Kiểm tra từ chối request không có token
+  Mức độ: CRITICAL
+  
+  [Bruno Setup]
+  - Method: GET
+  - URL: http://localhost:8081/auth/me
+  - Tab Headers: (không có Authorization)
+  
+  [Expected Response]
+  - Status: 403 Forbidden
+  - Body:
+     {
+       "timestamp": "2026-03-19T...",
+       "status": 403,
+       "error": "Forbidden",
+       "message": "Access Denied"
+     }
+
+  --------------------------------------------------------------------------
+  TC-AUTHME-04: Token không hợp lệ (sai format)
+  --------------------------------------------------------------------------
+  Mục đích: Kiểm tra xử lý token sai format
+  Mức độ: HIGH
+  
+  [Bruno Setup]
+  - Method: GET
+  - URL: http://localhost:8081/auth/me
+  - Tab Headers:
+    • Authorization = Bearer invalid_token
+  
+  [Expected Response]
+  - Status: 403 Forbidden
+  - Body chứa: "Access Denied" hoặc "Invalid JWT"
+
+  --------------------------------------------------------------------------
+  TC-AUTHME-05: Token hết hạn
+  --------------------------------------------------------------------------
+  Mục đích: Kiểm tra xử lý token hết hạn
+  Mức độ: HIGH
+  
+  [Bruno Setup]
+  - Method: GET
+  - URL: http://localhost:8081/auth/me
+  - Tab Headers:
+    • Authorization = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0QHRoaW5rYWkudiIsImV4cCI6MTYwMDAwMDAwMH0.expired
+  
+  [Expected Response]
+  - Status: 403 Forbidden
+  - Body chứa: "JWT expired" hoặc "Access Denied"
+
+  --------------------------------------------------------------------------
+  TC-AUTHME-06: Token sai prefix
+  --------------------------------------------------------------------------
+  Mục đích: Kiểm tra xử lý token không có prefix "Bearer"
+  Mức độ: MEDIUM
+  
+  [Bruno Setup]
+  - Method: GET
+  - URL: http://localhost:8081/auth/me
+  - Tab Headers:
+    • Authorization = eyJhbGciOiJIUzI1NiJ9...
+  
+  [Expected Response]
+  - Status: 403 Forbidden
+
+  --------------------------------------------------------------------------
+  TC-AUTHME-07: User bị xóa/khóa sau khi lấy token
+  --------------------------------------------------------------------------
+  Mục đích: Kiểm tra token vẫn hợp lệ nhưng user bị khóa sau đó
+  Mức độ: MEDIUM
+  Tiền điều kiện: Set is_active = 0 trong DB cho user test
+  
+  [Bruno Setup]
+  - Method: GET
+  - URL: http://localhost:8081/auth/me
+  - Tab Headers:
+    • Authorization = Bearer <TOKEN_CUA_USER_BI_KHOA>
+  
+  [Expected Response]
+  - Status: 403 Forbidden
+  - Body:
+     {
+       "status": 403,
+       "message": "Tài khoản đã bị khóa"
+     }
+
+================================================================================
+               PHẦN 2: KIỂM TRA DATABASE TRONG MYSQL DOCKER
+================================================================================
+
+  --------------------------------------------------------------------------
+  DB-AUTHME-01: Kiểm tra user tồn tại trong DB
+  --------------------------------------------------------------------------
+  Tiền điều kiện: Đã chạy TC-AUTHME-01 thành công
+  
+  Lệnh:
+     
+     docker exec -it thinkai-mysql mysql -u root -proot -e "USE thinkai_db; SELECT id, email, full_name, role, is_active FROM users WHERE email = 'authtest@thinkai.vn';"
+  
+  Kiểm tra:
+  ✓ User tồn tại
+  ✓ is_active = 1
+
+================================================================================
+                            BẢNG TÓM TẮT KẾT QUẢ
+================================================================================
+
+  | Test Case   | Mô tả                          | Expected | Kết quả | Ghi chú                              |
+  |-------------|--------------------------------|----------|---------|--------------------------------------|
+  | TC-AUTHME-01| Lấy thông tin user (email)     | 200 OK   | [  ]    |                                      |
+  | TC-AUTHME-02| Lấy thông tin user (Google)    | 200 OK   | [  ]    |                                      |
+  | TC-AUTHME-03| Không có token                 | 403      | [  ]    |                                      |
+  | TC-AUTHME-04| Token không hợp lệ             | 403      | [  ]    |                                      |
+  | TC-AUTHME-05| Token hết hạn                 | 403      | [  ]    |                                      |
+  | TC-AUTHME-06| Token sai prefix              | 403      | [  ]    |                                      |
+  | TC-AUTHME-07| User bị khóa                   | 403      | [  ]    |                                      |
+  | DB-AUTHME-01| Kiểm tra user trong DB         |          | [  ]    |                                      |
+
+  Tested on: 2026-03-19
+  Tester: Bình Minh
+
+================================================================================
+                                GHI CHÚ
+================================================================================
+
+  ★ Token được trả về từ /auth/me có thể là token mới (refresh)
+  ★ Test TC-AUTHME-07 cần set is_active = 0 trong DB trước khi test
+  
+  CURL thay thế (TC-AUTHME-01):
+  
+     # Lấy token trước
+     TOKEN=$(curl -s -X POST http://localhost:8081/auth/login \
+       -H "Content-Type: application/json" \
+       -d '{"email":"authtest@thinkai.vn","password":"Abc12345"}' | jq -r '.token')
+     
+     # Gọi API
+     curl -s http://localhost:8081/auth/me \
+       -H "Authorization: Bearer $TOKEN" \
+       | python3 -m json.tool
+
+================================================================================

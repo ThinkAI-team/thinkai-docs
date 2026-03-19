@@ -1,0 +1,320 @@
+================================================================================
+          THINKAI — TEST CASE: ĐĂNG NHẬP GOOGLE OAUTH
+================================================================================
+Ngày tạo: 2026-03-19
+Tester: Bình Minh
+API Endpoint: POST /auth/google
+URL: http://localhost:8081/auth/google
+
+================================================================================
+                       PHẦN 0: CHUẨN BỊ MÔI TRƯỜNG
+================================================================================
+
+  [0.1] Khởi động MySQL Container
+  --------------------------------
+  Terminal:
+     
+     cd /home/binhminh/Developer/DA/thinkai-backend
+     docker compose up -d
+     
+  Kiểm tra container đang chạy:
+     
+     docker ps
+     
+  Expected: thinkai-mysql STATUS Up
+
+  [0.2] Khởi động Spring Boot App
+  ---------------------------------
+  Terminal:
+     
+     cd /home/binhminh/Developer/DA/thinkai-backend
+     ./mvnw spring-boot:run
+     
+  Đợi đến khi thấy: "Started DemoApplication in X.XXX seconds"
+
+  [0.3] Cấu hình Google OAuth
+  ---------------------------------
+  Thêm vào application.properties:
+     
+     google.client-id=YOUR_GOOGLE_CLIENT_ID
+     
+  Lưu ý: Cần tạo OAuth credentials trong Google Cloud Console
+
+================================================================================
+                   PHẦN 1: TEST CASES — BRUNO API CLIENT
+================================================================================
+
+  --------------------------------------------------------------------------
+  TC-GOOGLE-01: Đăng nhập Google thành công (User mới)
+  --------------------------------------------------------------------------
+  Mục đích: Kiểm tra đăng nhập bằng Google với user chưa tồn tại
+  Mức độ: CRITICAL
+  
+  [Bruno Setup]
+  - Method: POST
+  - URL: http://localhost:8081/auth/google
+  - Tab Headers: Content-Type = application/json
+  - Tab Body → JSON:
+     
+     {
+       "idToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9..."
+     }
+     
+  [Giải thích idToken]
+  - idToken là Google ID Token được trả về từ Google Sign-In frontend
+  - Token này chứa: sub (Google ID), email, name, picture
+  
+  [Expected Response]
+  - Status: 200 OK
+  - Body:
+     {
+       "token": "eyJhbGciOiJIUzI1NiJ9...",
+       "email": "user@gmail.com",
+       "fullName": "User Name",
+       "role": "STUDENT",
+       "hasPassword": false,
+       "isGoogleUser": true,
+       "avatarUrl": "https://lh3.googleusercontent.com/..."
+     }
+  
+  [Kiểm tra thêm]
+  ✓ Token không rỗng
+  ✓ isGoogleUser = true
+  ✓ hasPassword = false (user chưa có password)
+  ✓ role mặc định là "STUDENT"
+  ✓ avatarUrl từ Google
+
+  --------------------------------------------------------------------------
+  TC-GOOGLE-02: Đăng nhập Google với email đã tồn tại
+  --------------------------------------------------------------------------
+  Mục đích: Kiểm tra liên kết Google vào tài khoản hiện có
+  Mức độ: CRITICAL
+  Tiền điều kiện: Đã có user đăng ký bằng email trong hệ thống
+  
+  [Bruno Setup]
+  - Method: POST
+  - URL: http://localhost:8081/auth/google
+  - Body → JSON:
+     
+     {
+       "idToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9..."
+     }
+     
+  [Giả định]
+  - Email trong idToken = "minh@thinkai.vn" (đã đăng ký trước đó)
+  
+  [Expected Response]
+  - Status: 200 OK
+  - Body:
+     {
+       "token": "eyJhbGciOiJIUzI1NiJ9...",
+       "email": "minh@thinkai.vn",
+       "fullName": "Bình Minh",
+       "role": "STUDENT",
+       "hasPassword": true,
+       "isGoogleUser": true,
+       "avatarUrl": "https://lh3.googleusercontent.com/..."
+     }
+  
+  [Kiểm tra thêm]
+  ✓ isGoogleUser = true
+  ✓ hasPassword = true (vì đã đăng ký bằng email trước)
+  ✓ google_id đã được liên kết vào user
+
+  --------------------------------------------------------------------------
+  TC-GOOGLE-03: Đăng nhập Google với user bị khóa
+  --------------------------------------------------------------------------
+  Mục đích: Kiểm tra từ chối user bị khóa
+  Mức độ: HIGH
+  Tiền điều kiện: User Google đã bị set isActive = false trong DB
+  
+  [Bruno Setup]
+  - Method: POST
+  - URL: http://localhost:8081/auth/google
+  - Body → JSON:
+     
+     {
+       "idToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9..."
+     }
+     
+  [Expected Response]
+  - Status: 403 Forbidden
+  - Body:
+     {
+       "timestamp": "2026-03-19T...",
+       "status": 403,
+       "error": "Forbidden",
+       "message": "Tài khoản đã bị khóa"
+     }
+
+  --------------------------------------------------------------------------
+  TC-GOOGLE-04: Google token không hợp lệ
+  --------------------------------------------------------------------------
+  Mục đích: Kiểm tra verify token thất bại
+  Mức độ: HIGH
+  
+  [Bruno Setup]
+  - Method: POST
+  - URL: http://localhost:8081/auth/google
+  - Body → JSON:
+     
+     {
+       "idToken": "invalid.token.here"
+     }
+     
+  [Expected Response]
+  - Status: 401 Unauthorized
+  - Body:
+     {
+       "status": 401,
+       "message": "Google token không hợp lệ hoặc đã hết hạn"
+     }
+
+  --------------------------------------------------------------------------
+  TC-GOOGLE-05: Google token hết hạn
+  --------------------------------------------------------------------------
+  Mục đích: Kiểm tra xử lý token hết hạn
+  Mức độ: HIGH
+  
+  [Bruno Setup]
+  - Method: POST
+  - URL: http://localhost:8081/auth/google
+  - Body → JSON:
+     
+     {
+       "idToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiZXhwIjoxNjAwMDAwMDAwfQ.expired"
+     }
+     
+  [Expected Response]
+  - Status: 401 Unauthorized
+  - Body chứa: "Google token không hợp lệ hoặc đã hết hạn"
+
+  --------------------------------------------------------------------------
+  TC-GOOGLE-06: Thiếu idToken trong request
+  --------------------------------------------------------------------------
+  Mục đích: Kiểm tra validation
+  Mức độ: MEDIUM
+  
+  [Bruno Setup]
+  - Method: POST
+  - URL: http://localhost:8081/auth/google
+  - Body → JSON:
+     
+     {}
+     
+  [Expected Response]
+  - Status: 400 Bad Request
+  - Body chứa: "idToken" validation error
+
+  --------------------------------------------------------------------------
+  TC-GOOGLE-07: idToken rỗng
+  --------------------------------------------------------------------------
+  Mục đích: Kiểm tra validation
+  Mức độ: MEDIUM
+  
+  [Bruno Setup]
+  - Method: POST
+  - URL: http://localhost:8081/auth/google
+  - Body → JSON:
+     
+     {
+       "idToken": ""
+     }
+     
+  [Expected Response]
+  - Status: 400 Bad Request
+
+  --------------------------------------------------------------------------
+  TC-GOOGLE-08: Google OAuth chưa được cấu hình
+  --------------------------------------------------------------------------
+  Mục đích: Kiểm tra khi chưa set google.client-id
+  Mức độ: MEDIUM
+  Tiền điều kiện: Không có google.client-id trong config
+  
+  [Bruno Setup]
+  - Method: POST
+  - URL: http://localhost:8081/auth/google
+  - Body → JSON:
+     
+     {
+       "idToken": "valid.but.ignored"
+     }
+     
+  [Expected Response]
+  - Status: 503 Service Unavailable
+  - Body:
+     {
+       "status": 503,
+       "message": "Google OAuth chưa được cấu hình. Vui lòng liên hệ admin."
+     }
+
+================================================================================
+               PHẦN 2: KIỂM TRA DATABASE TRONG MYSQL DOCKER
+================================================================================
+
+  --------------------------------------------------------------------------
+  DB-GOOGLE-01: Kiểm tra user mới sau khi đăng nhập Google
+  --------------------------------------------------------------------------
+  Tiền điều kiện: Đã chạy TC-GOOGLE-01 thành công
+  
+  Lệnh:
+     
+     docker exec -it thinkai-mysql mysql -u root -proot -e "USE thinkai_db; SELECT id, email, full_name, google_id, role, is_active FROM users WHERE google_id IS NOT NULL;"
+  
+  Kiểm tra:
+  ✓ google_id có giá trị (không NULL)
+  ✓ email được lấy từ Google
+  ✓ full_name được lấy từ Google
+  ✓ role = "STUDENT"
+  ✓ is_active = 1
+
+  --------------------------------------------------------------------------
+  DB-GOOGLE-02: Kiểm tra user đã liên kết Google
+  --------------------------------------------------------------------------
+  Tiền điều kiện: Đã chạy TC-GOOGLE-02 thành công
+  
+  Lệnh:
+     
+     docker exec -it thinkai-mysql mysql -u root -proot -e "USE thinkai_db; SELECT email, google_id, password_hash FROM users WHERE email = 'minh@thinkai.vn';"
+  
+  Kiểm tra:
+  ✓ google_id có giá trị (đã liên kết)
+  ✓ password_hash vẫn tồn tại (user có password)
+
+================================================================================
+                            BẢNG TÓM TẮT KẾT QUẢ
+================================================================================
+
+  | Test Case   | Mô tả                          | Expected | Kết quả | Ghi chú                              |
+  |-------------|--------------------------------|----------|---------|--------------------------------------|
+  | TC-GOOGLE-01| Đăng nhập Google (user mới)    | 200 OK   | [  ]    |                                      |
+  | TC-GOOGLE-02| Đăng nhập Google (email tồn tại)| 200 OK   | [  ]    |                                      |
+  | TC-GOOGLE-03| Đăng nhập Google (user bị khóa)| 403      | [  ]    |                                      |
+  | TC-GOOGLE-04| Token không hợp lệ             | 401      | [  ]    |                                      |
+  | TC-GOOGLE-05| Token hết hạn                  | 401      | [  ]    |                                      |
+  | TC-GOOGLE-06| Thiếu idToken                  | 400      | [  ]    |                                      |
+  | TC-GOOGLE-07| idToken rỗng                   | 400      | [  ]    |                                      |
+  | TC-GOOGLE-08| Chưa cấu hình Google OAuth      | 503      | [  ]    |                                      |
+  | DB-GOOGLE-01| Kiểm tra user mới trong DB      |          | [  ]    |                                      |
+  | DB-GOOGLE-02| Kiểm tra user liên kết trong DB |          | [  ]    |                                      |
+
+  Tested on: 2026-03-19
+  Tester: Bình Minh
+
+================================================================================
+                                GHI CHÚ
+================================================================================
+
+  ★ Lưu ý: idToken thực tế cần lấy từ frontend Google Sign-In
+  ★ Test TC-GOOGLE-02 cần tạo user đăng ký bằng email trước
+  ★ Test TC-GOOGLE-03 cần set is_active = 0 trong DB cho user test
+  ★ Test TC-GOOGLE-08 cần remove google.client-id trong config
+  
+  CURL thay thế (cho TC-GOOGLE-04):
+  
+     curl -s -X POST http://localhost:8081/auth/google \
+       -H "Content-Type: application/json" \
+       -d '{"idToken":"invalid.token"}' \
+       | python3 -m json.tool
+
+================================================================================

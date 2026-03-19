@@ -3,7 +3,7 @@
 **Module:** Authentication & User Profile  
 **Base URL:** `http://localhost:8081`  
 **Auth:** `Authorization: Bearer <access_token>` (trừ Auth endpoints)  
-**Last Updated:** 2026-03-16
+**Last Updated:** 2026-03-19
 
 ---
 
@@ -13,9 +13,10 @@
 |---|-----------|-------|--------|
 | 1 | Đăng ký tài khoản | Tạo tài khoản mới (mặc định role STUDENT) | 1 |
 | 2 | Đăng nhập | Xác thực email/password, trả JWT token | 1 |
-| 3 | Quên / Đặt lại mật khẩu | Gửi email reset link + xử lý đặt lại | 2 |
-| 4 | Xem & Cập nhật hồ sơ | Xem và chỉnh sửa thông tin cá nhân | 2 |
-| 5 | Đổi mật khẩu | Đổi mật khẩu khi đã đăng nhập | 1 |
+| 3 | Đăng nhập Google OAuth | Đăng nhập bằng tài khoản Google | 1 |
+| 4 | Quên / Đặt lại mật khẩu | Gửi email reset link + xử lý đặt lại | 2 |
+| 5 | Xem & Cập nhật hồ sơ | Xem và chỉnh sửa thông tin cá nhân | 2 |
+| 6 | Đổi mật khẩu | Đổi mật khẩu khi đã đăng nhập | 1 |
 
 ---
 
@@ -140,7 +141,103 @@
 
 ---
 
-## ③ Quên / Đặt lại mật khẩu
+## ③ Đăng nhập Google OAuth
+
+### 3.1 Đăng nhập Google
+
+| Field | Value |
+|-------|-------|
+| **Method** | `POST` |
+| **Endpoint** | `/auth/google` |
+| **Auth** | Public |
+
+**Request Body:**
+```json
+{
+  "idToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+| Field | Type | Validation | Mô tả |
+|-------|------|------------|-------|
+| `idToken` | String | @NotBlank | Google ID Token từ frontend |
+
+**Response `200 OK`:**
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiJ9...",
+  "email": "binhminh@gmail.com",
+  "fullName": "Bình Minh",
+  "role": "STUDENT",
+  "hasPassword": false,
+  "isGoogleUser": true,
+  "avatarUrl": "https://lh3.googleusercontent.com/..."
+}
+```
+
+| Field | Type | Mô tả |
+|-------|------|-------|
+| `token` | String | JWT token |
+| `email` | String | Email Google |
+| `fullName` | String | Tên từ Google |
+| `role` | String | Vai trò (mặc định STUDENT) |
+| `hasPassword` | Boolean | User có password hay không |
+| `isGoogleUser` | Boolean | User đăng nhập bằng Google |
+| `avatarUrl` | String | Ảnh đại diện Google |
+
+**Business Logic:**
+1. Verify ID token với Google (sử dụng GoogleIdTokenVerifier)
+2. Lấy thông tin user từ token (email, name, picture)
+3. Tìm user theo `googleId` - nếu chưa có → tạo mới
+4. Nếu email đã tồn tại (đăng ký bằng email trước đó) → liên kết Google vào tài khoản hiện có
+5. Check `isActive == true` → `403` nếu bị khóa
+6. Generate JWT token
+
+**Config Required:**
+```properties
+google.client-id=YOUR_GOOGLE_CLIENT_ID
+```
+
+**Error Responses:**
+| Status | Message |
+|--------|---------|
+| `401` | Google token không hợp lệ hoặc đã hết hạn |
+| `403` | Tài khoản đã bị khóa |
+| `503` | Google OAuth chưa được cấu hình |
+
+### Files
+
+| File | Type |
+|------|------|
+| `dto/GoogleLoginRequest.java` | DTO Google login |
+| `service/GoogleAuthService.java` | loginWithGoogle() |
+| `controller/AuthController.java` | POST /auth/google |
+
+### 3.2 Lấy thông tin user hiện tại
+
+| Field | Value |
+|-------|-------|
+| **Method** | `GET` |
+| **Endpoint** | `/auth/me` |
+| **Auth** | Bearer Token (Authenticated) |
+
+**Response `200 OK`:**
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiJ9...",
+  "email": "binhminh@thinkai.com",
+  "fullName": "Bình Minh",
+  "role": "STUDENT",
+  "hasPassword": true,
+  "isGoogleUser": false
+}
+```
+
+**Business Logic:** Lấy thông tin user từ token đang登录 (dùng cho kiểm tra trạng thái auth)
+
+---
+
+## ④ Quên / Đặt lại mật khẩu
 
 ### 3.1 Quên mật khẩu (Gửi email reset)
 
@@ -239,7 +336,7 @@
 
 ---
 
-## ④ Xem & Cập nhật hồ sơ
+## ⑤ Xem & Cập nhật hồ sơ
 
 ### 4.1 Xem hồ sơ cá nhân
 
@@ -311,7 +408,7 @@
 
 ---
 
-## ⑤ Đổi mật khẩu
+## ⑥ Đổi mật khẩu
 
 ### 5.1 Đổi mật khẩu
 
