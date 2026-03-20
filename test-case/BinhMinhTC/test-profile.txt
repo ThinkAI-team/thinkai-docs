@@ -13,7 +13,7 @@
   3. Có user đã register + lấy JWT token bằng login
 
   Lấy token:
-  TOKEN=$(curl -s -X POST http://localhost:8080/auth/login \
+  TOKEN=$(curl -s -X POST http://localhost:8081/auth/login \
     -H "Content-Type: application/json" \
     -d '{"email":"minh@thinkai.vn","password":"Abc12345"}' \
     | python3 -c "import sys,json; print(json.load(sys.stdin)['token'])")
@@ -27,7 +27,7 @@
 ────────────────────────────────────────────────────────────────────────────────
 
   Request:
-  curl -s http://localhost:8080/users/me \
+  curl -s http://localhost:8081/users/me \
     -H "Authorization: Bearer $TOKEN"
 
   Expected: 200 OK
@@ -45,7 +45,7 @@
 ────────────────────────────────────────────────────────────────────────────────
 
   Request:
-  curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/users/me
+  curl -s -o /dev/null -w "%{http_code}" http://localhost:8081/users/me
 
   Expected: 403 Forbidden
 
@@ -54,7 +54,7 @@
 ────────────────────────────────────────────────────────────────────────────────
 
   Request:
-  curl -s -X PUT http://localhost:8080/users/me \
+  curl -s -X PUT http://localhost:8081/users/me \
     -H "Authorization: Bearer $TOKEN" \
     -H "Content-Type: application/json" \
     -d '{"fullName":"Bình Minh Updated","phoneNumber":"0901234567"}'
@@ -66,7 +66,7 @@
 ────────────────────────────────────────────────────────────────────────────────
 
   Request:
-  curl -s -X PUT http://localhost:8080/users/me \
+  curl -s -X PUT http://localhost:8081/users/me \
     -H "Authorization: Bearer $TOKEN" \
     -H "Content-Type: application/json" \
     -d '{"fullName":"","phoneNumber":"0901234567"}'
@@ -79,7 +79,7 @@
 ────────────────────────────────────────────────────────────────────────────────
 
   Request:
-  curl -s -X PUT http://localhost:8080/users/me/password \
+  curl -s -X PUT http://localhost:8081/users/me/password \
     -H "Authorization: Bearer $TOKEN" \
     -H "Content-Type: application/json" \
     -d '{"currentPassword":"Abc12345","newPassword":"NewPass123","confirmNewPassword":"NewPass123"}'
@@ -92,7 +92,7 @@
 ────────────────────────────────────────────────────────────────────────────────
 
   Request:
-  curl -s -X PUT http://localhost:8080/users/me/password \
+  curl -s -X PUT http://localhost:8081/users/me/password \
     -H "Authorization: Bearer $TOKEN" \
     -H "Content-Type: application/json" \
     -d '{"currentPassword":"SaiPassword","newPassword":"NewPass456","confirmNewPassword":"NewPass456"}'
@@ -105,7 +105,7 @@
 ────────────────────────────────────────────────────────────────────────────────
 
   Request:
-  curl -s -X PUT http://localhost:8080/users/me/password \
+  curl -s -X PUT http://localhost:8081/users/me/password \
     -H "Authorization: Bearer $TOKEN" \
     -H "Content-Type: application/json" \
     -d '{"currentPassword":"Abc12345","newPassword":"Abc99999","confirmNewPassword":"Abc88888"}'

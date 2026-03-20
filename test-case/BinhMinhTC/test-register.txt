@@ -4,7 +4,7 @@
 Ngày tạo: 2026-02-22
 Tester: Bình Minh
 API Endpoint: POST /auth/register
-URL: http://localhost:8080/auth/register
+URL: http://localhost:8081/auth/register
 
 ================================================================================
                       PHẦN 0: CHUẨN BỊ MÔI TRƯỜNG
@@ -69,7 +69,7 @@ URL: http://localhost:8080/auth/register
   
   [Bruno Setup]
   - Method: POST
-  - URL: http://localhost:8080/auth/register
+  - URL: http://localhost:8081/auth/register
   - Tab Headers: Content-Type = application/json
   - Tab Body → JSON:
   
@@ -106,7 +106,7 @@ URL: http://localhost:8080/auth/register
   
   [Bruno Setup]
   - Method: POST
-  - URL: http://localhost:8080/auth/register
+  - URL: http://localhost:8081/auth/register
   - Body → JSON:
   
      {
@@ -135,7 +135,7 @@ URL: http://localhost:8080/auth/register
   
   [Bruno Setup]
   - Method: POST
-  - URL: http://localhost:8080/auth/register
+  - URL: http://localhost:8081/auth/register
   - Body → JSON:
   
      {
@@ -274,7 +274,7 @@ URL: http://localhost:8080/auth/register
   
   [Bruno Setup]
   - Method: POST
-  - URL: http://localhost:8080/auth/register
+  - URL: http://localhost:8081/auth/register
   - Headers: Content-Type = application/json
   - Body: (để trống hoặc {})
 
@@ -555,19 +555,19 @@ URL: http://localhost:8080/auth/register
   CURL thay thế (copy-paste nhanh):
   
      # TC-REG-01
-     curl -s -X POST http://localhost:8080/auth/register \
+     curl -s -X POST http://localhost:8081/auth/register \
        -H "Content-Type: application/json" \
        -d '{"firstName":"Bình","lastName":"Minh","email":"minh@thinkai.vn","password":"Abc12345","confirmPassword":"Abc12345"}' \
        | python3 -m json.tool
      
      # TC-REG-02 (chạy lại TC-REG-01)
-     curl -s -X POST http://localhost:8080/auth/register \
+     curl -s -X POST http://localhost:8081/auth/register \
        -H "Content-Type: application/json" \
        -d '{"firstName":"Nguyễn","lastName":"Văn A","email":"minh@thinkai.vn","password":"Abc12345","confirmPassword":"Abc12345"}' \
        | python3 -m json.tool
      
      # TC-REG-03
-     curl -s -X POST http://localhost:8080/auth/register \
+     curl -s -X POST http://localhost:8081/auth/register \
        -H "Content-Type: application/json" \
        -d '{"firstName":"Test","lastName":"User","email":"test1@thinkai.vn","password":"Abc12345","confirmPassword":"Xyz99999"}' \
        | python3 -m json.tool
