@@ -1,24 +1,34 @@
-# 📚 API Documentation — Nguyễn Anh Khoa
-
-> **Module:** Learning Room & Student Dashboard
-> **Backend:** Spring Boot 4.0.2 / Java 25 / MySQL 8.0
-> **Cập nhật:** 19/03/2026
+# 📋 ThinkAI — API Documentation: Learning Room & Student Dashboard
+**Thành viên:** Nguyễn Anh Khoa  
+**Module:** Learning Room & Student Dashboard  
+**Base URL:** `http://localhost:8081`  
+**Auth:** `Authorization: Bearer <access_token>` (STUDENT role)  
+**Last Updated:** 2026-03-28
 
 ---
 
-## Tính năng 1: Dashboard Sinh viên (Trang tổng quan)
+## 📌 Tổng quan 4 tính năng
 
-Giao diện tổng quan cho sinh viên giúp theo dõi tiến độ học tập, các khóa học đang tham gia và gợi ý bài học tiếp theo.
+| # | Tính năng | Mô tả | Số API |
+|---|-----------|-------|--------|
+| 1 | Dashboard Sinh viên | Xem tiến độ học tập, các khóa học đang tham gia và gợi ý bài học | 1 |
+| 2 | Learning Room Layout | Lấy thông tin tổng quan khóa học trong chế độ phòng học (danh sách bài học) | 1 |
+| 3 | Chi tiết bài học | Lấy nội dung chi tiết bài (Video, PDF) & thông tin tiến độ hiện tại | 1 |
+| 4 | Cập nhật & Đồng bộ tiến độ | Cập nhật thời gian xem video, tự động đánh dấu hoàn thành & tính % khóa học | 1 |
 
-| Field        | Value                         |
-| ------------ | ----------------------------- |
-| **Method**   | `GET`                         |
-| **Endpoint** | `/users/me/dashboard`         |
-| **Auth**     | Bearer Token (**STUDENT**)    |
-| **Branch**   | `feature/learning-room/student-dashboard` |
+---
 
-### Response: `200 OK`
+## ① Dashboard Sinh viên
 
+### 1.1 Tổng quan Dashboard
+
+| Field | Value |
+|-------|-------|
+| **Method** | `GET` |
+| **Endpoint** | `/users/me/dashboard` |
+| **Auth** | Bearer Token (STUDENT) |
+
+**Response `200 OK`:**
 ```json
 {
   "status": 200,
@@ -48,35 +58,42 @@ Giao diện tổng quan cho sinh viên giúp theo dõi tiến độ học tập,
 }
 ```
 
+**Business Logic:**
+1. Lấy thông tin User hiện tại từ token.
+2. Lấy danh sách `Enrollment` của User.
+3. Tính toán tổng tiến độ trung bình (`averageProgress`) dựa trên `progressPercent` của các khóa đã tham gia.
+4. Gợi ý `nextLesson` bằng cách tìm bài học cuối cùng được truy cập từ `LessonProgress`.
+
+**Error Responses:**
+| Status | Message |
+|--------|---------|
+| `401` | Token không hợp lệ hoặc hết hạn |
+| `403` | Không có quyền truy cập (không phải STUDENT) |
+
 ### Files
 
 | File | Type |
 |------|------|
 | `dto/DashboardResponse.java` | DTO bao quát Dashboard |
-| `dto/EnrolledCourseDto.java` | Thông tin khóa học đã đăng ký |
-| `dto/NextLessonDto.java` | Thông tin bài học tiếp theo |
-| `service/DashboardService.java` | Xử lý logic Dashboard, tính tiến độ trung bình |
-| `controller/DashboardController.java` | Endpoint GET /users/me/dashboard |
+| `service/DashboardService.java` | Xử lý logic Dashboard, tính tiến độ |
+| `controller/DashboardController.java` | GET /users/me/dashboard |
 
 ---
 
-## Tính năng 2: Learning Room Layout (Cấu trúc phòng học)
+## ② Learning Room Layout
 
-Lấy thông tin tổng quan của khóa học trong chế độ phòng học (màn hình chính khi vào học).
+### 2.1 Cấu trúc phòng học
 
-| Field        | Value                         |
-| ------------ | ----------------------------- |
-| **Method**   | `GET`                         |
-| **Endpoint** | `/courses/{courseId}/learn`   |
-| **Auth**     | Bearer Token (**STUDENT**)    |
-| **Branch**   | `feature/learning-room/layout` |
+| Field | Value |
+|-------|-------|
+| **Method** | `GET` |
+| **Endpoint** | `/courses/{courseId}/learn` |
+| **Auth** | Bearer Token (STUDENT) |
 
-### Path Variables
+**Path Variables:**
+- `courseId` (Long): ID khóa học.
 
-- `courseId`: ID của khóa học muốn xem nội dung học.
-
-### Response: `200 OK`
-
+**Response `200 OK`:**
 ```json
 {
   "status": 200,
@@ -101,25 +118,42 @@ Lấy thông tin tổng quan của khóa học trong chế độ phòng học (m
 }
 ```
 
+**Business Logic:**
+1. Check quyền truy cập khóa học (phải có `Enrollment`).
+2. Trả về thông tin khóa học kèm danh sách bài học sắp xếp theo `orderIndex`.
+3. Kiểm tra từng bài học với `LessonProgress` để xác định trạng thái `isCompleted`.
+
+**Error Responses:**
+| Status | Message |
+|--------|---------|
+| `403` | Bạn chưa đăng ký khóa học này |
+| `404` | Khóa học không tồn tại |
+
+### Files
+
+| File | Type |
+|------|------|
+| `dto/CourseDetailResponse.java` | DTO cấu trúc khóa học |
+| `dto/LessonResponse.java` | DTO danh sách bài học thu gọn |
+| `service/LearningRoomService.java` | getCourseWithLessons() |
+| `controller/LearningRoomController.java` | GET /courses/{courseId}/learn |
+
 ---
 
-## Tính năng 3 & 4: Chi tiết bài học (Video Player / PDF Viewer)
+## ③ Chi tiết bài học
 
-Lấy nội dung chi tiết của một bài học để hiển thị lên trình phát Video hoặc xem nội dung PDF/Văn bản.
+### 3.1 Nội dung chi tiết bài học
 
-| Field        | Value                         |
-| ------------ | ----------------------------- |
-| **Method**   | `GET`                         |
+| Field | Value |
+|-------|-------|
+| **Method** | `GET` |
 | **Endpoint** | `/courses/lessons/{lessonId}` |
-| **Auth**     | Bearer Token (**STUDENT**)    |
-| **Branch**   | `feature/learning-room/video-player`, `feature/learning-room/pdf-viewer` |
+| **Auth** | Bearer Token (STUDENT) |
 
-### Path Variables
+**Path Variables:**
+- `lessonId` (Long): ID bài học.
 
-- `lessonId`: ID của bài học cần lấy nội dung.
-
-### Response: `200 OK`
-
+**Response `200 OK`:**
 ```json
 {
   "status": 200,
@@ -127,13 +161,15 @@ Lấy nội dung chi tiết của một bài học để hiển thị lên trìn
   "data": {
     "id": 1,
     "title": "Introduction to React Native",
-    "type": "VIDEO", 
+    "type": "VIDEO",
     "contentUrl": "https://www.youtube.com/watch?v=...",
     "contentText": null,
     "durationSeconds": 600,
     "orderIndex": 1,
     "isCompleted": true,
     "watchTimeSeconds": 120,
+    "currentTimeSeconds": 120,
+    "lessonProgressPercent": 20.0,
     "courseId": 1,
     "courseTitle": "ThinkAI React Native Course",
     "previousLessonId": null,
@@ -142,87 +178,135 @@ Lấy nội dung chi tiết của một bài học để hiển thị lên trìn
 }
 ```
 
-### Business Logic
+**Business Logic:**
+1. Nếu User chưa có `LessonProgress` cho bài này, tạo mới (watchTime = 0).
+2. Tự động cập nhật `lastAccessedAt = now()` để phục vụ tính năng `nextLesson` (resume khóa học).
+3. Auto-detect `previousLessonId` và `nextLessonId` để giao diện hiển thị nút Chuyển Bài.
+4. Trả về `currentTimeSeconds` kèm `lessonProgressPercent` để Frontend khôi phục vị trí Video và hiển thị phần trăm học.
 
-1. Nếu `type = VIDEO`: Frontend dùng `contentUrl` để hiển thị trình phát Video.
-2. Nếu `type = PDF`: Frontend dùng `contentUrl` để hiển thị PDF Viewer.
-3. Nếu `type = TEXT`: Hiển thị nội dung từ `contentText`.
-4. API tự động trả về `previousLessonId` và `nextLessonId` để điều hướng nội dung.
+**Error Responses:**
+| Status | Message |
+|--------|---------|
+| `403` | Bạn chưa đăng ký khóa học này |
+| `404` | Bài học không tồn tại |
 
 ### Files
 
 | File | Type |
 |------|------|
-| `dto/LessonDetailResponse.java` | DTO chi tiết bài học đầy đủ thông tin nội dung |
-| `service/LearningRoomService.java` | Lấy chi tiết bài học + Navigation info |
-| `controller/LearningRoomController.java` | Endpoint GET /courses/lessons/{lessonId} |
+| `dto/LessonDetailResponse.java` | DTO chi tiết bài học |
+| `service/LearningRoomService.java` | getLessonDetail() |
+| `controller/LearningRoomController.java` | GET /courses/lessons/{lessonId} |
 
 ---
 
-## Tính năng 5: Đánh dấu hoàn thành bài học
+## ④ Cập nhật & Đồng bộ tiến độ
 
-Cập nhật trạng thái đã học của một bài học và đồng bộ tiến độ vào khóa học.
+### 4.1 Cập nhật tiến độ Video
 
-| Field        | Value                                 |
-| ------------ | ------------------------------------- |
-| **Method**   | `POST`                                |
-| **Endpoint** | `/courses/lessons/{lessonId}/complete` |
-| **Auth**     | Bearer Token (**STUDENT**)            |
-| **Branch**   | `feature/learning-room/lesson-complete` |
+| Field | Value |
+|-------|-------|
+| **Method** | `PUT` |
+| **Endpoint** | `/courses/lessons/{lessonId}/progress` |
+| **Auth** | Bearer Token (STUDENT) |
 
-### Request Body
-
+**Request Body:**
 ```json
 {
-  "watchTimeSeconds": 600
+  "watchTimeSeconds": 550,
+  "currentTimeSeconds": 550
 }
 ```
 
-### Response: `200 OK`
+| Field | Type | Validation | Mô tả |
+|-------|------|------------|-------|
+| `watchTimeSeconds` | Integer | @NotNull, >= 0 | Thời gian đã xem thực sự |
+| `currentTimeSeconds` | Integer | >= 0 | Vị trí dừng tạm thời của Video (Resume Playback) |
 
+**Response `200 OK`:**
 ```json
 {
   "status": 200,
-  "message": "Lesson marked as completed",
+  "message": "Success",
   "data": {
     "lessonId": 1,
+    "watchTimeSeconds": 550,
+    "currentTimeSeconds": 550,
     "isCompleted": true,
-    "courseProgress": 70
+    "lessonProgressPercent": 91.6,
+    "courseProgressPercent": 10.0
   }
 }
 ```
 
-### Business Logic
+**Business Logic:**
+1. Frontend API định kỳ (setInterval) gọi endpoint này mỗi 10 giây khi xem Video.
+2. Lưu `watchTimeSeconds`, `currentTimeSeconds` và cập nhật `lastAccessedAt`.
+3. Tính `% bài học`. Nếu độ dài xem video đạt **>= 90%** thời lượng gốc -> `isCompleted = true` (Đánh dấu hoàn thành tự động) và set `completedAt = now()`.
+4. Tính lại `% khóa học` bằng công thức: `(Số bài đã xong / Tổng số bài) * 100`.
+5. Cập nhật con số `%` này vào bảng `Enrollment` (trường `progressPercent`). Nếu đạt 100% thì gán `completedAt` cho Enrollment để tốt nghiệp khóa học.
+6. Trả lại thông số `% mới nhất` để Frontend vẽ realtime thanh Progress Bar trên giao diện.
 
-1. Kiểm tra tồn tại liên kết Enrollment.
-2. Lưu/Cập nhật bản ghi `LessonProgress` là `isCompleted = true`.
-3. Tính toán lại tổng số bài học đã hoàn thành / tổng số bài học của khóa học.
-4. Cập nhật `progress_percent` trong bảng `Enrollment`.
-5. Trả về tiến độ mới nhất của toàn khóa học.
+**Error Responses:**
+| Status | Message |
+|--------|---------|
+| `400` | Validation errors (watchTimeSeconds < 0...) |
+| `403` | Bạn chưa đăng ký khóa học này |
+| `404` | Bài học không tồn tại |
 
 ### Files
 
 | File | Type |
 |------|------|
-| `dto/LessonCompleteRequest.java` | Request DTO chứa thời gian đã xem |
-| `dto/LessonCompleteResponse.java` | Response DTO chứa tiến độ khóa học mới |
-| `service/LessonProgressService.java` | Logic chính xử lý hoàn thành bài học và tính lại % |
-| `controller/LessonProgressController.java` | Endpoint POST /courses/lessons/{lessonId}/complete |
+| `dto/UpdateProgressRequest.java` | Request DTO |
+| `dto/UpdateProgressResponse.java` | Response DTO |
+| `service/VideoProgressService.java` | updateProgress(), Auto-complete logic, Enrollment recalculation |
+| `controller/VideoProgressController.java` | PUT /courses/lessons/{lessonId}/progress |
 
 ---
 
-## Tổng kết Repository đã tạo
+## 🗄️ Database Schema (Bảng liên quan)
 
-Hệ thống Learning Room sử dụng các Repository quan trọng sau:
+### `enrollments`
+| Column | Type | Mô tả |
+|--------|------|-------|
+| `id` | BIGINT PK | ID đăng ký |
+| `user_id` | BIGINT | ID Sinh viên |
+| `course_id` | BIGINT | ID Khóa học |
+| `progress_percent`| INT | Tiến độ hoàn thành khóa học (%) |
+| `enrolled_at` | DATETIME | Ngày tham gia |
+| `completed_at` | DATETIME | Ngày hoàn thành 100% khóa học |
 
-| Repository | Mục đích chính |
-|------------|----------------|
-| `EnrollmentRepository` | Quản lý việc đăng ký và cập nhật tiến độ phần trăm (`progressPercent`) |
-| `CourseRepository` | Truy vấn thông tin cơ bản về khóa học |
-| `LessonRepository` | Truy vấn danh sách bài học theo `courseId` và sắp xếp theo `orderIndex` |
-| `LessonProgressRepository` | Theo dõi trạng thái hoàn thành (`isCompleted`) và thời gian truy cập cuối cùng của từng bài học |
+### `lesson_progress`
+| Column | Type | Mô tả |
+|--------|------|-------|
+| `id` | BIGINT PK | ID tiến độ |
+| `user_id` | BIGINT | ID Sinh viên |
+| `lesson_id` | BIGINT | ID Bài học |
+| `is_completed` | BOOLEAN | Trạng thái tự động hoàn thành (>= 90%) |
+| `watch_time_seconds`| INT | Tổng thời gian thực tế đã xem |
+| `current_time_seconds`| INT | Vị trí tạm dừng video lần cuối |
+| `last_accessed_at`| DATETIME | Thời điểm truy cập gần nhất (cho cấu hình Next Lesson) |
+| `completed_at` | DATETIME | Thời điểm xem xong |
 
 ---
 
-> **Thực hiện bởi:** Nguyễn Anh Khoa
-> **Ngày hoàn thành:** 19/03/2026
+## 🔐 Xác thực & Phân quyền
+
+### Security Config
+
+| Endpoint | Auth |
+|----------|------|
+| `GET /users/me/dashboard` | Authenticated (`@StudentOnly`) |
+| `GET /courses/{courseId}/learn` | Authenticated (`@StudentOnly`) |
+| `GET /courses/lessons/{lessonId}` | Authenticated (`@StudentOnly`) |
+| `PUT /courses/lessons/{lessonId}/progress` | Authenticated (`@StudentOnly`) |
+
+### Security Annotations có sẵn
+- Sử dụng `@StudentOnly` cho tất cả các thiết lập endpoint thuộc phạm vi Student Dashboard và Learning Room.
+- Luôn kiểm tra tính xác thực (bằng bảng `enrollments`) giữa User và Course thì mới được phép thao tác.
+
+---
+
+> **Thực hiện bởi:** Nguyễn Anh Khoa  
+> **Ngày cập nhật gần nhất:** 28/03/2026
