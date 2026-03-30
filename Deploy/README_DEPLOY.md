@@ -1,61 +1,99 @@
-# Hướng dẫn Triển khai ThinkAI Backend lên Oracle Cloud
+# Hướng dẫn Triển khai ThinkAI Backend lên Railway
 
-Tài liệu này tổng hợp các bước cần thiết để đưa mã nguồn từ GitHub lên máy chủ Oracle Cloud sau khi kết thúc quá trình phát triển.
+Tài liệu này hướng dẫn các bước để triển khai ThinkAI Backend lên Railway với database Aiven MySQL.
 
-## 1. Thông tin hạ tầng đã thiết lập
-- **IP Public của Backend:** `159.13.48.35`
-- **Hệ điều hành:** Ubuntu 24.04 LTS
-- **User truy cập:** `ubuntu`
-- **SSH Key:** `/home/binhminh/Downloads/ssh-key-2026-03-16.key` (đã chmod 400)
+## 1. Thông tin hạ tầng
 
-## 2. Quy trình Triển khai (Sau khi Merge Main)
+- **Backend:** Railway - `thinkai-backend-production.up.railway.app`
+- **Database:** Aiven MySQL - `thinkai-database-thinkai-db.c.aivencloud.com:25733`
+- **Port:** 8081
 
-### Bước 1: SSH vào máy chủ
-Mở terminal trên Fedora và gõ:
+## 2. Quy trình Triển khai Backend lên Railway
+
+### Bước 1: Cập nhật code (nếu cần)
+
 ```bash
-ssh -i /home/binhminh/Downloads/ssh-key-2026-03-16.key ubuntu@159.13.48.35
-```
+cd /home/binhminh/Developer/DA/thinkai-backend
 
-### Bước 2: Cập nhật mã nguồn
-```bash
-# Lần đầu tiên
-git clone <URL_GITHUB_BACKEND_CUA_BAN>
-cd thinkai-backend
-
-# Những lần sau
+# Pull code mới nhất
 git pull origin main
 ```
 
-### Bước 3: Cấu hình Biến môi trường (.env)
-Tạo hoặc sửa file `.env` trong thư mục dự án:
+### Bước 2: Build Docker Image
+
 ```bash
-nano .env
-```
-Nội dung cần điền:
-```env
-DB_URL=jdbc:mysql://<IP_NỘI_BỘ_DATABASE>:3306/thinkai_db?useSSL=false&allowPublicKeyRetrieval=true
-DB_USERNAME=<USERNAME_DATABSE>
-DB_PASSWORD=<PASSWORD_DATABASE>
-JWT_SECRET=<CHUỖI_BẢO_MẬT_BẤT_KỲ>
+docker build -t minhtuyetvoi/thinkai-backend:latest .
 ```
 
-### Bước 4: Chạy ứng dụng bằng Docker
+### Bước 3: Push lên Docker Hub
+
 ```bash
-# Dừng container cũ (nếu có)
-docker compose down
-
-# Build và chạy lại
-docker compose up -d --build
+docker push minhtuyetvoi/thinkai-backend:latest
 ```
 
-## 3. Các cấu hình mạng cần lưu ý (OCI Console)
+### Bước 4: Deploy trên Railway
 
-### Security List (Public Subnet)
-- Phải mở cổng **22** (TCP) cho IP của bạn (đã làm).
-- Phải mở cổng **8081** (TCP) cho `0.0.0.0/0` để cho phép truy cập API từ Internet.
+1. Truy cập [Railway Dashboard](https://railway.app/dashboard)
+2. Chọn project **ThinkAI**
+3. Click **Deploy** để pull image mới từ Docker Hub
 
-### Security List (Private Subnet - Database)
-- Phải mở cổng **3306** (TCP) cho nguồn từ `10.0.0.0/16` (để Backend gọi được Database).
+### Bước 5: Cấu hình Environment Variables trên Railway
+
+Vào **Railway Dashboard** → Backend Service → **Variables**, đảm bảo có:
+
+| Variable | Value |
+|----------|-------|
+| `DB_URL` | `jdbc:mysql://avnadmin:YOUR_PASSWORD@thinkai-database-thinkai-db.c.aivencloud.com:25733/defaultdb?ssl-mode=REQUIRED` |
+| `DB_USERNAME` | `avnadmin` |
+| `DB_PASSWORD` | `<YOUR_AIVEN_PASSWORD>` |
+| `JWT_SECRET` | `<JWT_SECRET_MIN_32_CHARS>` |
+| `SPRING_PROFILES_ACTIVE` | `staging` |
+| `GOOGLE_CLIENT_ID` | `<YOUR_GOOGLE_CLIENT_ID>` |
+| `MAIL_USERNAME` | `<YOUR_GMAIL>` |
+| `MAIL_PASSWORD` | `<YOUR_GMAIL_APP_PASSWORD>` |
+| `MAIL_HOST` | `smtp.gmail.com` |
+| `MAIL_PORT` | `587` |
+| `FRONTEND_URL` | `https://thinkai-frontend-psi.vercel.app` |
+| `CORS_ORIGINS` | `https://thinkai-frontend-psi.vercel.app` |
+| `PORT` | `8081` |
+| `SPRING_JPA_HIBERNATE_DDL_AUTO` | `update` |
+
+### Bước 6: Kiểm tra Backend
+
+Sau khi deploy, kiểm tra tại:
+- `https://thinkai-backend-production.up.railway.app/actuator/health`
 
 ---
-*Cập nhật lần cuối: 17/03/2026*
+
+## 3. Database Aiven MySQL
+
+### Thông tin kết nối
+
+- **Host:** `thinkai-database-thinkai-db.c.aivencloud.com`
+- **Port:** 25733
+- **Database:** `defaultdb`
+- **User:** `avnadmin`
+- **Password:** Lấy từ Aiven Dashboard → ThinkAI Database → Get Password
+
+### Lưu ý
+
+- `ddl-auto: update` đã được cấu hình trong `application-staging.yml`, Hibernate sẽ tự tạo các bảng khi ứng dụng khởi động.
+- Nếu cần import schema thủ công, xem file `thinkai-docs/database/thinkai_schema.sql`
+
+---
+
+## 4. Xử lý sự cố
+
+### Lỗi "Access denied for user 'avnadmin'"
+- Kiểm tra lại DB_PASSWORD trong Railway
+- Đảm bảo user có quyền truy cập database trên Aiven
+
+### Lỗi JWT "key byte array is 184 bits"
+- JWT_SECRET phải có độ dài ≥32 ký tự (≥256 bits)
+- Tạo secret mới và cập nhật trong Railway
+
+### Lỗi CORS
+- Đảm bảo `CORS_ORIGINS` trong Railway trùng với frontend URL
+
+---
+*Cập nhật lần cuối: 24/03/2026*
